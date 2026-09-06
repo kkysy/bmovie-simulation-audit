@@ -1,0 +1,33 @@
+function checkpoint = run_acc00_p0_3_mphase_world(root, cellId, seedIndex, mode, outputRoot)
+%RUN_ACC00_P0_3_MPHASE_WORLD Historical-seed replay with guard-only changes.
+arguments
+    root (1,1) string
+    cellId (1,1) string
+    seedIndex (1,1) double {mustBeInteger,mustBePositive}
+    mode (1,1) string {mustBeMember(mode,["smoke" "synthetic"])} = "synthetic"
+    outputRoot (1,1) string = ""
+end
+root=string(char(java.io.File(char(root)).getCanonicalPath()));paperPath=fullfile(root,"scripts","ieeg","paper");addpath(fullfile(root,"scripts","ieeg","acc01"));paper=jsondecode(fileread(fullfile(paperPath,"acc00_sim_p0_3_ablation_contract.json")));base=jsondecode(fileread(fullfile(root,"scripts","ieeg","acc00_sim_contract.json")));cell=phaseCell(paper,cellId);assert(seedIndex<=double(cell.worlds),"seed_index exceeds frozen cell size.");seed=double(paper.seed.M01_to_M02.base_seed)+100000*double(paper.seed.M01_to_M02.scenario_index)+seedIndex;
+if strlength(outputRoot)==0,outputRoot=fullfile(root,string(paper.outputs.root));end;outDir=fullfile(outputRoot,"mphase","checkpoints",cellId);if ~isfolder(outDir),mkdir(outDir),end;final=fullfile(outDir,sprintf("world_%03d.mat",seedIndex));if isfile(final),s=load(final,"checkpoint");assertIdentity(s.checkpoint,paper,root,cellId,seedIndex,seed);checkpoint=s.checkpoint;return,end
+sim=base;sim.surrogate.domain_guard_edge_lower_s=double(cell.edge_guard_lower_s);sim.surrogate.domain_guard_edge_upper_s=double(cell.edge_guard_upper_s);sim.surrogate.domain_guard_bad_dilation_s=double(cell.bad_dilation_s);
+started=utcNow();clock=tic;world=acc00_sim_generate_world(root,sim,legacyMode(mode),seed,"null",struct());rows=repmat(struct("subject","","run","","power",0,"phase",NaN),numel(world.pairs),1);pairRows=repmat(struct("subject","","run","","session_id","","pair_id","","domain_fraction",NaN,"surrogate_count",NaN,"refit_surrogate_count",NaN),numel(world.pairs),1);
+for i=1:numel(world.pairs)
+    [~,events]=acc01_build_support_and_events(world.pairs(i),world.covariates,sim);ph=acc01_compute_phase_metric_optimized(world.pairs(i),events,sim,world.stream);rows(i)=struct("subject",world.pairs(i).subject,"run",world.pairs(i).run,"power",0,"phase",ph.difference);pairRows(i)=struct("subject",world.pairs(i).subject,"run",world.pairs(i).run,"session_id",world.pairs(i).session_id,"pair_id",world.pairs(i).pair_id,"domain_fraction",ph.surrogate.domain_fraction,"surrogate_count",ph.surrogate.sample_count,"refit_surrogate_count",ph.refit_surrogate_count);
+end
+agg=acc01_aggregate_subject_metrics(rows);shape=struct();for run=["R1" "R2"],keep=agg.runs==run&isfinite(agg.matrix(:,2));shape.(run)=shapeForRun(agg.subjects(keep),agg.matrix(keep,2));end
+checkpoint=struct("status","complete","analysis_id",paper.analysis_id,"arm","Mphase","cell_id",cellId,"world_seed",seed,"seed_index",seedIndex,"scenario_index",double(paper.seed.M01_to_M02.scenario_index),"effect_index",0,"contract_sha256",sha256File(fullfile(paperPath,"acc00_sim_p0_3_ablation_contract.json")),"parent_p0_2_contract_sha256",string(paper.parent_p0_2.sha256),"input_hashes",inputHashes(paper.inputs),"started_at_utc",started,"completed_at_utc",utcNow(),"timing",struct("elapsed_s",toc(clock),"synthesis_s",world.timing.synthesis_s,"peak_memory_bytes",world.timing.peak_memory_bytes),"guard",struct("edge_guard_lower_s",cell.edge_guard_lower_s,"edge_guard_upper_s",cell.edge_guard_upper_s,"bad_dilation_s",cell.bad_dilation_s),"pair_diagnostics",pairRows,"subject_metrics",agg.table,"mphase_shape",shape,"world_summary",struct("fpr_role",string(cell.fpr_role),"note","paired descriptive replay only"),"mode",mode);
+tmp=final+".tmp.mat";save(tmp,"checkpoint","-v7.3");movefile(tmp,final,"f");
+end
+function q=shapeForRun(subjects,x)
+[subjects,ix]=sort(string(subjects));x=x(ix);
+if isempty(x)
+    q=struct("subjects_lexicographic",subjects,"subject_mphase_vector",x,"subject_mean",NaN,"subject_sample_sd",NaN,"subject_MAD_about_median",NaN,"subject_skewness_bias_corrected",NaN,"subject_excess_kurtosis_bias_corrected",NaN,"subject_max_abs_over_rms",NaN,"orbit_n",0,"orbit_mean",NaN,"orbit_sample_sd",NaN,"orbit_q0_5",NaN,"orbit_q2_5",NaN,"orbit_q25",NaN,"orbit_q50",NaN,"orbit_q75",NaN,"orbit_q97_5",NaN,"orbit_q99_5",NaN,"orbit_skewness_bias_corrected",NaN,"orbit_excess_kurtosis_bias_corrected",NaN,"observed",NaN,"studentization_sd",NaN,"observed_standardized_score",NaN,"p_two_sided",NaN,"p_maxstat",NaN);return
+end
+sf=acc01_exact_signflip_family([zeros(numel(x),1),x]);orbit=sf.statistics(:,2);q=struct("subjects_lexicographic",subjects,"subject_mphase_vector",x,"subject_mean",mean(x),"subject_sample_sd",std(x,0),"subject_MAD_about_median",median(abs(x-median(x))),"subject_skewness_bias_corrected",skewness(x,0),"subject_excess_kurtosis_bias_corrected",kurtosis(x,0)-3,"subject_max_abs_over_rms",max(abs(x))/rms(x),"orbit_n",numel(orbit),"orbit_mean",mean(orbit),"orbit_sample_sd",std(orbit,0),"orbit_q0_5",prctile(orbit,.5,"Method","inclusive"),"orbit_q2_5",prctile(orbit,2.5,"Method","inclusive"),"orbit_q25",prctile(orbit,25,"Method","inclusive"),"orbit_q50",prctile(orbit,50,"Method","inclusive"),"orbit_q75",prctile(orbit,75,"Method","inclusive"),"orbit_q97_5",prctile(orbit,97.5,"Method","inclusive"),"orbit_q99_5",prctile(orbit,99.5,"Method","inclusive"),"orbit_skewness_bias_corrected",skewness(orbit,0),"orbit_excess_kurtosis_bias_corrected",kurtosis(orbit,0)-3,"observed",sf.observed(2),"studentization_sd",sf.studentization_sd(2),"observed_standardized_score",sf.studentized_observed(2),"p_two_sided",sf.p_two_sided(2),"p_maxstat",sf.p_maxstat);
+end
+function cell=phaseCell(paper,id),z=paper.cells.Mphase;ix=find(string({z.id})==id,1);assert(~isempty(ix),"Unknown cell.");cell=z(ix);end
+function out=legacyMode(mode),if mode=="smoke",out="smoke";else,out="benchmark";end,end
+function assertIdentity(q,paper,root,id,si,seed),assert(string(q.status)=="complete"&&string(q.arm)=="Mphase"&&string(q.cell_id)==id&&q.seed_index==si&&q.world_seed==seed&&string(q.contract_sha256)==sha256File(fullfile(root,"scripts","ieeg","paper","acc00_sim_p0_3_ablation_contract.json")),"P0-3 Mphase checkpoint identity mismatch.");end
+function h=inputHashes(x),h=struct();for k=string(fieldnames(x))',h.(k)=string(x.(k).sha256);end,end
+function s=utcNow(),s=string(datetime("now","TimeZone","UTC","Format","yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"));end
+function h=sha256File(path),fid=fopen(path,"rb");assert(fid>=0);cl=onCleanup(@()fclose(fid));b=fread(fid,Inf,"*uint8");md=java.security.MessageDigest.getInstance("SHA-256");md.update(typecast(b,"int8"));h=upper(string(reshape(dec2hex(typecast(md.digest(),"uint8"),2)',1,[])));end

@@ -1,0 +1,43 @@
+{
+  "analysis_id": "ACC00-SIM-P0-4-DIAGNOSTIC-PANEL-v1.0.0",
+  "seal_role": "implementation and independent unblinding validator only; aggregation scoring must not read this file",
+  "opaque_to_member": {
+    "PanelMember-01": {
+      "member_id": "P-REF",
+      "estimator": "Mpower_aperiodic_adjusted",
+      "mutation": "none",
+      "guard": null,
+      "prediction": "nominal_0p05_in_CP_CI"
+    },
+    "PanelMember-02": {
+      "member_id": "M-REF",
+      "estimator": "Mphase",
+      "mutation": "none",
+      "guard": {"edge_lower_s": 1.5, "edge_upper_s": 1.5, "bad_dilation_s": 0.75},
+      "crossfit_coefficient_mode": "refit",
+      "prediction": "far_above_nominal"
+    },
+    "PanelMember-03": {
+      "member_id": "M-D2",
+      "estimator": "Mphase",
+      "mutation": "wrong_edge_guard",
+      "guard": {"edge_lower_s": 0.75, "edge_upper_s": 0.756, "bad_dilation_s": 0.75},
+      "crossfit_coefficient_mode": "refit",
+      "prediction": "directional_FPR_or_domain_not_less_than_M_REF; historical_0p5475_gt_0p3875"
+    },
+    "PanelMember-04": {
+      "member_id": "M-D1",
+      "estimator": "Mphase",
+      "mutation": "crossfit_not_refit",
+      "guard": {"edge_lower_s": 1.5, "edge_upper_s": 1.5, "bad_dilation_s": 0.75},
+      "crossfit_coefficient_mode": "observed_fixed",
+      "prediction": "direction_free_exploratory"
+    }
+  },
+  "unblinding": {
+    "directional_member_id": "M-D2",
+    "reference_member_id": "M-REF",
+    "exploratory_member_id": "M-D1",
+    "positive_control_member_id": "P-REF"
+  }
+}

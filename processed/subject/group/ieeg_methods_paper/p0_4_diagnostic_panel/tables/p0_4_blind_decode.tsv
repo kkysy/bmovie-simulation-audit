@@ -1,0 +1,5 @@
+opaque_id	member_id	prediction	mutation
+PanelMember-01	P-REF	nominal_0p05_in_CP_CI	none
+PanelMember-02	M-REF	far_above_nominal	none
+PanelMember-03	M-D2	directional_FPR_or_domain_not_less_than_M_REF; historical_0p5475_gt_0p3875	wrong_edge_guard
+PanelMember-04	M-D1	direction_free_exploratory	crossfit_not_refit

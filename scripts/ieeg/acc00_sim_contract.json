@@ -1,0 +1,362 @@
+{
+  "analysis_id": "ACC00-SIM-v1.0.0",
+  "status": "stage1_implementation_only_full_simulation_not_authorized",
+  "no_acc_neural_results_read": true,
+  "sampling": {
+    "synthetic_hz": 1000,
+    "analysis_hz": 250,
+    "anti_alias_lowpass_hz": 100,
+    "anti_alias_order": 3
+  },
+  "background": {
+    "recipe": "random_phase_frequency_domain_A(f)=1/max(f,0.5Hz)_DC_zero_Hermitian_IFFT",
+    "power_exponent_chi": 2,
+    "f_min_hz": 0.5,
+    "b0_uV": 34.224649933425269,
+    "b0_definition": "median over 351 eligible ACC pairs of sqrt(median_rms_uv(contact_a)^2+median_rms_uv(contact_b)^2)",
+    "log_scale_sigma": {
+      "subject": 0.25,
+      "session": 0.15,
+      "pair": 0.35
+    },
+    "normalization_domain": "background-only full 250-Hz trace RMS after anti-alias and decimation",
+    "scales_injection": false
+  },
+  "windows_s": {
+    "power_pre": [
+      -0.5,
+      -0.1
+    ],
+    "power_post": [
+      0.1,
+      0.5
+    ],
+    "phase_response": [
+      0.1,
+      0.5
+    ],
+    "filter_support": [
+      -0.75,
+      0.75
+    ]
+  },
+  "power": {
+    "band_hz": [
+      4,
+      8
+    ],
+    "theta_periodogram_bins_hz": [
+      5,
+      7.5
+    ],
+    "hann_epoch_s": 0.4,
+    "periodogram_bins_hz": [
+      2.5,
+      5,
+      7.5,
+      10,
+      12.5,
+      15,
+      17.5,
+      20,
+      22.5,
+      25,
+      27.5,
+      30
+    ],
+    "aperiodic_fit_bins_hz": [
+      2.5,
+      10,
+      12.5,
+      15,
+      17.5,
+      20,
+      22.5,
+      25,
+      27.5,
+      30
+    ],
+    "log_base": 10,
+    "robust_fit": "robustfit bisquare",
+    "robustfit_iteration_limit_warning_id": "stats:statrobustfit:IterationLimit",
+    "robustfit_iteration_limit_policy": "suppress stdout and count each fit per world; estimator settings unchanged"
+  },
+  "phase": {
+    "band_hz": [
+      4,
+      8
+    ],
+    "filter": "Butterworth",
+    "filter_order": 3,
+    "zero_phase": true,
+    "analytic_signal": "Hilbert",
+    "erp_crossfit_folds": 5,
+    "fold_assignment": "contiguous_movie_time_blocks",
+    "ppc": "pairwise_phase_consistency",
+    "mphase_surrogate_reducer": "mean",
+    "refit_surrogates": {
+      "J": 32,
+      "selection": "uniform_without_replacement_from_existing_pair_surrogates_same_stream",
+      "when_B_lt_J": "use_all"
+    },
+    "filter_scope": "per_continuous_clean_block",
+    "corr_series_diagnostic_surrogates": 1024
+  },
+  "surrogate": {
+    "type": "whole_schedule_circular_time_shift",
+    "signal_moved": false,
+    "event_attributes_carried": true,
+    "delta_grid_hz": 250,
+    "delta_quantum_s": 0.004,
+    "max_surrogates_per_estimable_pair": 1024,
+    "enumerate_when_quantized_feasible_count_lte": 1024,
+    "empty_domain": "not_estimable_no_substitution",
+    "domain_guard_bad_dilation_s": 0.75,
+    "domain_guard_edge_lower_s": 1.5,
+    "domain_guard_edge_upper_s": 1.5,
+    "domain_guard_edge_basis": "closed intervals [0,1.5] and [T-1.5,T] on the 250-Hz grid; 1.5 s * fs is an integer sample count, so the existing closed-grid quantization requires no rounding adjustment",
+    "feasible_domain": "[0,T) minus union_e(((edge_lower_guarded_by_1.5s or edge_upper_guarded_by_1.5s or bad_dilated_by_0.75s) - t_e) mod T)"
+  },
+  "additive": {
+    "kernel": "half_sine_rms1",
+    "kernel_formula": "h(t)=sqrt(2)*sin(pi*(t-0.10)/0.40), t in [0.10,0.50]s, zero outside, RMS=1",
+    "kernel_support_s": [
+      0.1,
+      0.5
+    ],
+    "kernel_rms": 1,
+    "amplitude_relation": "amplitude_e_uV=A_ERP_uV*exp(a+b*z_e)*pair_polarity",
+    "gain_intercept_a": 0,
+    "gain_slope_b": 0.3055533803,
+    "a_erp_grid_uV": [
+      0,
+      0.10575470588829396,
+      0.42663459535147219,
+      0.51561069183786479
+    ],
+    "a_erp_grid_definition": "[0,prctile(max(D_i,0),p,Method=\"inclusive\") for p=50,75,90]; D_i=RMS(hard_cut,0.04:0.40)-mean(RMS(shot_matched_pseudo),RMS(circular_shift)) for I02 R1 bipolar subject waveform",
+    "percentile_method": "MATLAB prctile Method=\"inclusive\" (linear interpolation, position 1+(n-1)*p/100; never version default)",
+    "d_i_uV": [
+      -0.15764094199868298,
+      0.58093561631025359,
+      0.12095847632542235,
+      -0.022277119158546504,
+      0.3043834735400518,
+      0.042189685861130866,
+      1.0581580112676605,
+      0.090550935451165562,
+      -0.13613707726897492,
+      0.450285767365476,
+      -0.31644034645180058,
+      0.011061998265494791,
+      0.43436491003920336,
+      0.051723165961435794,
+      0.23507077973403068,
+      0.42405782378889512
+    ],
+    "anchor_mean_uV": 0.19820282243951343,
+    "anchor_median_uV": 0.10575470588829396,
+    "beta_gen_uV2_per_z": [
+      0,
+      0.014442038814039786,
+      0.23503970986849976,
+      0.34329931206195413
+    ]
+  },
+  "label_gain_diagnostics": {
+    "z_quantiles": [
+      -1.090642711394,
+      -0.121669072924,
+      1.1785184319280002
+    ],
+    "z_range": [
+      -2.77647787881,
+      5.66166099341
+    ],
+    "gain_quantiles": [
+      0.7165913341693928,
+      0.96350616123396948,
+      1.4334731712666817
+    ],
+    "gain_range": [
+      0.42811552517075047,
+      5.6403135314589941
+    ],
+    "gain_q90_over_q10": 2.000405395535843,
+    "cov_z_exp2bz_over_var_z": 1.2913058077558113,
+    "top_1pct_event_energy_share": 0.10454817693212863
+  },
+  "aperiodic_calibration": {
+    "method": "monotone_bisection_common_random_numbers",
+    "calibration_worlds": 64,
+    "target": "match additive median direct 4-8Hz post-window log10 power increment",
+    "residual_tolerance_dB": 0.001,
+    "residual_tolerance_rule": "absolute_residual_dB <= min(0.001, MCSE_dB/10)",
+    "bracket_relative_width_tolerance": 1E-6,
+    "max_iterations": 32,
+    "on_max_iterations": "record_lambda_residual_mcse_iterations_and_not_converged",
+    "initial_lambda_guess": "benchmark_lambda_provisional_uV * A_level_uV / A_Q75plus_uV",
+    "initial_bracket_relative_to_guess": [
+      0.125,
+      8
+    ],
+    "bracket_expansion": {
+      "factor": 8,
+      "max_steps_per_side": 4,
+      "direction": "expand_only_endpoint_indicated_by_same_sign_residual",
+      "record_each_step": true,
+      "on_failure": "record_not_converged_without_silent_fallback"
+    },
+    "bisection_space": "log10_lambda_geometric_midpoint",
+    "calibration_scenario_index": 3,
+    "calibration_seed_index": [
+      1001,
+      1064
+    ],
+    "calibration_seed_formula": "base_seed + 100000*3 + 1000*effect_index + seed_index; seed_index=1001:1064",
+    "crn": "within calibration world, synthesize and cache once; additive target and every lambda evaluation share bit-identical background and event random variates",
+    "increment": {
+      "event_formula": "mean(theta_periodogram_bins_log10_power(post+injection)) - mean(theta_periodogram_bins_log10_power(post|base))",
+      "pair_aggregation": "mean over the same eligible power-event table passed to acc01_compute_power_metric",
+      "world_aggregation": "equal-weight mean over 351 eligible pairs",
+      "signal_path": "paired raw_pair_signal post window [0.10,0.50] s; demeaned Hann epoch; log10(abs(fft).^2/sum(hann.^2)); theta bins only",
+      "stops_before": "robustfit_aperiodic_residual",
+      "excluded": [
+        "pre_window",
+        "crossfit",
+        "per_block_filtering",
+        "robustfit_aperiodic_adjustment",
+        "covariate_regression",
+        "surrogate_reference",
+        "inference"
+      ]
+    },
+    "residual": "median_over_64_CRN_paired_world_differences_aperiodic_direct_minus_additive_direct_log10_units; multiply_by_10_for_dB",
+    "mcse": {
+      "method": "world_level_bootstrap_paired_median",
+      "bootstrap_replicates": 10000,
+      "rng": "RandStream('mt19937ar','Seed',20260827+777000)",
+      "seed": 2.1037827E+7,
+      "statistic": "sd_of_bootstrap_medians"
+    },
+    "parallel_workers": 8,
+    "parallel_workers_rationale": "calibration cache loads peak synchronously at about 4 GiB per worker; 8 workers keep the calibration peak below host RAM alongside MATLAB root, rocketstation, and OS headroom"
+  },
+  "aperiodic": {
+    "event_recipe": "independent random-phase 1/f segment times h(t)",
+    "normalization": "each event 0.10-0.50s product normalized to RMS=1 before lambda_A*exp(a+b*z_e)",
+    "polarity": "none",
+    "lambda_unit": "window uV RMS",
+    "benchmark_lambda_provisional_uV": 0.19820282243951343,
+    "benchmark_value_status": "provisional_timing_only"
+  },
+  "design_matrix": {
+    "formula": "1+z_e+9_delta_z+movie_time_linear_z+movie_time_quadratic_z",
+    "health_diagnostics": [
+      "condition_number_2norm",
+      "correlation_z_with_each_covariate",
+      "source_complete_coverage",
+      "power_phase_common_support_coverage"
+    ]
+  },
+  "randomization": {
+    "base_seed": 2.0260827E+7,
+    "world_seed": "base_seed + 100000*scenario_index + 1000*effect_index + seed_index",
+    "worker_rng": "independent deterministic RandStream per world",
+    "common_random_numbers": "same background/event random variates within aperiodic calibration bracket"
+  },
+  "world_plan": {
+    "world_count_upper_bound": 5800,
+    "run_is_not_world_axis": true,
+    "null_seeds": 400,
+    "additive_positive_a_erp_seeds": 200,
+    "aperiodic_positive_a_erp_seeds": 200,
+    "phase_per_a_erp_kappa_seeds": 200,
+    "phase_kappa_target_null_sd_multipliers": [
+      0,
+      1,
+      2,
+      4,
+      8,
+      16,
+      32
+    ],
+    "phase_max_grid_points": 7,
+    "phase_r2_hard_cap": 0.64,
+    "phase_kappa_hard_cap_approx": 3.7,
+    "null_pool_role": "zero-level reference and sigma_null(Mphase) estimation; no duplicated zero worlds",
+    "aperiodic_bisection_crn_worlds": 64,
+    "bisection_worlds_excluded_from_main_upper_bound": true
+  },
+  "sign_flip": {
+    "runs": [
+      "R1",
+      "R2"
+    ],
+    "subject_counts": [
+      16,
+      13
+    ],
+    "enumeration_counts": [
+      65536,
+      8192
+    ],
+    "subject_order": "lexicographic subject key",
+    "metric_order": [
+      "Mpower",
+      "Mphase"
+    ],
+    "observed_sign_row": 1,
+    "observed_row": "all_plus_one row of same sign matrix and same matrix multiplication",
+    "p_value": "exhaustive two-sided max-stat with enumerated rows as denominator; no floating tolerance",
+    "nan_policy": "complete subject rows within run and metric family; report exclusions",
+    "studentization": {
+      "enabled": true,
+      "scale": "per_metric_flip_distribution_sd",
+      "apply_before": "max_stat",
+      "per_metric_two_sided_uses": "raw_statistics"
+    }
+  },
+  "inputs": {
+    "label": {
+      "path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_acc00_vjepa2_preflight\\BangYoureDead\\task-bangyouredead_desc-acc00vjepa2-prediction-difficulty.tsv",
+      "sha256": "552A08ECEBADF32F8378361795564D5E6EB35CE821D0E40D9E14EC4FB6F4B247"
+    },
+    "label_covariates": {
+      "path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_acc00_sim\\BangYoureDead\\task-bangyouredead_desc-acc00sim-label-covariates.tsv",
+      "sha256": "FB371D5DB3F23439BB2569DD8CB2E5159475B5D8D3CDE6B4806FF74D8BC44CA2"
+    },
+    "i02_subject_erp": {
+      "path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_i02_acc\\BangYoureDead\\task-bangyouredead_desc-i02acc-subject-erp.tsv",
+      "sha256": "DFC1F92C505FB162DDBF07131DF4A4EB95A8CD54D8255F1258F0DA51D90BBB69"
+    },
+    "i02_erp_inference": {
+      "path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_i02_acc\\BangYoureDead\\task-bangyouredead_desc-i02acc-erp-inference.tsv",
+      "sha256": "EF35FDFB42834FF7B546910EDE2D4F9FC411C95B4FC73918FA1A29B224226E2E"
+    },
+    "i00_acc_pairs": {
+      "path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_i00\\BangYoureDead\\task-bangyouredead_desc-i00-macro-bipolar-pairs.tsv",
+      "sha256": "C6C4A62B4A9D245394AD3B4470EF4B7193247DE701D5245FADAA9119D1DFD082"
+    },
+    "i00_channel_qc": {
+      "path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_i00\\BangYoureDead\\task-bangyouredead_desc-i00-channel-qc.tsv",
+      "sha256": "359F62988856C1566F6D71BA7DA3D738F42DAF3EBA75E0DC6FD16EC3DB78C5D0",
+      "role": "unit-anchor only"
+    },
+    "i00_bad_segments": {
+      "path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_i00\\BangYoureDead\\task-bangyouredead_desc-i00-bad-segments.tsv",
+      "sha256": "279090EAADAC4EBC873392D5F5353307906CA44A4BCC385B6897838983F935E6"
+    },
+    "i00_timing": {
+      "path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_i00\\BangYoureDead\\task-bangyouredead_desc-i00-timing-transforms.tsv",
+      "sha256": "64FD7CAAEF9A6A5DE0F392824DBD948B971F194E8B732F0F0D0809ABA4C5E650"
+    }
+  },
+  "implementation_boundary": {
+    "full_simulation": "authorized_route_B_mpower_only_additive_effect_index_2_to_4_seed_index_1_to_100; aperiodic_effect_index_2_previous_negative_target_withdrawal_superseded_for_direct_scale_calibration_only; no_aperiodic_main_worlds_authorized",
+    "checkpoint_directory": "processed/subject/group/ieeg_acc00_sim/BangYoureDead/checkpoints",
+    "parallel_workers": 12,
+    "parallel_workers_rationale": "host RAM 61.65 GiB; benchmark observed 3.1-3.7 GiB peak per world; 22 workers imply about 80 GiB and exceed RAM; 12 workers imply about 44 GiB and retain OS/agent headroom",
+    "long_run": "detached_process_with_completion_notification"
+  }
+}

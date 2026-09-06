@@ -1,0 +1,13 @@
+function report = check_acc00_p0_3_p10_fft(root, outputRoot)
+%CHECK_ACC00_P0_3_P10_FFT Deterministic specification check; no world RNG.
+arguments
+    root (1,1) string
+    outputRoot (1,1) string = ""
+end
+root=string(char(java.io.File(char(root)).getCanonicalPath()));paper=jsondecode(fileread(fullfile(root,"scripts","ieeg","paper","acc00_sim_p0_3_ablation_contract.json")));fs=double(paper.sampling.synthetic_hz);off=round(.10*fs):round(.50*fs)-1;u=off/fs;tau=u-.10;v=sin(pi*tau/.40).*cos(2*pi*double(paper.spectral_shape.P10.carrier_hz)*tau);h=v/rms(v);
+trace=zeros(round(4*fs)+1,1);center=round(2*fs)+1;ix=center+off;trace(ix)=h';[b,a]=butter(double(paper.sampling.anti_alias_order),double(paper.sampling.anti_alias_lowpass_hz)/(fs/2));analysis=filtfilt(b,a,trace);analysis=analysis(1:4:end);afs=double(paper.sampling.analysis_hz);n=round(double(paper.power.hann_epoch_s)*afs);postCenter=round(2*afs)+1;epoch=analysis(postCenter+round(.10*afs):postCenter+round(.10*afs)+n-1);epoch=(epoch-mean(epoch)).*hann(n);p=abs(fft(epoch)).^2/sum(hann(n).^2);f=(0:n-1)'*afs/n;bins=double(paper.power.periodogram_bins_hz(:));power=nan(numel(bins),1);for i=1:numel(bins),power(i)=p(abs(f-bins(i))<1e-12);end
+nonDc=power/sum(power(bins>0));theta=sum(power(ismembertol(bins,double(paper.power.theta_periodogram_bins_hz),1e-12)))/sum(power(bins>0));fit=sum(power(ismembertol(bins,double(paper.power.aperiodic_fit_bins_hz),1e-12)))/sum(power(bins>0));[~,maxix]=max(power(bins>0));nonzero=bins(bins>0);peak=nonzero(maxix);supportOk=all(trace(setdiff(1:numel(trace),ix))==0)&&isequal(h(:),v(:)/rms(v));rmsError=abs(rms(h)-1);rmsOk=rmsError<=32*eps;peakOk=ismember(peak,double(paper.power.theta_periodogram_bins_hz));
+if strlength(outputRoot)==0,outputRoot=fullfile(root,string(paper.outputs.root));end;tableDir=fullfile(outputRoot,"tables");if ~isfolder(tableDir),mkdir(tableDir),end;description=table(bins(:),power(:),nonDc(:),repmat(theta,numel(bins),1),repmat(fit,numel(bins),1),'VariableNames',["frequency_hz" "power" "one_sided_nonDC_fraction" "theta_4_8_total_fraction" "aperiodic_fit_bins_total_fraction"]);writetable(description,fullfile(tableDir,"p10_fft_leakage_description.tsv"),"FileType","text","Delimiter","\t");
+report=struct("status",ternary(supportOk&&rmsOk&&peakOk,"PASS","FAIL"),"support_ok",supportOk,"rms_error",rmsError,"rms_ok",rmsOk,"peak_analysis_bin_hz",peak,"theta_centered_peak_ok",peakOk,"output",fullfile(tableDir,"p10_fft_leakage_description.tsv"));assert(report.status=="PASS","P10 FFT specification failure; delete P10 rather than retuning it.");
+end
+function out=ternary(c,a,b),if c,out=a;else,out=b;end,end

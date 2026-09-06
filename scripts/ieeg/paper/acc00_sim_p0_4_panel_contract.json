@@ -1,0 +1,340 @@
+{
+  "analysis_id": "ACC00-SIM-P0-4-DIAGNOSTIC-PANEL-v1.0.0",
+  "status": "paper_only_frozen_implementation_not_authorized",
+  "purpose": "pre-registered blinded null-FPR diagnostic panel; implementation and smoke only, no main run",
+  "parent_p0_2": {
+    "path": "scripts/ieeg/paper/acc00_sim_powercurve_contract.json",
+    "sha256": "E3C35D065F6819AA611B7A60573689BFDCED06E399F80B6DAAE40F46BE3E1863",
+    "immutable": true
+  },
+  "parent_acc00_null": {
+    "path": "scripts/ieeg/acc00_sim_contract.json",
+    "edgeguard_contract_sha256": "E0930B71CE91CD1641EDD9B1F7A1012C7DBB7769458ACB96386CA5892EAF8CEF",
+    "immutable": true
+  },
+  "sampling": {
+    "synthetic_hz": 1000,
+    "analysis_hz": 250,
+    "anti_alias_lowpass_hz": 100,
+    "anti_alias_order": 3
+  },
+  "background": {
+    "recipe": "random_phase_frequency_domain_A(f)=1/max(f,0.5Hz)_DC_zero_Hermitian_IFFT",
+    "power_exponent_chi": 2,
+    "f_min_hz": 0.5,
+    "b0_uV": 34.22464993342527,
+    "b0_definition": "median over 351 eligible ACC pairs of sqrt(median_rms_uv(contact_a)^2+median_rms_uv(contact_b)^2)",
+    "log_scale_sigma": {
+      "subject": 0.25,
+      "session": 0.15,
+      "pair": 0.35
+    },
+    "normalization_domain": "background-only full 250-Hz trace RMS after anti-alias and decimation",
+    "scales_injection": false
+  },
+  "windows_s": {
+    "power_pre": [
+      -0.5,
+      -0.1
+    ],
+    "power_post": [
+      0.1,
+      0.5
+    ],
+    "phase_response": [
+      0.1,
+      0.5
+    ],
+    "filter_support": [
+      -0.75,
+      0.75
+    ]
+  },
+  "power": {
+    "band_hz": [
+      4,
+      8
+    ],
+    "theta_periodogram_bins_hz": [
+      5,
+      7.5
+    ],
+    "hann_epoch_s": 0.4,
+    "periodogram_bins_hz": [
+      2.5,
+      5,
+      7.5,
+      10,
+      12.5,
+      15,
+      17.5,
+      20,
+      22.5,
+      25,
+      27.5,
+      30
+    ],
+    "aperiodic_fit_bins_hz": [
+      2.5,
+      10,
+      12.5,
+      15,
+      17.5,
+      20,
+      22.5,
+      25,
+      27.5,
+      30
+    ],
+    "log_base": 10,
+    "robust_fit": "robustfit bisquare",
+    "robustfit_iteration_limit_warning_id": "stats:statrobustfit:IterationLimit",
+    "robustfit_iteration_limit_policy": "suppress stdout and count each fit per world; estimator settings unchanged"
+  },
+  "phase": {
+    "band_hz": [
+      4,
+      8
+    ],
+    "filter": "Butterworth",
+    "filter_order": 3,
+    "zero_phase": true,
+    "analytic_signal": "Hilbert",
+    "erp_crossfit_folds": 5,
+    "fold_assignment": "contiguous_movie_time_blocks",
+    "ppc": "pairwise_phase_consistency",
+    "mphase_surrogate_reducer": "mean",
+    "refit_surrogates": {
+      "J": 32,
+      "selection": "uniform_without_replacement_from_existing_pair_surrogates_same_stream",
+      "when_B_lt_J": "use_all"
+    },
+    "filter_scope": "per_continuous_clean_block",
+    "corr_series_diagnostic_surrogates": 1024
+  },
+  "surrogate": {
+    "type": "whole_schedule_circular_time_shift",
+    "signal_moved": false,
+    "event_attributes_carried": true,
+    "delta_grid_hz": 250,
+    "delta_quantum_s": 0.004,
+    "max_surrogates_per_estimable_pair": 1024,
+    "enumerate_when_quantized_feasible_count_lte": 1024,
+    "empty_domain": "not_estimable_no_substitution",
+    "domain_guard_bad_dilation_s": 0.75,
+    "guard_is_cell_specific_only_for": [
+      "M-D2"
+    ],
+    "domain_guard_edge_lower_s": 1.5,
+    "domain_guard_edge_upper_s": 1.5
+  },
+  "additive": {
+    "A_uV": 0.0,
+    "A_source": "P0-4 pure-null panel",
+    "gain_intercept_a": 0,
+    "gain_slope_b": 0.3055533803,
+    "amplitude_relation": "amplitude_e_uV=A_cell_uV*exp(a+b*z_e)*pair_polarity",
+    "post_half_sine": {
+      "position": "post",
+      "offset_samples_formula": "round(+0.10*fs):round(+0.50*fs)-1",
+      "support_s": [
+        0.1,
+        0.5
+      ],
+      "formula": "sqrt(2)*sin(pi*(u-0.10)/0.40), u in [0.10,0.50), zero otherwise",
+      "rms": 1
+    },
+    "pre_half_sine": {
+      "position": "pre",
+      "offset_samples_formula": "round(-0.50*fs):round(-0.10*fs)-1",
+      "support_s": [
+        -0.5,
+        -0.1
+      ],
+      "formula": "sqrt(2)*sin(pi*(u+0.50)/0.40), u in [-0.50,-0.10), zero otherwise",
+      "rms": 1,
+      "out_of_bounds": "skip_event_and_count"
+    },
+    "symmetric": {
+      "positions": [
+        "pre",
+        "post"
+      ],
+      "amplitude_per_component_uV": "A_uV/sqrt(2)",
+      "total_kernel_energy_relative_to_post_only_A": 1,
+      "rationale": "two disjoint RMS-1 components each carry A^2/2, matching post-only A^2"
+    }
+  },
+  "readouts": {
+    "power_aperiodic": {
+      "enabled": true,
+      "event_level": [
+        "offset_pre_log10",
+        "offset_post_log10",
+        "delta_offset_log10",
+        "exponent_pre",
+        "exponent_post",
+        "delta_exponent",
+        "raw_theta_pre_log10",
+        "raw_theta_post_log10",
+        "raw_theta_delta_log10",
+        "residual_theta_delta_log10"
+      ],
+      "offset_definition": "robustfit coefficient q(1) in log10(power)=q(1)+q(2)*log10(f)",
+      "exponent_definition": "-q(2)",
+      "same_covariate_model": "1+z_e+all *_delta_z columns+movie_time_linear_z+movie_time_quadratic_z",
+      "pair_outputs": "event means and OLS z_e coefficient for pre, post, and delta of offset/exponent; raw/residual theta means and delta z slope",
+      "world_outputs": "equal-pair mean and subject-median summaries by R1/R2"
+    },
+    "mphase_shape": {
+      "enabled": true,
+      "source": "exact acc01_exact_signflip_family Mphase column",
+      "subject_vector_persisted": true,
+      "orbit_persisted": false,
+      "quantiles_percent": [
+        0.5,
+        2.5,
+        25,
+        50,
+        75,
+        97.5,
+        99.5
+      ],
+      "shape": [
+        "mean",
+        "sample_sd",
+        "skewness_bias_corrected",
+        "excess_kurtosis_bias_corrected",
+        "observed_standardized_score"
+      ],
+      "subject_shape": [
+        "mean",
+        "sample_sd",
+        "MAD_about_median",
+        "skewness_bias_corrected",
+        "excess_kurtosis_bias_corrected",
+        "max_abs_over_rms"
+      ]
+    }
+  },
+  "sign_flip": {
+    "runs": [
+      "R1",
+      "R2"
+    ],
+    "subject_counts": [
+      16,
+      13
+    ],
+    "enumeration_counts": [
+      65536,
+      8192
+    ],
+    "subject_order": "lexicographic subject key",
+    "metric_order": [
+      "Mpower",
+      "Mphase"
+    ],
+    "observed_sign_row": 1,
+    "p_value": "exhaustive two-sided enumeration; no floating tolerance",
+    "studentization": {
+      "enabled": true,
+      "scale": "per_metric_flip_distribution_sd",
+      "apply_before": "max_stat",
+      "per_metric_two_sided_uses": "raw_statistics"
+    }
+  },
+  "historical_references": {
+    "Mphase_guard_0p75": {
+      "path": "processed/subject/group/ieeg_acc00_sim/BangYoureDead/checkpoints/nullpool",
+      "contract_sha256": "6656A33AFD2C9C0CB6FDE5D2CF346A478FB394C81C74345BF7BBE63238E483E7",
+      "worlds": 400
+    },
+    "Mphase_guard_1p5": {
+      "path": "processed/subject/group/ieeg_acc00_sim/BangYoureDead/checkpoints/nullpool_edgeguard_20260829",
+      "contract_sha256": "E0930B71CE91CD1641EDD9B1F7A1012C7DBB7769458ACB96386CA5892EAF8CEF",
+      "worlds": 400
+    }
+  },
+  "inputs": {
+    "label": {
+      "path": "processed/subject/group/ieeg_acc00_vjepa2_preflight/BangYoureDead/task-bangyouredead_desc-acc00vjepa2-prediction-difficulty.tsv",
+      "sha256": "552A08ECEBADF32F8378361795564D5E6EB35CE821D0E40D9E14EC4FB6F4B247"
+    },
+    "label_covariates": {
+      "path": "processed/subject/group/ieeg_acc00_sim/BangYoureDead/task-bangyouredead_desc-acc00sim-label-covariates.tsv",
+      "sha256": "FB371D5DB3F23439BB2569DD8CB2E5159475B5D8D3CDE6B4806FF74D8BC44CA2"
+    },
+    "i02_subject_erp": {
+      "path": "processed/subject/group/ieeg_i02_acc/BangYoureDead/task-bangyouredead_desc-i02acc-subject-erp.tsv",
+      "sha256": "DFC1F92C505FB162DDBF07131DF4A4EB95A8CD54D8255F1258F0DA51D90BBB69"
+    },
+    "i02_erp_inference": {
+      "path": "processed/subject/group/ieeg_i02_acc/BangYoureDead/task-bangyouredead_desc-i02acc-erp-inference.tsv",
+      "sha256": "EF35FDFB42834FF7B546910EDE2D4F9FC411C95B4FC73918FA1A29B224226E2E"
+    },
+    "i00_acc_pairs": {
+      "path": "processed/subject/group/ieeg_i00/BangYoureDead/task-bangyouredead_desc-i00-macro-bipolar-pairs.tsv",
+      "sha256": "C6C4A62B4A9D245394AD3B4470EF4B7193247DE701D5245FADAA9119D1DFD082"
+    },
+    "i00_channel_qc": {
+      "path": "processed/subject/group/ieeg_i00/BangYoureDead/task-bangyouredead_desc-i00-channel-qc.tsv",
+      "sha256": "359F62988856C1566F6D71BA7DA3D738F42DAF3EBA75E0DC6FD16EC3DB78C5D0",
+      "role": "unit-anchor only"
+    },
+    "i00_bad_segments": {
+      "path": "processed/subject/group/ieeg_i00/BangYoureDead/task-bangyouredead_desc-i00-bad-segments.tsv",
+      "sha256": "279090EAADAC4EBC873392D5F5353307906CA44A4BCC385B6897838983F935E6"
+    },
+    "i00_timing": {
+      "path": "processed/subject/group/ieeg_i00/BangYoureDead/task-bangyouredead_desc-i00-timing-transforms.tsv",
+      "sha256": "64FD7CAAEF9A6A5DE0F392824DBD948B971F194E8B732F0F0D0809ABA4C5E650"
+    }
+  },
+  "outputs": {
+    "root": "processed/subject/group/ieeg_methods_paper/p0_4_diagnostic_panel",
+    "checkpoints": "processed/subject/group/ieeg_methods_paper/p0_4_diagnostic_panel/checkpoints/<opaque_id>/world_<seed_index>.mat",
+    "tables": "processed/subject/group/ieeg_methods_paper/p0_4_diagnostic_panel/tables",
+    "checkpoint_format": "MATLAB -v7.3; write .tmp.mat then atomic move",
+    "overwrite_policy": "identity-verified resume only; mismatch stops"
+  },
+  "execution": {
+    "implementation_authorized": false,
+    "smoke_authorized": false,
+    "main_run_authorized": true,
+    "parallel_workers": 12,
+    "worker_rationale": "single-world peak about 3.1GB; run members sequentially; do not co-schedule member classes",
+    "total_new_world_evaluations": 480,
+    "no_new_gate": true
+  },
+  "panel": {
+    "null_worlds": 120,
+    "base_seed": 91000000,
+    "scenario_index": 5,
+    "effect_index": 0,
+    "world_seed_range": [
+      91500001,
+      91500120
+    ],
+    "crn_paired_across_members": true,
+    "member_id_in_seed": false,
+    "holdout_relative_to_historical_pools": true,
+    "opaque_members": [
+      "PanelMember-01",
+      "PanelMember-02",
+      "PanelMember-03",
+      "PanelMember-04"
+    ],
+    "pre_registered_directional_contrast_opaque_ids": [
+      "PanelMember-03",
+      "PanelMember-02"
+    ],
+    "pre_registered_exploratory_opaque_id": "PanelMember-04",
+    "member_semantics_seal": "paper_p0_4_blind_seal.json"
+  },
+  "parent_p0_3": {
+    "path": "scripts/ieeg/paper/acc00_sim_p0_3_ablation_contract.json",
+    "sha256": "C27DD782384AEAED32995E9C2C508A38D57349BFEA3D3EC7BC2E4D08D983F949",
+    "immutable": true
+  }
+}

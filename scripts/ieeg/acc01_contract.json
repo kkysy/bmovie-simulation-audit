@@ -1,0 +1,839 @@
+{
+  "analysis_id": "ACC01-v1.0.0",
+  "status": "contract_frozen_real_lfp_run_not_authorized",
+  "authorization": {
+    "contract_and_validator_authorized_at": "2026-09-01",
+    "real_lfp_run_authorized": false,
+    "permitted_stages": [
+      "contract",
+      "validator_dry_run",
+      "smoke"
+    ],
+    "forbidden_stages": "real_lfp_run"
+  },
+  "purpose": "Pre-specified same-data exploratory ACC event-related 4-8 Hz analysis against the frozen causal V-JEPA2 prediction-difficulty label. It is not a behavioural attention measure, a confirmatory analysis, or neural prediction-error measurement.",
+  "background": "ACC00-SIM calibrated Mpower only; Mphase is descriptive-only after its calibration failure.",
+  "movie": "BangYoureDead",
+  "primary_question": "Whether the subject-level Mpower slope against continuous V-JEPA2 z labels is directionally repeated from R1 to R2.",
+  "scope_boundaries": {
+    "same_data_exploratory": true,
+    "no_sampling_phase_export": true,
+    "no_acc02_or_acc03_start": true,
+    "no_real_lfp_run_in_this_stage": true
+  },
+  "source_contracts": {
+    "acc00_vjepa2_contract": {
+      "path": "E:\\HighEV_sampling\\Bmovie\\scripts\\ieeg\\acc00_vjepa2_prediction_contract.json",
+      "sha256": "884D70753EEEF5A7BEF56CDE7E06CACA10CB8A188746F5C3F74252B130B3C4B6"
+    },
+    "acc00_sim_contract": {
+      "path": "E:\\HighEV_sampling\\Bmovie\\scripts\\ieeg\\acc00_sim_contract.json",
+      "sha256": "51F06B9A733D6FF88534FAECE148E5AB89EDB17B6372657313BF3D4D3BF53260"
+    },
+    "acc01_plan_draft": {
+      "path": "E:\\HighEV_sampling\\Bmovie\\research_to_do_list\\iEEG\\acc01_plan_draft.md",
+      "sha256": "BD08337632502DF44F381C6A9C17380C59C1EF6FE2356499792CCA2178CE82E1",
+      "frozen_commit": "0625240",
+      "review_commit": "77fe7a2"
+    }
+  },
+  "inputs": {
+    "vjepa2_label": {
+      "path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_acc00_vjepa2_preflight\\BangYoureDead\\task-bangyouredead_desc-acc00vjepa2-prediction-difficulty.tsv",
+      "sha256": "552A08ECEBADF32F8378361795564D5E6EB35CE821D0E40D9E14EC4FB6F4B247",
+      "expected_rows": 1901,
+      "required_columns": [
+        "label_index",
+        "label_time_s",
+        "prediction_difficulty_z"
+      ],
+      "z_range": [
+        -2.77647787881,
+        5.66166099341
+      ]
+    },
+    "label_covariates": {
+      "path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_acc00_sim\\BangYoureDead\\task-bangyouredead_desc-acc00sim-label-covariates.tsv",
+      "sha256": "FB371D5DB3F23439BB2569DD8CB2E5159475B5D8D3CDE6B4806FF74D8BC44CA2",
+      "expected_rows": 1901,
+      "required_columns": [
+        "label_index",
+        "label_time_s",
+        "z_e",
+        "luminance_pre",
+        "luminance_post",
+        "luminance_delta",
+        "rms_contrast_pre",
+        "rms_contrast_post",
+        "rms_contrast_delta",
+        "global_motion_pre",
+        "global_motion_post",
+        "global_motion_delta",
+        "SF_low_pre",
+        "SF_low_post",
+        "SF_low_delta",
+        "SF_mid_pre",
+        "SF_mid_post",
+        "SF_mid_delta",
+        "SF_high_pre",
+        "SF_high_post",
+        "SF_high_delta",
+        "edge_density_pre",
+        "edge_density_post",
+        "edge_density_delta",
+        "novelty_pre",
+        "novelty_post",
+        "novelty_delta",
+        "audio_rms_envelope_pre",
+        "audio_rms_envelope_post",
+        "audio_rms_envelope_delta",
+        "source_complete",
+        "movie_time_linear",
+        "movie_time_quadratic",
+        "luminance_delta_z",
+        "rms_contrast_delta_z",
+        "global_motion_delta_z",
+        "SF_low_delta_z",
+        "SF_mid_delta_z",
+        "SF_high_delta_z",
+        "edge_density_delta_z",
+        "novelty_delta_z",
+        "audio_rms_envelope_delta_z",
+        "movie_time_linear_z",
+        "movie_time_quadratic_z"
+      ],
+      "primary_label_column": "z_e",
+      "delta_z_columns": [
+        "luminance_delta_z",
+        "rms_contrast_delta_z",
+        "global_motion_delta_z",
+        "SF_low_delta_z",
+        "SF_mid_delta_z",
+        "SF_high_delta_z",
+        "edge_density_delta_z",
+        "novelty_delta_z",
+        "audio_rms_envelope_delta_z"
+      ],
+      "time_columns": [
+        "movie_time_linear_z",
+        "movie_time_quadratic_z"
+      ],
+      "source_complete_column": "source_complete"
+    },
+    "i00_acc_pairs": {
+      "path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_i00\\BangYoureDead\\task-bangyouredead_desc-i00-macro-bipolar-pairs.tsv",
+      "sha256": "C6C4A62B4A9D245394AD3B4470EF4B7193247DE701D5245FADAA9119D1DFD082",
+      "expected_rows": 2422,
+      "required_columns": [
+        "subject",
+        "session_id",
+        "run",
+        "pair_name",
+        "shaft",
+        "location",
+        "hemisphere",
+        "channel_a_index",
+        "channel_b_index",
+        "contact_a",
+        "contact_b",
+        "contact_a_index",
+        "contact_b_index",
+        "distance_mm",
+        "qc_eligible",
+        "exclusion_reason"
+      ],
+      "selection": "qc_eligible && location contains ACC",
+      "expected_pairs": 351
+    },
+    "i00_channel_qc": {
+      "path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_i00\\BangYoureDead\\task-bangyouredead_desc-i00-channel-qc.tsv",
+      "sha256": "359F62988856C1566F6D71BA7DA3D738F42DAF3EBA75E0DC6FD16EC3DB78C5D0",
+      "expected_rows": null,
+      "required_columns": [
+        "subject",
+        "session_id",
+        "run",
+        "series",
+        "series_channel_index",
+        "electrode_table_index_0based",
+        "origchannel",
+        "origchannel_name",
+        "shaft",
+        "contact_index",
+        "location",
+        "hemisphere",
+        "x",
+        "y",
+        "z",
+        "coordinate_complete",
+        "sampling_rate_hz",
+        "declared_padding_s",
+        "assessed_movie_seconds",
+        "median_rms_uv",
+        "median_mad_uv",
+        "median_diff_mad_uv",
+        "flat_window_fraction",
+        "plateau_window_fraction",
+        "clipped_window_fraction",
+        "nonfinite_fraction",
+        "artifact_window_fraction",
+        "artifact_free_s",
+        "longest_clean_s",
+        "log_rms_robust_z",
+        "rms_ratio",
+        "line_50_excess_db",
+        "line_60_excess_db",
+        "max_line_harmonic_excess_db",
+        "drift_to_1_40_db",
+        "psd_window_count",
+        "qc_pilot",
+        "exclusion_reason",
+        "qc_eligible"
+      ]
+    },
+    "i00_bad_segments": {
+      "path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_i00\\BangYoureDead\\task-bangyouredead_desc-i00-bad-segments.tsv",
+      "sha256": "279090EAADAC4EBC873392D5F5353307906CA44A4BCC385B6897838983F935E6",
+      "expected_rows": null,
+      "required_columns": [
+        "subject",
+        "session_id",
+        "run",
+        "series",
+        "series_channel_index",
+        "origchannel_name",
+        "start_common_time_s",
+        "stop_common_time_s",
+        "duration_s",
+        "reason"
+      ]
+    },
+    "i00_timing": {
+      "path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_i00\\BangYoureDead\\task-bangyouredead_desc-i00-timing-transforms.tsv",
+      "sha256": "64FD7CAAEF9A6A5DE0F392824DBD948B971F194E8B732F0F0D0809ABA4C5E650",
+      "expected_rows": 29,
+      "required_columns": [
+        "subject",
+        "session_id",
+        "run",
+        "nwb_file",
+        "encoding_start_s",
+        "encoding_stop_s",
+        "movie_first_timestamp_s",
+        "movie_last_timestamp_s",
+        "median_frame_interval_s",
+        "movie_stop_s",
+        "terminal_mismatch_s",
+        "usable_movie_stop_s",
+        "recognition_start_s",
+        "ttl_anchor_count",
+        "missing_ttl_anchor_count",
+        "unexpected_movie_ttl_count",
+        "movie_to_ttl_intercept_s",
+        "movie_to_ttl_slope",
+        "movie_to_ttl_drift_ppm",
+        "ttl_movie_rms_residual_s",
+        "ttl_movie_max_abs_residual_s",
+        "macro_padding_s",
+        "macro_starting_time_s",
+        "macro_rate_hz",
+        "macro_samples",
+        "macro_common_start_s",
+        "macro_common_stop_s",
+        "macro_movie_first_sample",
+        "macro_movie_last_sample",
+        "macro_first_rounding_residual_s",
+        "macro_last_rounding_residual_s",
+        "macro_recognition_sample",
+        "macro_coverage_ok",
+        "micro_padding_s",
+        "micro_starting_time_s",
+        "micro_rate_hz",
+        "micro_samples",
+        "micro_common_start_s",
+        "micro_common_stop_s",
+        "micro_movie_first_sample",
+        "micro_movie_last_sample",
+        "micro_first_rounding_residual_s",
+        "micro_last_rounding_residual_s",
+        "micro_recognition_sample",
+        "micro_coverage_ok",
+        "timing_eligible",
+        "timing_status"
+      ]
+    },
+    "raw_nwbs": [
+      [
+        {
+          "subject": "CS41",
+          "session_id": "P41CS_R1",
+          "run": "R1",
+          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS41\\sub-CS41_ses-P41CSR1_behavior+ecephys.nwb",
+          "relative_path": "raw\\nwb\\sub-CS41\\sub-CS41_ses-P41CSR1_behavior+ecephys.nwb",
+          "size_bytes": 9.29320399E+8,
+          "sha256": "696388DEA25292786E54CA6B3B26171268111F315E554D6A89FD13B1D7F39985"
+        },
+        {
+          "subject": "CS41",
+          "session_id": "P41CS_R2",
+          "run": "R2",
+          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS41\\sub-CS41_ses-P41CSR2_behavior+ecephys.nwb",
+          "relative_path": "raw\\nwb\\sub-CS41\\sub-CS41_ses-P41CSR2_behavior+ecephys.nwb",
+          "size_bytes": 8.03882951E+8,
+          "sha256": "0D2865ED760A344040CCC57050747896FB5B3E9860C331A3063A0C4199F2C38C"
+        },
+        {
+          "subject": "CS42",
+          "session_id": "P42CS_R1",
+          "run": "R1",
+          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS42\\sub-CS42_ses-P42CSR1_behavior+ecephys.nwb",
+          "relative_path": "raw\\nwb\\sub-CS42\\sub-CS42_ses-P42CSR1_behavior+ecephys.nwb",
+          "size_bytes": 9.13018422E+8,
+          "sha256": "7F7086F18A355D3AC257E6A8FAF2A8A96F5BF574EDFC0DAC08F0A8F56026BF53"
+        },
+        {
+          "subject": "CS42",
+          "session_id": "P42CS_R2",
+          "run": "R2",
+          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS42\\sub-CS42_ses-P42CSR2_behavior+ecephys.nwb",
+          "relative_path": "raw\\nwb\\sub-CS42\\sub-CS42_ses-P42CSR2_behavior+ecephys.nwb",
+          "size_bytes": 8.94307064E+8,
+          "sha256": "0B14D3F58B765E7DC8DFB85B14D01E0E36F0DC61F5F3011D09B24B11211987B8"
+        },
+        {
+          "subject": "CS43",
+          "session_id": "P43CS_R1",
+          "run": "R1",
+          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS43\\sub-CS43_ses-P43CSR1_behavior+ecephys.nwb",
+          "relative_path": "raw\\nwb\\sub-CS43\\sub-CS43_ses-P43CSR1_behavior+ecephys.nwb",
+          "size_bytes": 1.016236528E+9,
+          "sha256": "C10B89E704CAF71A55C7AD60427318ECBEE83CE704B8BA223A95E35692C57FDC"
+        },
+        {
+          "subject": "CS43",
+          "session_id": "P43CS_R2",
+          "run": "R2",
+          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS43\\sub-CS43_ses-P43CSR2_behavior+ecephys.nwb",
+          "relative_path": "raw\\nwb\\sub-CS43\\sub-CS43_ses-P43CSR2_behavior+ecephys.nwb",
+          "size_bytes": 8.34923452E+8,
+          "sha256": "6E4EBB8BB088D93BE2F7B95418338B9BED2C21F390983D899D991F974ADB0F37"
+        },
+        {
+          "subject": "CS44",
+          "session_id": "P44CS_R1",
+          "run": "R1",
+          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS44\\sub-CS44_ses-P44CSR1_behavior+ecephys.nwb",
+          "relative_path": "raw\\nwb\\sub-CS44\\sub-CS44_ses-P44CSR1_behavior+ecephys.nwb",
+          "size_bytes": 9.94457952E+8,
+          "sha256": "DD222B138C734D5A8DE66BD8E382B3D5269DEFD5A4FEF4FFAD9829DCFA3BF8DB"
+        },
+        {
+          "subject": "CS47",
+          "session_id": "P47CS_R1",
+          "run": "R1",
+          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS47\\sub-CS47_ses-P47CSR1_behavior+ecephys.nwb",
+          "relative_path": "raw\\nwb\\sub-CS47\\sub-CS47_ses-P47CSR1_behavior+ecephys.nwb",
+          "size_bytes": 9.27817738E+8,
+          "sha256": "BEBC189CC43B46EA7E0CCD13B8061CE1348456D1C4C5E56D02E997DAD3E33347"
+        },
+        {
+          "subject": "CS47",
+          "session_id": "P47CS_R2",
+          "run": "R2",
+          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS47\\sub-CS47_ses-P47CSR2_behavior+ecephys.nwb",
+          "relative_path": "raw\\nwb\\sub-CS47\\sub-CS47_ses-P47CSR2_behavior+ecephys.nwb",
+          "size_bytes": 8.97685121E+8,
+          "sha256": "0C6E21FA0B1E267F4AEB3C4A7486D27B2DDA6E6B9FC9D607DA32554723053C03"
+        },
+        {
+          "subject": "CS48",
+          "session_id": "P48CS_R1",
+          "run": "R1",
+          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS48\\sub-CS48_ses-P48CSR1_behavior+ecephys.nwb",
+          "relative_path": "raw\\nwb\\sub-CS48\\sub-CS48_ses-P48CSR1_behavior+ecephys.nwb",
+          "size_bytes": 1.01302069E+9,
+          "sha256": "580BEF6C0A46ECFF6B4580D68F85DE2FE70D20156D837594D2C4D3C62FBD1936"
+        },
+        {
+          "subject": "CS48",
+          "session_id": "P48CS_R2",
+          "run": "R2",
+          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS48\\sub-CS48_ses-P48CSR2_behavior+ecephys.nwb",
+          "relative_path": "raw\\nwb\\sub-CS48\\sub-CS48_ses-P48CSR2_behavior+ecephys.nwb",
+          "size_bytes": 9.8829348E+8,
+          "sha256": "E7CF7EFA0679AC708D4D1AE87BB167F08D01286837E2C26B6131BAAC204A977D"
+        },
+        {
+          "subject": "CS49",
+          "session_id": "P49CS_R1",
+          "run": "R1",
+          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS49\\sub-CS49_ses-P49CSR1_behavior+ecephys.nwb",
+          "relative_path": "raw\\nwb\\sub-CS49\\sub-CS49_ses-P49CSR1_behavior+ecephys.nwb",
+          "size_bytes": 1.257984064E+9,
+          "sha256": "0E945E966D1CCA7BEE7441BEE7BFBF2C7DF3E3764A0FA03AF0C7ACBA5BB49592"
+        },
+        {
+          "subject": "CS49",
+          "session_id": "P49CS_R2",
+          "run": "R2",
+          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS49\\sub-CS49_ses-P49CSR2_behavior+ecephys.nwb",
+          "relative_path": "raw\\nwb\\sub-CS49\\sub-CS49_ses-P49CSR2_behavior+ecephys.nwb",
+          "size_bytes": 9.46447895E+8,
+          "sha256": "BDAC0E2F484E101104A137530B3EE20F398B4727FF1716F6B02B5A4C3504A546"
+        },
+        {
+          "subject": "CS51",
+          "session_id": "P51CS_R1",
+          "run": "R1",
+          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS51\\sub-CS51_ses-P51CSR1_behavior+ecephys.nwb",
+          "relative_path": "raw\\nwb\\sub-CS51\\sub-CS51_ses-P51CSR1_behavior+ecephys.nwb",
+          "size_bytes": 1.244681559E+9,
+          "sha256": "C89AF9F9D01ACBB89AE75FB6B86C5319946EA2959B9B6B8BC681B109EF63D904"
+        },
+        {
+          "subject": "CS51",
+          "session_id": "P51CS_R2",
+          "run": "R2",
+          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS51\\sub-CS51_ses-P51CSR2_behavior+ecephys.nwb",
+          "relative_path": "raw\\nwb\\sub-CS51\\sub-CS51_ses-P51CSR2_behavior+ecephys.nwb",
+          "size_bytes": 1.227348888E+9,
+          "sha256": "97E90B45AB4F42E57B037BFCD77551E129BA87E14427D90320EACC4D2E1986F4"
+        },
+        {
+          "subject": "CS53",
+          "session_id": "P53CS_R1",
+          "run": "R1",
+          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS53\\sub-CS53_ses-P53CSR1_behavior+ecephys.nwb",
+          "relative_path": "raw\\nwb\\sub-CS53\\sub-CS53_ses-P53CSR1_behavior+ecephys.nwb",
+          "size_bytes": 1.033846161E+9,
+          "sha256": "B5059FFC956DF8A6005AAAA675E4F4E2CF1D081AF567CAD7FAA2354E84644898"
+        },
+        {
+          "subject": "CS53",
+          "session_id": "P53CS_R2",
+          "run": "R2",
+          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS53\\sub-CS53_ses-P53CSR2_behavior+ecephys.nwb",
+          "relative_path": "raw\\nwb\\sub-CS53\\sub-CS53_ses-P53CSR2_behavior+ecephys.nwb",
+          "size_bytes": 8.82270191E+8,
+          "sha256": "B9A7815311D9EEEA41BE4967EC720BC84303832BA530F41093D8508D9A5F34BB"
+        },
+        {
+          "subject": "CS54",
+          "session_id": "P54CS_R1",
+          "run": "R1",
+          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS54\\sub-CS54_ses-P54CSR1_behavior+ecephys.nwb",
+          "relative_path": "raw\\nwb\\sub-CS54\\sub-CS54_ses-P54CSR1_behavior+ecephys.nwb",
+          "size_bytes": 1.132988695E+9,
+          "sha256": "49A91928481E72ED623B9B828F90ADC87C08101318197525D618E9C5C887DE54"
+        },
+        {
+          "subject": "CS54",
+          "session_id": "P54CS_R2",
+          "run": "R2",
+          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS54\\sub-CS54_ses-P54CSR2_behavior+ecephys.nwb",
+          "relative_path": "raw\\nwb\\sub-CS54\\sub-CS54_ses-P54CSR2_behavior+ecephys.nwb",
+          "size_bytes": 1.127644867E+9,
+          "sha256": "A5E893B12AE12B1868BE517136F1785469B999247AD9F83453D7B5C282E25446"
+        },
+        {
+          "subject": "CS55",
+          "session_id": "P55CS_R1",
+          "run": "R1",
+          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS55\\sub-CS55_ses-P55CSR1_behavior+ecephys.nwb",
+          "relative_path": "raw\\nwb\\sub-CS55\\sub-CS55_ses-P55CSR1_behavior+ecephys.nwb",
+          "size_bytes": 9.24729036E+8,
+          "sha256": "E9768BF1A58322FABBD6AA577813C699CCD83018904CB2AA5E0A6E2EE84ECA6C"
+        },
+        {
+          "subject": "CS55",
+          "session_id": "P55CS_R2",
+          "run": "R2",
+          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS55\\sub-CS55_ses-P55CSR2_behavior+ecephys.nwb",
+          "relative_path": "raw\\nwb\\sub-CS55\\sub-CS55_ses-P55CSR2_behavior+ecephys.nwb",
+          "size_bytes": 8.11170897E+8,
+          "sha256": "93B7C6115FB7AAFEC5A5303A8EEF877E458A27BC2388362A9536F8D1050D7195"
+        },
+        {
+          "subject": "CS56",
+          "session_id": "P56CS_R1",
+          "run": "R1",
+          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS56\\sub-CS56_ses-P56CSR1_behavior+ecephys.nwb",
+          "relative_path": "raw\\nwb\\sub-CS56\\sub-CS56_ses-P56CSR1_behavior+ecephys.nwb",
+          "size_bytes": 1.139766698E+9,
+          "sha256": "AB6E51FAF199447F0525B061634650B505131159D5CFD004691886CF2F3E9177"
+        },
+        {
+          "subject": "CS56",
+          "session_id": "P56CS_R2",
+          "run": "R2",
+          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS56\\sub-CS56_ses-P56CSR2_behavior+ecephys.nwb",
+          "relative_path": "raw\\nwb\\sub-CS56\\sub-CS56_ses-P56CSR2_behavior+ecephys.nwb",
+          "size_bytes": 1.187278887E+9,
+          "sha256": "4D0BB1006526E35F2FA9CDB56F36417471E553EF6311824B6B2B6EAF51218F32"
+        },
+        {
+          "subject": "CS57",
+          "session_id": "P57CS_R1",
+          "run": "R1",
+          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS57\\sub-CS57_ses-P57CSR1_behavior+ecephys.nwb",
+          "relative_path": "raw\\nwb\\sub-CS57\\sub-CS57_ses-P57CSR1_behavior+ecephys.nwb",
+          "size_bytes": 9.10108268E+8,
+          "sha256": "C2ACDFA20CDF78CC3B418D0541B1562A3E4C4EB025D65E2E512350DB9D366415"
+        },
+        {
+          "subject": "CS57",
+          "session_id": "P57CS_R2",
+          "run": "R2",
+          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS57\\sub-CS57_ses-P57CSR2_behavior+ecephys.nwb",
+          "relative_path": "raw\\nwb\\sub-CS57\\sub-CS57_ses-P57CSR2_behavior+ecephys.nwb",
+          "size_bytes": 9.35356986E+8,
+          "sha256": "357D8CDFBF06C30178605923131BBBD0E5A1FCE52507D9BD37F4AAE522FDD9C2"
+        },
+        {
+          "subject": "CS58",
+          "session_id": "P58CS_R1",
+          "run": "R1",
+          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS58\\sub-CS58_ses-P58CSR1_behavior+ecephys.nwb",
+          "relative_path": "raw\\nwb\\sub-CS58\\sub-CS58_ses-P58CSR1_behavior+ecephys.nwb",
+          "size_bytes": 8.15928563E+8,
+          "sha256": "EB25B4B187BCAF2F246942C54DAF434FA82FAECB6CCC8D9F8FB2BE884945DC33"
+        },
+        {
+          "subject": "CS60",
+          "session_id": "P60CS_R1",
+          "run": "R1",
+          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS60\\sub-CS60_ses-P60CSR1_behavior+ecephys.nwb",
+          "relative_path": "raw\\nwb\\sub-CS60\\sub-CS60_ses-P60CSR1_behavior+ecephys.nwb",
+          "size_bytes": 9.13830001E+8,
+          "sha256": "C41A23CF67CDB94CC26CB65699B21EFB7546AD95CF83F99A6CA0D635D28FC4CA"
+        },
+        {
+          "subject": "CS62",
+          "session_id": "P62CS_R1",
+          "run": "R1",
+          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS62\\sub-CS62_ses-P62CSR1_behavior+ecephys.nwb",
+          "relative_path": "raw\\nwb\\sub-CS62\\sub-CS62_ses-P62CSR1_behavior+ecephys.nwb",
+          "size_bytes": 5.4820254E+8,
+          "sha256": "92D118453B137283B18C62B6BA5271D910B4C0701A894A34B88C996AB711DD17"
+        },
+        {
+          "subject": "CS62",
+          "session_id": "P62CS_R2",
+          "run": "R2",
+          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS62\\sub-CS62_ses-P62CSR2_behavior+ecephys.nwb",
+          "relative_path": "raw\\nwb\\sub-CS62\\sub-CS62_ses-P62CSR2_behavior+ecephys.nwb",
+          "size_bytes": 4.92201332E+8,
+          "sha256": "59D5A05DD9AAB5BE88E8B7E3FDA08ECBF42A91FCFAC2DC8189D8089930E44CDF"
+        }
+      ]
+    ],
+    "raw_nwb_count": 29
+  },
+  "raw_lfp_binding": {
+    "hdf5_path": "/processing/ecephys/LFP_macro/ElectricalSeries/data",
+    "orientation": "channel_by_sample",
+    "channel_key": "series_channel_index",
+    "movie_sample_bounds": "macro_movie_first_sample:last_sample"
+  },
+  "population_and_reference": {
+    "inference_unit": "subject",
+    "primary_reference": "same_shaft_adjacent_ACC_bipolar",
+    "pair_to_subject_aggregation": "median",
+    "runs": [
+      "R1",
+      "R2"
+    ],
+    "subject_counts": {
+      "R1": 16,
+      "R2": 13
+    }
+  },
+  "sampling": {
+    "synthetic_hz": 1000,
+    "analysis_hz": 250,
+    "anti_alias_lowpass_hz": 100,
+    "anti_alias_order": 3,
+    "raw_to_analysis_policy": "For each session and macro channel over the complete movie sample span: butter(3,100/500), filtfilt zero-phase, then 1:4:end; identical to ACC00-SIM sampling recipe in acc00_sim_generate_world.m:53-56,64. No 1000-Hz re-binning or re-freezing is allowed.",
+    "raw_to_analysis_policy_source": "ACC01 plan draft section 10a; ACC00-SIM contract sampling block"
+  },
+  "windows_s": {
+    "power_pre": [
+      -0.5,
+      -0.1
+    ],
+    "power_post": [
+      0.1,
+      0.5
+    ],
+    "phase_response": [
+      0.1,
+      0.5
+    ],
+    "filter_support": [
+      -0.75,
+      0.75
+    ]
+  },
+  "power": {
+    "band_hz": [
+      4,
+      8
+    ],
+    "theta_periodogram_bins_hz": [
+      5,
+      7.5
+    ],
+    "hann_epoch_s": 0.4,
+    "periodogram_bins_hz": [
+      2.5,
+      5,
+      7.5,
+      10,
+      12.5,
+      15,
+      17.5,
+      20,
+      22.5,
+      25,
+      27.5,
+      30
+    ],
+    "aperiodic_fit_bins_hz": [
+      2.5,
+      10,
+      12.5,
+      15,
+      17.5,
+      20,
+      22.5,
+      25,
+      27.5,
+      30
+    ],
+    "log_base": 10,
+    "robust_fit": "robustfit bisquare",
+    "robustfit_iteration_limit_warning_id": "stats:statrobustfit:IterationLimit",
+    "robustfit_iteration_limit_policy": "suppress stdout and count each fit per world; estimator settings unchanged",
+    "role": "primary_inferential_metric",
+    "metric_id": "Mpower",
+    "pair_level_model": "1+z_e+9_delta_z+movie_time_linear_z+movie_time_quadratic_z",
+    "pair_statistic": "coefficient_of_z_e_for_post_minus_pre_aperiodic_adjusted_log_power",
+    "subject_statistic": "median_of_pair_statistics"
+  },
+  "phase": {
+    "band_hz": [
+      4,
+      8
+    ],
+    "filter": "Butterworth",
+    "filter_order": 3,
+    "zero_phase": true,
+    "analytic_signal": "Hilbert",
+    "erp_crossfit_folds": 5,
+    "fold_assignment": "contiguous_movie_time_blocks",
+    "ppc": "pairwise_phase_consistency",
+    "mphase_surrogate_reducer": "mean",
+    "refit_surrogates": {
+      "J": 32,
+      "selection": "uniform_without_replacement_from_existing_pair_surrogates_same_stream",
+      "when_B_lt_J": "use_all"
+    },
+    "filter_scope": "per_continuous_clean_block",
+    "corr_series_diagnostic_surrogates": 1024,
+    "role": "descriptive_only"
+  },
+  "surrogate": {
+    "type": "whole_schedule_circular_time_shift",
+    "signal_moved": false,
+    "event_attributes_carried": true,
+    "delta_grid_hz": 250,
+    "delta_quantum_s": 0.004,
+    "max_surrogates_per_estimable_pair": 1024,
+    "enumerate_when_quantized_feasible_count_lte": 1024,
+    "empty_domain": "not_estimable_no_substitution",
+    "domain_guard_bad_dilation_s": 0.75,
+    "domain_guard_edge_lower_s": 1.5,
+    "domain_guard_edge_upper_s": 1.5,
+    "domain_guard_edge_basis": "closed intervals [0,1.5] and [T-1.5,T] on the 250-Hz grid; 1.5 s * fs is an integer sample count, so the existing closed-grid quantization requires no rounding adjustment",
+    "feasible_domain": "[0,T) minus union_e(((edge_lower_guarded_by_1.5s or edge_upper_guarded_by_1.5s or bad_dilated_by_0.75s) - t_e) mod T)"
+  },
+  "metric_path": {
+    "path_id": "ACC01_MPOWER_EXISTING_FUNCTIONS_V1",
+    "files": [
+      {
+        "repo_path": "scripts/ieeg/acc01/acc01_build_support_and_events.m",
+        "sha256": "623DC4D67A7F586B408000BE12D994EC63EA601C90238092C1A975B4B4C5882F",
+        "function_signature": "function [powerEvents, phaseEvents, diag] = acc01_build_support_and_events(pair, covariates, contract)"
+      },
+      {
+        "repo_path": "scripts/ieeg/acc01/acc01_compute_power_metric.m",
+        "sha256": "81DE8768672EBEECDB31B021006066EB1AC9EC253427E145F284E487B324B11C",
+        "function_signature": "function out = acc01_compute_power_metric(pair, events, contract)"
+      },
+      {
+        "repo_path": "scripts/ieeg/acc01/acc01_aggregate_subject_metrics.m",
+        "sha256": "8960E071365645F585F4E8BC191D21B6EE4C5D42E2743A22F60287A000FB2A37",
+        "function_signature": "function out = acc01_aggregate_subject_metrics(rows)"
+      },
+      {
+        "repo_path": "scripts/ieeg/acc01/acc01_exact_signflip_family.m",
+        "sha256": "29D9A6DDA1D11D496A657E9695F16CE4A8A4183508F0FBA3F70E9C64560751CA",
+        "function_signature": "function out = acc01_exact_signflip_family(x)"
+      }
+    ],
+    "invocation_order": [
+      "acc01_build_support_and_events",
+      "acc01_compute_power_metric",
+      "acc01_aggregate_subject_metrics",
+      "acc01_exact_signflip_family"
+    ],
+    "parallel_metric_implementation_forbidden": true
+  },
+  "sign_flip": {
+    "primary_metric_order": "Mpower",
+    "alpha": 0.05,
+    "test": "exhaustive_two_sided_subject_level_sign_flip",
+    "R1": {
+      "n_subjects": 16,
+      "enumeration_count": 65536
+    },
+    "R2": {
+      "n_subjects": 13,
+      "enumeration_count": 8192
+    },
+    "subject_order": "lexicographic_subject_key",
+    "observed_sign_row": 1,
+    "observed_row_rule": "all_plus_one_row_of_same_sign_matrix_and_same_matrix_multiplication",
+    "denominator": "all_enumerated_rows",
+    "floating_tolerance": "forbidden",
+    "Mpower_nan_policy": "complete_subject_rows_with_finite_Mpower_within_run",
+    "R2_direction_rule": "sign(beta_R2) == sign(beta_R1) && sign(beta_R1) ~= 0",
+    "r2_reselection_forbidden": true,
+    "paired_report": "direct_R2_minus_R1"
+  },
+  "decision": {
+    "reliable": "acc01_reliable_event_theta_power",
+    "no_reliable": "acc01_no_reliable_event_theta",
+    "reliable_rule": "R1 Mpower p_two_sided <= 0.05 AND R2 direction rule passes",
+    "no_reliable_rule": "otherwise",
+    "descriptive_outputs_cannot_change_decision": true,
+    "phase_concentration_candidate_reachable": false
+  },
+  "descriptive_outputs": [
+    {
+      "id": "Mphase",
+      "descriptive_only": true,
+      "inferential_p_value_forbidden": true,
+      "can_trigger_decision": false
+    },
+    {
+      "id": "raw_PPC",
+      "descriptive_only": true,
+      "inferential_p_value_forbidden": true,
+      "can_trigger_decision": false
+    },
+    {
+      "id": "ERP_RMS",
+      "descriptive_only": true,
+      "inferential_p_value_forbidden": true,
+      "can_trigger_decision": false
+    },
+    {
+      "id": "uncorrected_ERP_time_frequency_power",
+      "descriptive_only": true,
+      "inferential_p_value_forbidden": true,
+      "can_trigger_decision": false
+    },
+    {
+      "id": "band_5_to_10_Hz",
+      "descriptive_only": true,
+      "inferential_p_value_forbidden": true,
+      "can_trigger_decision": false
+    },
+    {
+      "id": "local_CAR_reference",
+      "descriptive_only": true,
+      "inferential_p_value_forbidden": true,
+      "can_trigger_decision": false
+    },
+    {
+      "id": "hemisphere",
+      "descriptive_only": true,
+      "inferential_p_value_forbidden": true,
+      "can_trigger_decision": false
+    },
+    {
+      "id": "frozen_subregion",
+      "descriptive_only": true,
+      "inferential_p_value_forbidden": true,
+      "can_trigger_decision": false
+    }
+  ],
+  "mde_boundary": {
+    "required_in_contract_and_final_report": true,
+    "mde80_log10_per_z": 0.00448,
+    "power": 0.8,
+    "unit": "log10_per_z",
+    "simulation_contract_sha256": "51F06B9A733D6FF88534FAECE148E5AB89EDB17B6372657313BF3D4D3BF53260",
+    "i02_expected_slope_log10_per_z": [
+      2.39E-6,
+      3.89E-5,
+      5.68E-5
+    ],
+    "i02_tiers": [
+      "Q50plus",
+      "Q75plus",
+      "Q90plus"
+    ],
+    "i02_percent_of_mde": [
+      0.053,
+      0.87,
+      1.27
+    ],
+    "i02_shortfall_fold": [
+      1875,
+      115,
+      79
+    ],
+    "mde_db_per_z": 0.0448,
+    "mde_percent_per_z_approx": 1.04,
+    "i02_db_per_z_range": [
+      2.39E-5,
+      0.000568
+    ],
+    "i02_percent_per_z_range": [
+      0.00055,
+      0.0131
+    ],
+    "is_sensitivity_reference_not_effect_lower_bound": true,
+    "equivalence_claim_requires_predefined_SESOI_and_TOST": true,
+    "human_readable_full_text": "在冻结的模拟、输入与 sign-flip 程序下，本分析对 |β|=4.48e-3 log10/z 具有 80% 检出功效（MDE₈₀）。该值是本管线的设计特异性**灵敏度参照**，不是生物学最小重要效应、置信界或显著结果的幅度下限：小于 MDE 的真实效应同样可能显著，非显著也不能排除小于该灵敏度的斜率。显著结果应同时报告估计值及其区间，并避免以观测幅度反推真实效应必然超过 MDE（sign-flip 控制 FPR 但不控制幅度膨胀）。以 I02 实测 ERP 幅度锚定的生成真值对应期望斜率 2.39e-6/3.89e-5/5.68e-5（Q50+/Q75+/Q90+ 档），即 MDE 的 0.053%/0.87%/1.27%（差 1,875×/115×/79×）；换算为功率，MDE 相当于每 1 z 标签仅 0.0448 dB（≈1.04%）变化，I02 锚定档相当于每 1 z 仅 2.39e-5–5.68e-4 dB（≈0.00055%–0.0131%）。当前 ACC 文献支持正向 theta 假设（§9a），但尚未提供可转换至本冻结估计量的绝对斜率基准，故不作「文献幅度预期」断言。\\n\\n若未来要主张「可排除实际重要效应」，须另行预先定义 SESOI/等效界并做等效检验（TOST 类，§9b）；本合同不能由 MDE 本身推出该结论。"
+  },
+  "interpretation_boundary": {
+    "event_label_is_not_behavioral_attention_measure": true,
+    "mphase_is_future_reference_only_and_no_p_value_narrative": true,
+    "pre_window_contamination": {
+      "median_schedule_gap_s": 1,
+      "probability_gap_lt_1_s_percent": 48.5,
+      "delta_pre_over_delta_post_range": [
+        0.95,
+        1.09
+      ],
+      "estimand": "net_post_minus_pre_difference_relative_to_recent_event_history",
+      "not_an_isolated_event_absolute_theta_response": true,
+      "no_deconvolution_matched_control_or_long_ISI_exclusion": true,
+      "label_correlated_overlap_can_bias_slope": true
+    },
+    "fpr_claim": {
+      "allowed_text": "ACC00-SIM calibrates nominal FPR only under its specified zero-generating model and fixed schedule; it is not proof of unbiasedness under real label-correlated overlap.",
+      "forbidden_text": "subject-level sign-flip removes any shared label-correlated event-history bias."
+    }
+  },
+  "outputs": {
+    "contract_sha256_sidecar": "scripts/ieeg/acc01_contract.sha256",
+    "validator_table": "processed/subject/group/ieeg_acc01/BangYoureDead/task-bangyouredead_desc-acc01-contract-validation.tsv",
+    "validator_summary": "processed/subject/group/ieeg_acc01/BangYoureDead/task-bangyouredead_desc-acc01-contract-validation.json",
+    "smoke_directory": "processed/subject/group/ieeg_acc01/BangYoureDead/checkpoints/smoke"
+  },
+  "stop_boundary": "After contract, synthetic-only smoke, and independent validator dry-run pass, stop. Real LFP execution requires separate authorization."
+}

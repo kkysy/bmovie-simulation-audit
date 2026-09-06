@@ -1,0 +1,70 @@
+{
+  "analysis_id": "ACC00-SIM-POWER-CURVE-v1.0.0",
+  "status": "paper_only_frozen_no_main_run_authorized",
+  "scenario": "additive",
+  "scenario_index": 2,
+  "sampling": {"synthetic_hz": 1000, "analysis_hz": 250, "anti_alias_lowpass_hz": 100, "anti_alias_order": 3},
+  "background": {
+    "recipe": "random_phase_frequency_domain_A(f)=1/max(f,0.5Hz)_DC_zero_Hermitian_IFFT",
+    "power_exponent_chi": 2, "f_min_hz": 0.5, "b0_uV": 34.224649933425269,
+    "b0_definition": "median over 351 eligible ACC pairs of sqrt(median_rms_uv(contact_a)^2+median_rms_uv(contact_b)^2)",
+    "log_scale_sigma": {"subject": 0.25, "session": 0.15, "pair": 0.35},
+    "normalization_domain": "background-only full 250-Hz trace RMS after anti-alias and decimation",
+    "scales_injection": false
+  },
+  "windows_s": {"power_pre": [-0.5, -0.1], "power_post": [0.1, 0.5], "phase_response": [0.1, 0.5], "filter_support": [-0.75, 0.75]},
+  "power": {
+    "band_hz": [4, 8], "theta_periodogram_bins_hz": [5, 7.5], "hann_epoch_s": 0.4,
+    "periodogram_bins_hz": [2.5,5,7.5,10,12.5,15,17.5,20,22.5,25,27.5,30],
+    "aperiodic_fit_bins_hz": [2.5,10,12.5,15,17.5,20,22.5,25,27.5,30],
+    "log_base": 10, "robust_fit": "robustfit bisquare",
+    "robustfit_iteration_limit_warning_id": "stats:statrobustfit:IterationLimit",
+    "robustfit_iteration_limit_policy": "suppress stdout and count each fit per world; estimator settings unchanged"
+  },
+  "additive": {
+    "kernel": "half_sine_rms1",
+    "kernel_formula": "h(t)=sqrt(2)*sin(pi*(t-0.10)/0.40), t in [0.10,0.50]s, zero outside, RMS=1",
+    "kernel_support_s": [0.1,0.5], "kernel_rms": 1,
+    "amplitude_relation": "amplitude_e_uV=A_ERP_uV*exp(a+b*z_e)*pair_polarity",
+    "gain_intercept_a": 0, "gain_slope_b": 0.3055533803,
+    "a_erp_grid_uV": [0,0.052877352944147,0.105754705888294,0.42663459535147219,0.51561069183786479,3.2654140348111795,4.61799281479342,6.530828069622359],
+    "grid_id": ["G01","G02","G03","G04","G05","G06","G07"],
+    "grid_r_mde": [0.0001311091212325,0.00052443648493,0.00853504140583,0.0124662928008,0.5,1,2],
+    "grid_worlds": [88,88,88,88,333,265,36],
+    "beta_gen_uV2_per_z": [0.00361050970350995,0.0144420388140398,0.2350397098685,0.343299312061954,13.7691019113286,27.5382038226563,55.0764076453145]
+  },
+  "label_gain_diagnostics": {"cov_z_exp2bz_over_var_z": 1.2913058077558113},
+  "bridge": {
+    "E_m_inverse2": 1.5143707406920481,
+    "E_m_inverse2_formula": "exp(2*(subject_sigma^2+session_sigma^2+pair_sigma^2))",
+    "K_R_log10_per_uV2": 0.00010742619513638891,
+    "K_R_historical_D4_log10_per_uV2": 0.00010929,
+    "K_R_source": "scripts/ieeg/paper/recompute_d4_kr_zero_derivative.m and p0_2_design/d4_2_kr_recompute.json",
+    "K_R_status": "paper_probe_adopted_not_historical_contract_field",
+    "expected_slope_gain_G_log10_per_uV2_per_z": 0.00021007361467731422,
+    "mde80_log10_per_z": 0.00448,
+    "mde80_source_contract": "scripts/ieeg/acc01_contract.json:mde_boundary.mde80_log10_per_z",
+    "mde80_contract_sha256": "F2C874719CA9F83010666538017570D4980E0E7D622A0BC0A1E5F4501368D2C9"
+  },
+  "theta_inversion": {"method": "exact_signflip_two_sided_grid", "lower": -0.02, "upper": 0.02, "step": 0.00001, "hit_tolerance": 0.000005, "coverage_rule": "CI contains bridge truth slope"},
+  "sign_flip": {
+    "runs": ["R1","R2"], "subject_counts": [16,13], "enumeration_counts": [65536,8192],
+    "subject_order": "lexicographic subject key", "metric_order": ["Mpower","Mphase"],
+    "observed_sign_row": 1, "observed_row": "all_plus_one row of same sign matrix and same matrix multiplication", "p_value": "exhaustive two-sided max-stat with enumerated rows as denominator; no floating tolerance",
+    "nan_policy": "complete subject rows within run and metric family; report exclusions",
+    "studentization": {"enabled": true, "scale": "per_metric_flip_distribution_sd", "apply_before": "max_stat", "per_metric_two_sided_uses": "raw_statistics"}
+  },
+  "seed": {"paper_base_seed": 91000000, "formula": "91000000+100000*scenario_index+1000*grid_index+seed_index", "scenario_index": 2, "seed_index_base": 1},
+  "null_reference": {"type": "reuse_existing_null_pool_as_A0_reference", "path": "processed/subject/group/ieeg_acc00_sim/BangYoureDead/checkpoints/nullpool_edgeguard_20260829", "contract_sha256": "E0930B71CE91CD1641EDD9B1F7A1012C7DBB7769458ACB96386CA5892EAF8CEF", "worlds": 400},
+  "inputs": {
+    "label": {"path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_acc00_vjepa2_preflight\\BangYoureDead\\task-bangyouredead_desc-acc00vjepa2-prediction-difficulty.tsv", "sha256": "552A08ECEBADF32F8378361795564D5E6EB35CE821D0E40D9E14EC4FB6F4B247"},
+    "label_covariates": {"path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_acc00_sim\\BangYoureDead\\task-bangyouredead_desc-acc00sim-label-covariates.tsv", "sha256": "FB371D5DB3F23439BB2569DD8CB2E5159475B5D8D3CDE6B4806FF74D8BC44CA2"},
+    "i02_subject_erp": {"path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_i02_acc\\BangYoureDead\\task-bangyouredead_desc-i02acc-subject-erp.tsv", "sha256": "DFC1F92C505FB162DDBF07131DF4A4EB95A8CD54D8255F1258F0DA51D90BBB69"},
+    "i02_erp_inference": {"path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_i02_acc\\BangYoureDead\\task-bangyouredead_desc-i02acc-erp-inference.tsv", "sha256": "EF35FDFB42834FF7B546910EDE2D4F9FC411C95B4FC73918FA1A29B224226E2E"},
+    "i00_acc_pairs": {"path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_i00\\BangYoureDead\\task-bangyouredead_desc-i00-macro-bipolar-pairs.tsv", "sha256": "C6C4A62B4A9D245394AD3B4470EF4B7193247DE701D5245FADAA9119D1DFD082"},
+    "i00_channel_qc": {"path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_i00\\BangYoureDead\\task-bangyouredead_desc-i00-channel-qc.tsv", "sha256": "359F62988856C1566F6D71BA7DA3D738F42DAF3EBA75E0DC6FD16EC3DB78C5D0", "role": "unit-anchor only"},
+    "i00_bad_segments": {"path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_i00\\BangYoureDead\\task-bangyouredead_desc-i00-bad-segments.tsv", "sha256": "279090EAADAC4EBC873392D5F5353307906CA44A4BCC385B6897838983F935E6"},
+    "i00_timing": {"path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_i00\\BangYoureDead\\task-bangyouredead_desc-i00-timing-transforms.tsv", "sha256": "64FD7CAAEF9A6A5DE0F392824DBD948B971F194E8B732F0F0D0809ABA4C5E650"}
+  },
+  "execution": {"main_run_authorized": true, "profiling_worlds": ["G01","G06","G07"], "checkpoint_format": "MATLAB -v7.3 atomic tmp then move", "mphase_injection_power": "not_reported"}
+}
