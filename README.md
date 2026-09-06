@@ -57,6 +57,20 @@ MANIFEST.md                        SHA-256 of every contract and shipped table
 5. Figures: `python manuscript/figure/generate_figures.py` regenerates all six
    figures from the shipped tables (runs its own layout checks).
 
+## Data source and citation
+
+The event schedule, clean support, and recording hierarchy analyzed here come
+from the Bmovie naturalistic movie-viewing iEEG dataset:
+
+> Keles, U., Dubois, J., Le, K. J. M., Tyszka, J. M., Kahn, D. A., Reed, C. M.,
+> Chung, J. M., Mamelak, A. N., Adolphs, R., & Rutishauser, U. (2024).
+> *Multimodal single-neuron, intracranial EEG, and fMRI brain responses during
+> movie watching in human patients.* Scientific Data, 11.
+> https://doi.org/10.1038/s41597-024-03029-1
+
+Dataset access: DANDI 000623 (https://dandiarchive.org/dandiset/000623);
+NWB BIDS release: https://github.com/rutishauserlab/bmovie-release-NWB-BIDS.
+
 ## Data boundary
 
 The frozen contracts pin their real-data-derived inputs (the causal
