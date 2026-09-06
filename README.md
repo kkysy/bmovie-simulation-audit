@@ -73,11 +73,14 @@ NWB BIDS release: https://github.com/rutishauserlab/bmovie-release-NWB-BIDS.
 
 ## Data boundary
 
-The frozen contracts pin their real-data-derived inputs (the causal
+This repository contains no video, no physiological recordings, and no
+per-event schedule: the movie stimulus is not redistributed (it was obtained
+from the original authors by request and is not part of this audit), and the
+frozen contracts pin their real-data-derived inputs (the causal
 prediction-difficulty event label, event covariates, and bad-segment support)
-by absolute path and SHA-256. Those input derivatives of the Bmovie dataset
-are **not redistributed** in this repository; summary tables and contracts are
-sufficient to reproduce every figure and numerical claim in the paper.
+by path and SHA-256 only. Those inputs are not redistributed here; summary
+tables and contracts are sufficient to reproduce every figure and numerical
+claim in the paper.
 
 ## Status
 
