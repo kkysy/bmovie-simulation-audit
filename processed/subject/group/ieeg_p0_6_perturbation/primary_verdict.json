@@ -1,0 +1,25 @@
+{
+  "analysis_id": "ACC00-P0-6-SCHEDULE-PERTURBATION",
+  "interval_rule": "Newcombe (1998b, Stat Med 17:2635-2650) paired-difference method 10, two-sided 95%. Closed form: with discordant counts b (new-only reject) and c (old-only reject), concordant counts e (both) and h (neither), n=e+b+c+h, d=(b-c)/n, p_b=(e+b)/n, p_c=(e+c)/n, phi=(e*h-b*c)/sqrt((e+b)(c+h)(e+c)(b+h)) (continuity-corrected numerator max(e*h-b*c-n/2,0) when e*h>b*c; phi=0 when the denominator vanishes), and (l_b,u_b),(l_c,u_c) the Wilson score bounds of p_b,p_c: CI = [d-sqrt((p_b-l_b)^2-2*phi*(p_b-l_b)*(u_c-p_c)+(u_c-p_c)^2), d+sqrt((u_b-p_b)^2-2*phi*(u_b-p_b)*(p_c-l_c)+(p_c-l_c)^2)]. ZCode provides an independent Python second implementation for cross-checking",
+  "items": [
+    {
+      "run": "R1",
+      "label": "attenuation",
+      "text": "Attenuation: the paired 95% Newcombe confidence interval for FPR at the high-density schedule minus FPR at the original schedule has an upper bound no greater than -0.05.",
+      "Delta": -0.25833333333333336,
+      "CI_lower": -0.36311416360869614,
+      "CI_upper": -0.14500538144575897,
+      "n": 120
+    },
+    {
+      "run": "R2",
+      "label": "indeterminate",
+      "text": "The density perturbation did not yield a decisive attenuation or persistence verdict under the preregistered precision rule.",
+      "Delta": -0.1,
+      "CI_lower": -0.20952766941675871,
+      "CI_upper": 0.012698044507294309,
+      "n": 120
+    }
+  ],
+  "status": "complete"
+}

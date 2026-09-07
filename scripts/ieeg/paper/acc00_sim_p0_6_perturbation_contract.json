@@ -1,0 +1,207 @@
+{
+ "analysis_id": "ACC00-P0-6-SCHEDULE-PERTURBATION",
+ "status": "frozen",
+ "frozen_at_utc": "2026-09-07",
+ "purpose": "Test whether the phase-consistency route's null miscalibration and the power route's behavior persist under schedule-density perturbation. Design note (verified in code): the phase-route event selector is the row-order local-maximum rule on z_e; plain midpoint insertion provably leaves the phase event set unchanged, so the 1.5x construction is midpoint interpolation plus deterministic peak-scrambling of every inserted row, which genuinely perturbs the phase event set, the ERP cross-fit event count, and the surrogate forbidden-domain construction. The power route is unaffected by event selection (support-gated only) and serves as the density-null contrast.",
+ "parent": {
+  "acc00_sim_contract": {
+   "path": "scripts/ieeg/acc00_sim_contract.json",
+   "sha256": "51F06B9A733D6FF88534FAECE148E5AB89EDB17B6372657313BF3D4D3BF53260"
+  },
+  "p0_4_panel_contract": {
+   "path": "scripts/ieeg/paper/acc00_sim_p0_4_panel_contract.json",
+   "sha256": "F6D6A81C7347D7261899F66FC7147E61FFA9E36D24B0EAC9C3B3FFD578F9D661"
+  },
+  "powercurve_contract": {
+   "path": "scripts/ieeg/paper/acc00_sim_powercurve_contract.json",
+   "sha256": "E3C35D065F6819AA611B7A60573689BFDCED06E399F80B6DAAE40F46BE3E1863"
+  },
+  "plan_document": {
+   "path": "E:/HighEV_sampling/Bmovie/research_to_do_list/iEEG/methods_paper_schedule_perturbation_plan.md",
+   "section": 8
+  }
+ },
+ "density_levels": {
+  "0p5x": {
+   "multiplier": 0.5,
+   "schedule_tsv": "processed/subject/group/ieeg_p0_6_perturbation/schedules/schedule_0p5x.tsv",
+   "generation_seed": 20860828,
+   "expected_rows": 951,
+   "sha256": "88DF4AF4D52C807689A381EAC52C83A703F97F74FAC33F5698334A06A58253B5"
+  },
+  "1p0x": {
+   "multiplier": 1.0,
+   "schedule_tsv": "E:/HighEV_sampling/Bmovie/processed/subject/group/ieeg_acc00_sim/BangYoureDead/task-bangyouredead_desc-acc00sim-label-covariates.tsv",
+   "expected_rows": 1901,
+   "sha256": "FB371D5DB3F23439BB2569DD8CB2E5159475B5D8D3CDE6B4806FF74D8BC44CA2",
+   "relation": "Paired reference pool for the density contrast = nullpool_edgeguard_20260829 (400 worlds, M02-replay configuration with base-contract guards 1.5/1.5/0.75; matched seed_index 1:120). The older nullpool (pre-edgeguard guard configuration) is NOT the paired reference; using it would confound density effects with guard-configuration differences. Reused without rerun or merging."
+  },
+  "1p5x": {
+   "multiplier": 1.5,
+   "schedule_tsv": "processed/subject/group/ieeg_p0_6_perturbation/schedules/schedule_1p5x.tsv",
+   "generation_seed": 20860829,
+   "expected_rows": 2852,
+   "sha256": "0187ABC3D09148F3C2AD46531ACDD9B2183A654BBAEFD34D2A1974BFC12598A8"
+  }
+ },
+ "schedule_transform": {
+  "source_rows": 1901,
+  "source_columns": 44,
+  "frozen_constants": {
+   "z_e_sample_sd_ddof1_complete_rows": 0.998870792018456,
+   "eps_peak_scramble_0p05": 0.0499435396009228
+  },
+  "one_point_five": {
+   "rule": "Preserve all 1901 source rows. Exactly one midpoint row is inserted for each of 951 selected source-adjacent intervals (1-based interval i joins rows i and i+1; interval 1900, whose right endpoint is the single source-incomplete row, is ineligible). Rows emitted in temporal order.",
+   "inserted_row_rule": {
+    "label_index": "negative sequence number -1,-2,... in insertion order",
+    "label_time_s": "(left+right)/2",
+    "z_e": "peak-scrambled: max(z_left, z_right) + eps, eps = 0.0499435396009228 (0.05 x frozen SD); plain midpoint is NOT used for z_e",
+    "nine_delta_z": "joint arithmetic midpoint of the two endpoints",
+    "other_42_columns": "arithmetic midpoint of the two endpoints, except source_complete set to 1 and movie_time columns recomputed from label_time_s per the frozen polynomial relations t-240.875 and t^2-481.75t+58020.765625; z-scored movie_time columns use endpoint midpoint (declared approximation, validator asserts membership in the endpoint z-closed interval)",
+    "float_safety": "verified: eps exceeds the minimum adjacent z_e difference (8.9e-6) by four orders, so the strict-peak condition holds unconditionally in double precision"
+   },
+   "interval_selection": {
+    "strata": "ten equal-width strata over the 1899 eligible intervals: 1-190, 191-380, ..., 1711-1899",
+    "allocation": [
+     96,
+     95,
+     95,
+     95,
+     95,
+     95,
+     95,
+     95,
+     95,
+     95
+    ],
+    "selection": "within-stratum Threefry permutation order, take first k",
+    "prng": "RandStream('Threefry', Seed=generation_seed)"
+   },
+   "variance_statement": "Inserted rows contract local variance for the nine delta_z columns; scrambled rows' z_e is raised by eps above the endpoint maximum. Declared properties of the densification operator; no re-standardization."
+  },
+  "zero_point_five": {
+   "rule": "Retain source row 1. Form 950 adjacent pairs (2,3),(4,5),...,(1900,1901). Retain exactly one row per pair by Bernoulli(0.5) draws from the same Threefry stream (row 1901, the source-incomplete row, is selectable; downstream source_complete gating applies as usual). Output 951 rows in temporal order; first and last source rows are always retained.",
+   "no_interpolation": true,
+   "no_scrambling": true
+  },
+  "nan_boundary_rules": "Source rows are never altered. Only adjacent complete-source rows may generate a midpoint. The parent schedule is a single continuous 0.25-s grid (verified: all 1900 adjacent gaps equal 0.25 s; no cuts). No extrapolation before the first or after the last event. A generated numeric value that is NaN/Inf is a hard failure."
+ },
+ "crn_and_seeding": {
+  "world_seed_formula": "20260827 + 100000 + seed_index (identical to the P0-1 historical null-pool formula)",
+  "matched_seed_domain": "seed_index 1:120 for every new arm; pairwise contrast against the M-REF pool nullpool_edgeguard_20260829 (M02 replay configuration, base-contract guards 1.5/1.5/0.75) at identical seed_index; new-arm subject inclusion follows the historical both-columns-finite rule (both Mpower and Mphase are computed for every pair in the Mphase arms)",
+  "p0_4_relation": "P0-4 seeds (91000000+100000*5+si) are a separate namespace and are not a reference pool",
+  "bitwise_crn_claim": "For null worlds, eta/polarity/phi/background 1/f are drawn outside the event loop and additive injection consumes no stream draws; with identical world seed the synthesized signals are bitwise identical across schedules, so schedule is the only difference within a seed pair. Verified in code review; asserted on a sample in smoke.",
+  "schedule_generators": {
+   "0p5x": 20860828,
+   "1p5x": 20860829
+  }
+ },
+ "arms": {
+  "Mphase_0p5": {
+   "density": "0p5x",
+   "config": "M-REF = M02 replay path byte-for-byte (base contract surrogate 1.5/1.5/0.75 + acc01_compute_phase_metric_optimized + maxNumCompThreads(1))",
+   "worlds": 120,
+   "seed_indices": "1:120",
+   "scenario": "null"
+  },
+  "Mphase_1p5": {
+   "density": "1p5x",
+   "config": "M-REF, same as Mphase_0p5",
+   "worlds": 120,
+   "seed_indices": "1:120",
+   "scenario": "null"
+  },
+  "Mpower_1p5": {
+   "density": "1p5x",
+   "config": "P-REF = acc01_compute_power_metric under the base contract",
+   "worlds": 120,
+   "seed_indices": "1:120",
+   "scenario": "null",
+   "verdict": "none; descriptive paired delta only (plan 8.5: verdict belongs to the Mphase contrast)"
+  },
+  "corner_probe_G06": {
+   "density": "1p5x",
+   "config": "P0-2 powercurve Mpower path quoted verbatim (incl. sign_flip)",
+   "worlds": 50,
+   "seed_indices": "1:50",
+   "scenario": "additive",
+   "injection": {
+    "grid_id": "G06",
+    "a_erp_uV": 3.2654140348111795,
+    "kernel": "half_sine_rms1",
+    "gain_slope_b": 0.3055533803,
+    "seed_formula": "91000000+100000*2+1000*6+seed_index"
+   },
+   "comparison": "descriptive contrast vs the P0-2 historical G06 cell (265 worlds); bitwise background identity vs historical G06 asserted on 3 sample seeds",
+   "role": "independent mechanism-consistent sensitivity check; never enters the primary verdict"
+  }
+ },
+ "verdict_rules": {
+  "primary_contrast": "Delta = FPR_1p5x - FPR_1p0x on matched seed indices, computed separately for R1 and R2; no cross-run pooling",
+  "paired_unit": "world-level binary rejection (two-sided exact sign-flip family p <= 0.05) per (seed_index, run)",
+  "interval": "Newcombe (1998b, Stat Med 17:2635-2650) paired-difference method 10, two-sided 95%. Closed form: with discordant counts b (new-only reject) and c (old-only reject), concordant counts e (both) and h (neither), n=e+b+c+h, d=(b-c)/n, p_b=(e+b)/n, p_c=(e+c)/n, phi=(e*h-b*c)/sqrt((e+b)(c+h)(e+c)(b+h)) (continuity-corrected numerator max(e*h-b*c-n/2,0) when e*h>b*c; phi=0 when the denominator vanishes), and (l_b,u_b),(l_c,u_c) the Wilson score bounds of p_b,p_c: CI = [d-sqrt((p_b-l_b)^2-2*phi*(p_b-l_b)*(u_c-p_c)+(u_c-p_c)^2), d+sqrt((u_b-p_b)^2-2*phi*(u_b-p_b)*(p_c-l_c)+(p_c-l_c)^2)]. ZCode provides an independent Python second implementation for cross-checking",
+  "classification": {
+   "attenuation": "CI_upper <= -0.05",
+   "persistence": "CI_lower >= -0.02",
+   "indeterminate": "otherwise; fixed text: The density perturbation did not yield a decisive attenuation or persistence verdict under the preregistered precision rule."
+  },
+  "prohibition": "The verdict is produced solely by the preregistered thresholds and frozen interval; no post hoc selection of any kind.",
+  "descriptive_rows": "paired_fpr_contrast.tsv additionally carries descriptive (verdict-free) paired rows for Mphase_0p5 vs 1x and Mpower_1p5 vs 1x, plus per-level Clopper-Pearson 95% intervals (plan 8.5); these never enter the primary verdict."
+ },
+ "census_sensitivity": {
+  "schedules": "four census-only 1.5x schedules: two interval-permutation replicates (seeds base+600101, base+600102) and two eps variants (0.025*SD, 0.10*SD, same interval selection as the main schedule)",
+  "method": "per-pair feasible-domain enumeration via acc01_build_empirical_surrogates following validate_acc00_simulation.m:feasibleCensus",
+  "historical_reference": {
+   "minimum_quanta": 62,
+   "median_fraction": 0.00958148859744382
+  },
+  "exclusion": "no census-sensitivity output enters FPR estimates, Newcombe intervals, or the verdict"
+ },
+ "outputs": {
+  "tables": [
+   "schedule_manifest.tsv",
+   "per_world_metrics.tsv",
+   "paired_fpr_contrast.tsv",
+   "primary_verdict.json",
+   "corner_probe_G06.tsv",
+   "census_sensitivity.tsv",
+   "run_manifest.json",
+   "validator_report.json"
+  ],
+  "checkpoints": "processed/subject/group/ieeg_p0_6_perturbation/checkpoints/<arm>/world_NNNN.mat",
+  "prohibited": "no new diagnostic-panel members, no exploratory verdict tables"
+ },
+ "execution": {
+  "orchestration": "serial arms, parfor over seed indices within an arm (P0-4 pattern)",
+  "thread_policy": "maxNumCompThreads(1) in every worker (M02 replay precedent)",
+  "checkpoint_policy": "atomic per-world checkpoint with arm, seed_index, world_seed, schedule sha256, thread evidence, MATLAB version, status",
+  "resume_policy": "resume only checkpoints whose identity fields all match this frozen contract"
+ },
+ "validator_assertions": [
+  "parent TSV 1901 rows x 44 columns; sha256 equals frozen value",
+  "0.5x TSV exactly 951 rows; 1.5x TSV exactly 2852 rows",
+  "generated TSV column names and order identical to parent",
+  "0.5x retains source rows 1 and 1901; exactly one row per predeclared pair",
+  "1.5x contains all 1901 source rows as an ordered subset, field-by-field identical",
+  "every inserted 1.5x row lies strictly between its endpoints in label_time_s",
+  "every inserted 1.5x row has z_e > max(z_left, z_right) - verified row-by-row",
+  "nine delta_z of inserted rows equal endpoint midpoints to floating tolerance",
+  "no generated numeric value is NaN or Inf",
+  "negative label_index iff inserted row",
+  "TSV sha256 equals the schedule_manifest values",
+  "new-arm world seeds equal 20260827+100000+seed_index and seed indices are within the historical 1:400 domain",
+  "P0-4 seed namespace never used in primary arms",
+  "bitwise background/signal identity across schedules on a predeclared seed sample before event-derived processing",
+  "M-REF resolves to the M02 replay configuration identity; smoke re-asserts bitwise equality vs historical M02 checkpoints for seed_index 1:2",
+  "corner-probe injection constants equal the frozen powercurve contract G06 cell",
+  "corner-probe world backgrounds bitwise-equal historical G06 worlds on 3 sample seeds",
+  "phase event count at 1.5x is recomputed on the full sequence and reported (annex, no directional claim)",
+  "verdict label and text generated only by the preregistered thresholds",
+  "census-only schedules never enter primary aggregation"
+ ],
+ "annex": {
+  "identity_transform_discovery": "Plain midpoint insertion leaves the phase event set bit-identical (proven analytically on the selector rule and verified numerically: 494 peaks at 1x, 494 at 1.5x with zero inserted-row peaks). This is why peak-scrambling is part of the frozen construction rather than an option.",
+  "phase_event_count_1x_no_support_gate": 494
+ }
+}

@@ -1,0 +1,128 @@
+{
+  "checks": [
+    {
+      "name": "contract_sha256",
+      "status": "PASS",
+      "evidence": "A6222A614B6EC977B19CC3D020DCAF13B986B98D43A3C136D8A19393A9080CAF"
+    },
+    {
+      "name": "parent_schema",
+      "status": "PASS",
+      "evidence": "1901x44"
+    },
+    {
+      "name": "rows_0p5",
+      "status": "PASS",
+      "evidence": "951"
+    },
+    {
+      "name": "rows_1p5",
+      "status": "PASS",
+      "evidence": "2852"
+    },
+    {
+      "name": "schema_0p5",
+      "status": "PASS",
+      "evidence": "44"
+    },
+    {
+      "name": "schema_1p5",
+      "status": "PASS",
+      "evidence": "44"
+    },
+    {
+      "name": "finite_0p5_generated",
+      "status": "PASS",
+      "evidence": "generated rows finite"
+    },
+    {
+      "name": "finite_1p5_generated",
+      "status": "PASS",
+      "evidence": "generated rows finite"
+    },
+    {
+      "name": "source_nan_preserved",
+      "status": "PASS",
+      "evidence": "only the source-incomplete row"
+    },
+    {
+      "name": "subset_ordered",
+      "status": "PASS",
+      "evidence": "1901"
+    },
+    {
+      "name": "subset_fieldwise",
+      "status": "PASS",
+      "evidence": "max abs diff NaN"
+    },
+    {
+      "name": "inserted_negative_seq",
+      "status": "PASS",
+      "evidence": "951"
+    },
+    {
+      "name": "inserted_midpoint_time",
+      "status": "PASS",
+      "evidence": "951"
+    },
+    {
+      "name": "inserted_peak_scramble",
+      "status": "PASS",
+      "evidence": "951"
+    },
+    {
+      "name": "inserted_delta_z_midpoint",
+      "status": "PASS",
+      "evidence": "9 cols"
+    },
+    {
+      "name": "rows_0p5_firstlast",
+      "status": "PASS",
+      "evidence": "first/last kept"
+    },
+    {
+      "name": "checkpoint_seeds",
+      "status": "PASS",
+      "evidence": "matched 20260827+100000+si"
+    },
+    {
+      "name": "p04_namespace",
+      "status": "PASS",
+      "evidence": "no panel-namespace seeds in null arms"
+    },
+    {
+      "name": "schedule_sha",
+      "status": "PASS",
+      "evidence": "6"
+    },
+    {
+      "name": "schedule_effect_present",
+      "status": "PASS",
+      "evidence": "metrics differ across schedules (CRN background identical by construction; generator-level bitwise probe runs in smoke)"
+    },
+    {
+      "name": "corner_g06_identity",
+      "status": "PASS",
+      "evidence": "seed + grid_id on all corner checkpoints"
+    },
+    {
+      "name": "phase_event_annex",
+      "status": "PASS",
+      "evidence": "1x no-gate=494; 1.5x no-gate=1080"
+    },
+    {
+      "name": "census_isolation",
+      "status": "PASS",
+      "evidence": "census-only outputs excluded from aggregation"
+    }
+  ],
+  "summary": [
+    23,
+    23
+  ],
+  "status": "PASS",
+  "phase_event_annex": {
+    "n1x": 494,
+    "n15": 1080
+  }
+}
