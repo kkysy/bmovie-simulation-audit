@@ -44,7 +44,7 @@
     "expected_slope_gain_G_log10_per_uV2_per_z": 0.00021007361467731422,
     "mde80_log10_per_z": 0.00448,
     "mde80_source_contract": "scripts/ieeg/acc01_contract.json:mde_boundary.mde80_log10_per_z",
-    "mde80_contract_sha256": "F2C874719CA9F83010666538017570D4980E0E7D622A0BC0A1E5F4501368D2C9"
+    "mde80_contract_sha256": "D15F89687CCB1FEB4D0DFD9C902B12255876CA54551F8014229FD65E9FE32ABD"
   },
   "theta_inversion": {"method": "exact_signflip_two_sided_grid", "lower": -0.02, "upper": 0.02, "step": 0.00001, "hit_tolerance": 0.000005, "coverage_rule": "CI contains bridge truth slope"},
   "sign_flip": {
@@ -57,14 +57,14 @@
   "seed": {"paper_base_seed": 91000000, "formula": "91000000+100000*scenario_index+1000*grid_index+seed_index", "scenario_index": 2, "seed_index_base": 1},
   "null_reference": {"type": "reuse_existing_null_pool_as_A0_reference", "path": "processed/subject/group/ieeg_acc00_sim/BangYoureDead/checkpoints/nullpool_edgeguard_20260829", "contract_sha256": "E0930B71CE91CD1641EDD9B1F7A1012C7DBB7769458ACB96386CA5892EAF8CEF", "worlds": 400},
   "inputs": {
-    "label": {"path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_acc00_vjepa2_preflight\\BangYoureDead\\task-bangyouredead_desc-acc00vjepa2-prediction-difficulty.tsv", "sha256": "552A08ECEBADF32F8378361795564D5E6EB35CE821D0E40D9E14EC4FB6F4B247"},
-    "label_covariates": {"path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_acc00_sim\\BangYoureDead\\task-bangyouredead_desc-acc00sim-label-covariates.tsv", "sha256": "FB371D5DB3F23439BB2569DD8CB2E5159475B5D8D3CDE6B4806FF74D8BC44CA2"},
-    "i02_subject_erp": {"path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_i02_acc\\BangYoureDead\\task-bangyouredead_desc-i02acc-subject-erp.tsv", "sha256": "DFC1F92C505FB162DDBF07131DF4A4EB95A8CD54D8255F1258F0DA51D90BBB69"},
-    "i02_erp_inference": {"path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_i02_acc\\BangYoureDead\\task-bangyouredead_desc-i02acc-erp-inference.tsv", "sha256": "EF35FDFB42834FF7B546910EDE2D4F9FC411C95B4FC73918FA1A29B224226E2E"},
-    "i00_acc_pairs": {"path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_i00\\BangYoureDead\\task-bangyouredead_desc-i00-macro-bipolar-pairs.tsv", "sha256": "C6C4A62B4A9D245394AD3B4470EF4B7193247DE701D5245FADAA9119D1DFD082"},
-    "i00_channel_qc": {"path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_i00\\BangYoureDead\\task-bangyouredead_desc-i00-channel-qc.tsv", "sha256": "359F62988856C1566F6D71BA7DA3D738F42DAF3EBA75E0DC6FD16EC3DB78C5D0", "role": "unit-anchor only"},
-    "i00_bad_segments": {"path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_i00\\BangYoureDead\\task-bangyouredead_desc-i00-bad-segments.tsv", "sha256": "279090EAADAC4EBC873392D5F5353307906CA44A4BCC385B6897838983F935E6"},
-    "i00_timing": {"path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_i00\\BangYoureDead\\task-bangyouredead_desc-i00-timing-transforms.tsv", "sha256": "64FD7CAAEF9A6A5DE0F392824DBD948B971F194E8B732F0F0D0809ABA4C5E650"}
+    "label": {"path": "processed\\subject\\group\\ieeg_acc00_vjepa2_preflight\\BangYoureDead\\task-bangyouredead_desc-acc00vjepa2-prediction-difficulty.tsv", "sha256": "552A08ECEBADF32F8378361795564D5E6EB35CE821D0E40D9E14EC4FB6F4B247"},
+    "label_covariates": {"path": "processed\\subject\\group\\ieeg_acc00_sim\\BangYoureDead\\task-bangyouredead_desc-acc00sim-label-covariates.tsv", "sha256": "FB371D5DB3F23439BB2569DD8CB2E5159475B5D8D3CDE6B4806FF74D8BC44CA2"},
+    "i02_subject_erp": {"path": "processed\\subject\\group\\ieeg_i02_acc\\BangYoureDead\\task-bangyouredead_desc-i02acc-subject-erp.tsv", "sha256": "DFC1F92C505FB162DDBF07131DF4A4EB95A8CD54D8255F1258F0DA51D90BBB69"},
+    "i02_erp_inference": {"path": "processed\\subject\\group\\ieeg_i02_acc\\BangYoureDead\\task-bangyouredead_desc-i02acc-erp-inference.tsv", "sha256": "EF35FDFB42834FF7B546910EDE2D4F9FC411C95B4FC73918FA1A29B224226E2E"},
+    "i00_acc_pairs": {"path": "processed\\subject\\group\\ieeg_i00\\BangYoureDead\\task-bangyouredead_desc-i00-macro-bipolar-pairs.tsv", "sha256": "C6C4A62B4A9D245394AD3B4470EF4B7193247DE701D5245FADAA9119D1DFD082"},
+    "i00_channel_qc": {"path": "processed\\subject\\group\\ieeg_i00\\BangYoureDead\\task-bangyouredead_desc-i00-channel-qc.tsv", "sha256": "359F62988856C1566F6D71BA7DA3D738F42DAF3EBA75E0DC6FD16EC3DB78C5D0", "role": "unit-anchor only"},
+    "i00_bad_segments": {"path": "processed\\subject\\group\\ieeg_i00\\BangYoureDead\\task-bangyouredead_desc-i00-bad-segments.tsv", "sha256": "279090EAADAC4EBC873392D5F5353307906CA44A4BCC385B6897838983F935E6"},
+    "i00_timing": {"path": "processed\\subject\\group\\ieeg_i00\\BangYoureDead\\task-bangyouredead_desc-i00-timing-transforms.tsv", "sha256": "64FD7CAAEF9A6A5DE0F392824DBD948B971F194E8B732F0F0D0809ABA4C5E650"}
   },
   "execution": {"main_run_authorized": true, "profiling_worlds": ["G01","G06","G07"], "checkpoint_format": "MATLAB -v7.3 atomic tmp then move", "mphase_injection_power": "not_reported"}
 }

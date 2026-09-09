@@ -3,6 +3,8 @@
 GPT two-round draft + ZCode rulings; see plan document section 8)."""
 import json
 import hashlib
+import os
+from pathlib import Path
 
 
 def sha(path):
@@ -10,10 +12,11 @@ def sha(path):
         return hashlib.sha256(fh.read()).hexdigest().upper()
 
 
-ROOT = "E:/HighEV_sampling/Bmovie/release/bmovie-simulation-audit"
-PARENT_TSV = ("E:/HighEV_sampling/Bmovie/processed/subject/group/"
-              "ieeg_acc00_sim/BangYoureDead/"
-              "task-bangyouredead_desc-acc00sim-label-covariates.tsv")
+ROOT = Path(__file__).resolve().parents[3]
+SOURCE_ROOT = Path(os.environ.get("BMOVIE_SOURCE_ROOT", str(ROOT)))
+PARENT_TSV_REL = ("processed/subject/group/ieeg_acc00_sim/BangYoureDead/"
+                  "task-bangyouredead_desc-acc00sim-label-covariates.tsv")
+PARENT_TSV = SOURCE_ROOT / PARENT_TSV_REL
 FIXED_TEXT = ("The density perturbation did not yield a decisive attenuation "
               "or persistence verdict under the preregistered precision rule.")
 
@@ -36,18 +39,17 @@ contract = {
     "parent": {
         "acc00_sim_contract": {
             "path": "scripts/ieeg/acc00_sim_contract.json",
-            "sha256": sha(ROOT + "/scripts/ieeg/acc00_sim_contract.json")},
+            "sha256": sha(ROOT / "scripts/ieeg/acc00_sim_contract.json")},
         "p0_4_panel_contract": {
             "path": "scripts/ieeg/paper/acc00_sim_p0_4_panel_contract.json",
-            "sha256": sha(ROOT + "/scripts/ieeg/paper/"
+            "sha256": sha(ROOT / "scripts/ieeg/paper/"
                           "acc00_sim_p0_4_panel_contract.json")},
         "powercurve_contract": {
             "path": "scripts/ieeg/paper/acc00_sim_powercurve_contract.json",
-            "sha256": sha(ROOT + "/scripts/ieeg/paper/"
+            "sha256": sha(ROOT / "scripts/ieeg/paper/"
                           "acc00_sim_powercurve_contract.json")},
         "plan_document": {
-            "path": ("E:/HighEV_sampling/Bmovie/research_to_do_list/iEEG/"
-                     "methods_paper_schedule_perturbation_plan.md"),
+            "path": "external_inputs/methods_paper_schedule_perturbation_plan.md",
             "section": 8},
     },
     "density_levels": {
@@ -61,7 +63,7 @@ contract = {
             "sha256": "PENDING_GENERATION"},
         "1p0x": {
             "multiplier": 1.0,
-            "schedule_tsv": PARENT_TSV,
+            "schedule_tsv": PARENT_TSV_REL,
             "expected_rows": 1901,
             "sha256": sha(PARENT_TSV),
             "relation": ("Paired reference pool for the density contrast = "
@@ -283,7 +285,7 @@ contract = {
     },
 }
 
-out = ROOT + "/scripts/ieeg/paper/acc00_sim_p0_6_perturbation_contract.json"
+out = ROOT / "scripts/ieeg/paper/acc00_sim_p0_6_perturbation_contract.json"
 with open(out, "w", encoding="utf-8") as fh:
     json.dump(contract, fh, indent=1, ensure_ascii=False)
 print("written:", out)

@@ -19,6 +19,7 @@ background plus injected transients.
 | P0-3 | mechanism ablations, 768 worlds (Mpower arm + Mphase guard replays) | `run_acc00_p0_3_ablation_main.m`, `summarize_p0_3_ablation.py`, `validate_acc00_p0_3_ablation.m` |
 | P0-4 | preregistered blinded four-member diagnostic panel, 480 worlds | `run_acc00_p0_4_panel_main.m`, `summarize_p0_4_panel.py`, `validate_acc00_p0_4_panel.m` |
 | P0-5 | surrogate-selection record and feasible-domain census | `acc01_build_empirical_surrogates.m`, census table under `processed/.../edgeguard_fix_20260829/validator/` |
+| P0-6 | schedule-density perturbation with paired FPR contrasts and census sensitivity checks | `run_acc00_p0_6_main.m`, `summarize_acc00_p0_6.m`, `validate_acc00_p0_6_perturbation.m`, `verify_p0_6_paired_contrast.py` |
 
 ## Repository layout
 
@@ -29,9 +30,9 @@ path references and the paper's source map stay valid.
 scripts/ieeg/                      frozen contracts + runners + validators + summarizers
   acc00_sim_contract.json          parent contract (schedule, guards, surrogate domain, seeds)
   acc01/                           synthetic-world generator and shared estimator kernels
-  paper/                           P0-2..P0-4 contracts, runners, validators, summarizers
+  paper/                           P0-2..P0-6 contracts, runners, validators, summarizers
 processed/subject/group/           summary tables underlying all figures and numerical claims
-manuscript/figure/                 figure generation script and rendered figures
+manuscript/figure/                 figure generation script; rendered manuscript figures are not shipped
 MANIFEST.md                        SHA-256 of every contract and shipped table
 ```
 
@@ -42,6 +43,8 @@ MANIFEST.md                        SHA-256 of every contract and shipped table
   repository root; each entry point resolves the root itself.
 - Python ≥ 3.10: `pip install -r requirements.txt` (numpy, scipy, pandas,
   h5py, matplotlib).
+- The P0-6 contract writer accepts `BMOVIE_SOURCE_ROOT` for local external
+  inputs and writes only repository-relative paths into the public contract.
 
 ## Reproduction chain
 
@@ -55,7 +58,8 @@ MANIFEST.md                        SHA-256 of every contract and shipped table
 4. Independent validators re-derive FPRs, Clopper–Pearson intervals, and
    pairing identities from the world-level tables.
 5. Figures: `python manuscript/figure/generate_figures.py` regenerates all six
-   figures from the shipped tables (runs its own layout checks).
+   figures from the shipped tables (runs its own layout checks). The rendered
+   manuscript figures are intentionally kept outside this public release.
 
 ## Data source and citation
 
@@ -70,6 +74,11 @@ from the Bmovie naturalistic movie-viewing iEEG dataset:
 
 Dataset access: DANDI 000623 (https://dandiarchive.org/dandiset/000623);
 NWB BIDS release: https://github.com/rutishauserlab/bmovie-release-NWB-BIDS.
+
+Contract paths are repository-relative. The raw NWB files and other
+external-input documents referenced by the contracts are not redistributed;
+their expected relative locations are retained only for provenance and
+independent re-use when those inputs are available locally.
 
 ## Data boundary
 

@@ -13,7 +13,7 @@ addpath(fullfile(root, "scripts", "ieeg", "acc01"));
 contractPath = fullfile(root, "scripts", "ieeg", "acc01_contract.json");
 contract = jsondecode(fileread(contractPath));
 contractHash = sha256File(contractPath);
-frozenHash = "F2C874719CA9F83010666538017570D4980E0E7D622A0BC0A1E5F4501368D2C9";
+frozenHash = "D15F89687CCB1FEB4D0DFD9C902B12255876CA54551F8014229FD65E9FE32ABD";
 assert(contractHash == frozenHash, "Bmovie:ACC01:ContractHash", "ACC01 contract SHA must remain frozen.");
 
 entries = contract.inputs.raw_nwbs;

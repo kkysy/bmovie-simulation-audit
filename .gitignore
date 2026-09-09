@@ -1,3 +1,7 @@
 __pycache__/
 *.pyc
 Thumbs.db
+
+# Local rerun artifacts; published summary tables remain tracked.
+*.log
+**/checkpoints/

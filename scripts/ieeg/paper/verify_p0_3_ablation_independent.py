@@ -34,7 +34,7 @@ from pathlib import Path
 import h5py
 import numpy as np
 
-ROOT = Path("E:/HighEV_sampling/Bmovie")
+ROOT = Path(__file__).resolve().parents[3]
 BASE = ROOT / "processed/subject/group/ieeg_methods_paper/p0_3_ablation"
 CONTRACT = ROOT / "scripts/ieeg/paper/acc00_sim_p0_3_ablation_contract.json"
 BRIDGE_TSV = BASE / "tables/p0_3_subject_vectors_bridge.tsv"

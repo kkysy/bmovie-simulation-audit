@@ -6,18 +6,18 @@
  "parent": {
   "acc00_sim_contract": {
    "path": "scripts/ieeg/acc00_sim_contract.json",
-   "sha256": "51F06B9A733D6FF88534FAECE148E5AB89EDB17B6372657313BF3D4D3BF53260"
+   "sha256": "AE9B0EEE540CC07AA3D3FE45D445B0C71815E95D7D461C6AB615903532705D09"
   },
   "p0_4_panel_contract": {
    "path": "scripts/ieeg/paper/acc00_sim_p0_4_panel_contract.json",
-   "sha256": "F6D6A81C7347D7261899F66FC7147E61FFA9E36D24B0EAC9C3B3FFD578F9D661"
+   "sha256": "6F8A9518D469322019D73B9FD43165AF60A57B4F0B3DAE9FA928867B7EE0C567"
   },
   "powercurve_contract": {
    "path": "scripts/ieeg/paper/acc00_sim_powercurve_contract.json",
-   "sha256": "E3C35D065F6819AA611B7A60573689BFDCED06E399F80B6DAAE40F46BE3E1863"
+   "sha256": "59B22764181C475D824B3847F1FC4F2E3EA726C62618AB02D8691B028031CC55"
   },
   "plan_document": {
-   "path": "E:/HighEV_sampling/Bmovie/research_to_do_list/iEEG/methods_paper_schedule_perturbation_plan.md",
+   "path": "external_inputs/methods_paper_schedule_perturbation_plan.md",
    "section": 8
   }
  },
@@ -31,7 +31,7 @@
   },
   "1p0x": {
    "multiplier": 1.0,
-   "schedule_tsv": "E:/HighEV_sampling/Bmovie/processed/subject/group/ieeg_acc00_sim/BangYoureDead/task-bangyouredead_desc-acc00sim-label-covariates.tsv",
+   "schedule_tsv": "processed/subject/group/ieeg_acc00_sim/BangYoureDead/task-bangyouredead_desc-acc00sim-label-covariates.tsv",
    "expected_rows": 1901,
    "sha256": "FB371D5DB3F23439BB2569DD8CB2E5159475B5D8D3CDE6B4806FF74D8BC44CA2",
    "relation": "Paired reference pool for the density contrast = nullpool_edgeguard_20260829 (400 worlds, M02-replay configuration with base-contract guards 1.5/1.5/0.75; matched seed_index 1:120). The older nullpool (pre-edgeguard guard configuration) is NOT the paired reference; using it would confound density effects with guard-configuration differences. Reused without rerun or merging."

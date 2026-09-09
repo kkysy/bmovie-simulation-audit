@@ -7,7 +7,7 @@ root=string(char(java.io.File(char(root)).getCanonicalPath()));pp=fullfile(root,
 c=jsondecode(fileread(fullfile(pp,"acc00_sim_p0_6_perturbation_contract.json")));
 od=fullfile(root,"processed","subject","group","ieeg_p0_6_perturbation");sd=fullfile(od,"schedules");
 checks=repmat(struct("name","","status","","evidence",""),0,1);
-add("contract_sha256",strcmp(sha256File(fullfile(pp,"acc00_sim_p0_6_perturbation_contract.json")),"A6222A614B6EC977B19CC3D020DCAF13B986B98D43A3C136D8A19393A9080CAF"),sha256File(fullfile(pp,"acc00_sim_p0_6_perturbation_contract.json")));
+add("contract_sha256",strcmp(sha256File(fullfile(pp,"acc00_sim_p0_6_perturbation_contract.json")),"BB7CB3D53CE724C4349A9ADF874B7AA43BA41D5DC8B1E0B95E4205619AAA916D"),sha256File(fullfile(pp,"acc00_sim_p0_6_perturbation_contract.json")));
 parentPath=char(string(c.density_levels.("x1p0x").schedule_tsv));if ~isfile(parentPath),parentPath=fullfile(root,parentPath);end;parent=readtable(parentPath,"FileType","text","Delimiter",char(9),"TextType","string","VariableNamingRule","preserve");
 t05=readtable(fullfile(sd,"schedule_0p5x.tsv"),"FileType","text","Delimiter","\t","TextType","string","VariableNamingRule","preserve");
 t15=readtable(fullfile(sd,"schedule_1p5x.tsv"),"FileType","text","Delimiter","\t","TextType","string","VariableNamingRule","preserve");

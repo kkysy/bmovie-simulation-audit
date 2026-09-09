@@ -4,7 +4,7 @@
   "purpose": "mechanism attribution only; no estimator change and no new scientific gate",
   "parent_p0_2": {
     "path": "scripts/ieeg/paper/acc00_sim_powercurve_contract.json",
-    "sha256": "E3C35D065F6819AA611B7A60573689BFDCED06E399F80B6DAAE40F46BE3E1863",
+    "sha256": "59B22764181C475D824B3847F1FC4F2E3EA726C62618AB02D8691B028031CC55",
     "immutable": true
   },
   "parent_acc00_null": {

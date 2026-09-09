@@ -319,36 +319,36 @@
   },
   "inputs": {
     "label": {
-      "path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_acc00_vjepa2_preflight\\BangYoureDead\\task-bangyouredead_desc-acc00vjepa2-prediction-difficulty.tsv",
+      "path": "processed\\subject\\group\\ieeg_acc00_vjepa2_preflight\\BangYoureDead\\task-bangyouredead_desc-acc00vjepa2-prediction-difficulty.tsv",
       "sha256": "552A08ECEBADF32F8378361795564D5E6EB35CE821D0E40D9E14EC4FB6F4B247"
     },
     "label_covariates": {
-      "path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_acc00_sim\\BangYoureDead\\task-bangyouredead_desc-acc00sim-label-covariates.tsv",
+      "path": "processed\\subject\\group\\ieeg_acc00_sim\\BangYoureDead\\task-bangyouredead_desc-acc00sim-label-covariates.tsv",
       "sha256": "FB371D5DB3F23439BB2569DD8CB2E5159475B5D8D3CDE6B4806FF74D8BC44CA2"
     },
     "i02_subject_erp": {
-      "path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_i02_acc\\BangYoureDead\\task-bangyouredead_desc-i02acc-subject-erp.tsv",
+      "path": "processed\\subject\\group\\ieeg_i02_acc\\BangYoureDead\\task-bangyouredead_desc-i02acc-subject-erp.tsv",
       "sha256": "DFC1F92C505FB162DDBF07131DF4A4EB95A8CD54D8255F1258F0DA51D90BBB69"
     },
     "i02_erp_inference": {
-      "path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_i02_acc\\BangYoureDead\\task-bangyouredead_desc-i02acc-erp-inference.tsv",
+      "path": "processed\\subject\\group\\ieeg_i02_acc\\BangYoureDead\\task-bangyouredead_desc-i02acc-erp-inference.tsv",
       "sha256": "EF35FDFB42834FF7B546910EDE2D4F9FC411C95B4FC73918FA1A29B224226E2E"
     },
     "i00_acc_pairs": {
-      "path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_i00\\BangYoureDead\\task-bangyouredead_desc-i00-macro-bipolar-pairs.tsv",
+      "path": "processed\\subject\\group\\ieeg_i00\\BangYoureDead\\task-bangyouredead_desc-i00-macro-bipolar-pairs.tsv",
       "sha256": "C6C4A62B4A9D245394AD3B4470EF4B7193247DE701D5245FADAA9119D1DFD082"
     },
     "i00_channel_qc": {
-      "path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_i00\\BangYoureDead\\task-bangyouredead_desc-i00-channel-qc.tsv",
+      "path": "processed\\subject\\group\\ieeg_i00\\BangYoureDead\\task-bangyouredead_desc-i00-channel-qc.tsv",
       "sha256": "359F62988856C1566F6D71BA7DA3D738F42DAF3EBA75E0DC6FD16EC3DB78C5D0",
       "role": "unit-anchor only"
     },
     "i00_bad_segments": {
-      "path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_i00\\BangYoureDead\\task-bangyouredead_desc-i00-bad-segments.tsv",
+      "path": "processed\\subject\\group\\ieeg_i00\\BangYoureDead\\task-bangyouredead_desc-i00-bad-segments.tsv",
       "sha256": "279090EAADAC4EBC873392D5F5353307906CA44A4BCC385B6897838983F935E6"
     },
     "i00_timing": {
-      "path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_i00\\BangYoureDead\\task-bangyouredead_desc-i00-timing-transforms.tsv",
+      "path": "processed\\subject\\group\\ieeg_i00\\BangYoureDead\\task-bangyouredead_desc-i00-timing-transforms.tsv",
       "sha256": "64FD7CAAEF9A6A5DE0F392824DBD948B971F194E8B732F0F0D0809ABA4C5E650"
     }
   },

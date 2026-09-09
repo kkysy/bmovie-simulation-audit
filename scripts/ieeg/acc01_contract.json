@@ -23,15 +23,15 @@
   },
   "source_contracts": {
     "acc00_vjepa2_contract": {
-      "path": "E:\\HighEV_sampling\\Bmovie\\scripts\\ieeg\\acc00_vjepa2_prediction_contract.json",
+      "path": "scripts\\ieeg\\acc00_vjepa2_prediction_contract.json",
       "sha256": "884D70753EEEF5A7BEF56CDE7E06CACA10CB8A188746F5C3F74252B130B3C4B6"
     },
     "acc00_sim_contract": {
-      "path": "E:\\HighEV_sampling\\Bmovie\\scripts\\ieeg\\acc00_sim_contract.json",
-      "sha256": "51F06B9A733D6FF88534FAECE148E5AB89EDB17B6372657313BF3D4D3BF53260"
+      "path": "scripts\\ieeg\\acc00_sim_contract.json",
+      "sha256": "AE9B0EEE540CC07AA3D3FE45D445B0C71815E95D7D461C6AB615903532705D09"
     },
     "acc01_plan_draft": {
-      "path": "E:\\HighEV_sampling\\Bmovie\\research_to_do_list\\iEEG\\acc01_plan_draft.md",
+      "path": "external_inputs\\acc01_plan_draft.md",
       "sha256": "BD08337632502DF44F381C6A9C17380C59C1EF6FE2356499792CCA2178CE82E1",
       "frozen_commit": "0625240",
       "review_commit": "77fe7a2"
@@ -39,7 +39,7 @@
   },
   "inputs": {
     "vjepa2_label": {
-      "path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_acc00_vjepa2_preflight\\BangYoureDead\\task-bangyouredead_desc-acc00vjepa2-prediction-difficulty.tsv",
+      "path": "processed\\subject\\group\\ieeg_acc00_vjepa2_preflight\\BangYoureDead\\task-bangyouredead_desc-acc00vjepa2-prediction-difficulty.tsv",
       "sha256": "552A08ECEBADF32F8378361795564D5E6EB35CE821D0E40D9E14EC4FB6F4B247",
       "expected_rows": 1901,
       "required_columns": [
@@ -53,7 +53,7 @@
       ]
     },
     "label_covariates": {
-      "path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_acc00_sim\\BangYoureDead\\task-bangyouredead_desc-acc00sim-label-covariates.tsv",
+      "path": "processed\\subject\\group\\ieeg_acc00_sim\\BangYoureDead\\task-bangyouredead_desc-acc00sim-label-covariates.tsv",
       "sha256": "FB371D5DB3F23439BB2569DD8CB2E5159475B5D8D3CDE6B4806FF74D8BC44CA2",
       "expected_rows": 1901,
       "required_columns": [
@@ -121,7 +121,7 @@
       "source_complete_column": "source_complete"
     },
     "i00_acc_pairs": {
-      "path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_i00\\BangYoureDead\\task-bangyouredead_desc-i00-macro-bipolar-pairs.tsv",
+      "path": "processed\\subject\\group\\ieeg_i00\\BangYoureDead\\task-bangyouredead_desc-i00-macro-bipolar-pairs.tsv",
       "sha256": "C6C4A62B4A9D245394AD3B4470EF4B7193247DE701D5245FADAA9119D1DFD082",
       "expected_rows": 2422,
       "required_columns": [
@@ -146,7 +146,7 @@
       "expected_pairs": 351
     },
     "i00_channel_qc": {
-      "path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_i00\\BangYoureDead\\task-bangyouredead_desc-i00-channel-qc.tsv",
+      "path": "processed\\subject\\group\\ieeg_i00\\BangYoureDead\\task-bangyouredead_desc-i00-channel-qc.tsv",
       "sha256": "359F62988856C1566F6D71BA7DA3D738F42DAF3EBA75E0DC6FD16EC3DB78C5D0",
       "expected_rows": null,
       "required_columns": [
@@ -192,7 +192,7 @@
       ]
     },
     "i00_bad_segments": {
-      "path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_i00\\BangYoureDead\\task-bangyouredead_desc-i00-bad-segments.tsv",
+      "path": "processed\\subject\\group\\ieeg_i00\\BangYoureDead\\task-bangyouredead_desc-i00-bad-segments.tsv",
       "sha256": "279090EAADAC4EBC873392D5F5353307906CA44A4BCC385B6897838983F935E6",
       "expected_rows": null,
       "required_columns": [
@@ -209,7 +209,7 @@
       ]
     },
     "i00_timing": {
-      "path": "E:\\HighEV_sampling\\Bmovie\\processed\\subject\\group\\ieeg_i00\\BangYoureDead\\task-bangyouredead_desc-i00-timing-transforms.tsv",
+      "path": "processed\\subject\\group\\ieeg_i00\\BangYoureDead\\task-bangyouredead_desc-i00-timing-transforms.tsv",
       "sha256": "64FD7CAAEF9A6A5DE0F392824DBD948B971F194E8B732F0F0D0809ABA4C5E650",
       "expected_rows": 29,
       "required_columns": [
@@ -268,7 +268,7 @@
           "subject": "CS41",
           "session_id": "P41CS_R1",
           "run": "R1",
-          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS41\\sub-CS41_ses-P41CSR1_behavior+ecephys.nwb",
+          "path": "raw\\nwb\\sub-CS41\\sub-CS41_ses-P41CSR1_behavior+ecephys.nwb",
           "relative_path": "raw\\nwb\\sub-CS41\\sub-CS41_ses-P41CSR1_behavior+ecephys.nwb",
           "size_bytes": 9.29320399E+8,
           "sha256": "696388DEA25292786E54CA6B3B26171268111F315E554D6A89FD13B1D7F39985"
@@ -277,7 +277,7 @@
           "subject": "CS41",
           "session_id": "P41CS_R2",
           "run": "R2",
-          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS41\\sub-CS41_ses-P41CSR2_behavior+ecephys.nwb",
+          "path": "raw\\nwb\\sub-CS41\\sub-CS41_ses-P41CSR2_behavior+ecephys.nwb",
           "relative_path": "raw\\nwb\\sub-CS41\\sub-CS41_ses-P41CSR2_behavior+ecephys.nwb",
           "size_bytes": 8.03882951E+8,
           "sha256": "0D2865ED760A344040CCC57050747896FB5B3E9860C331A3063A0C4199F2C38C"
@@ -286,7 +286,7 @@
           "subject": "CS42",
           "session_id": "P42CS_R1",
           "run": "R1",
-          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS42\\sub-CS42_ses-P42CSR1_behavior+ecephys.nwb",
+          "path": "raw\\nwb\\sub-CS42\\sub-CS42_ses-P42CSR1_behavior+ecephys.nwb",
           "relative_path": "raw\\nwb\\sub-CS42\\sub-CS42_ses-P42CSR1_behavior+ecephys.nwb",
           "size_bytes": 9.13018422E+8,
           "sha256": "7F7086F18A355D3AC257E6A8FAF2A8A96F5BF574EDFC0DAC08F0A8F56026BF53"
@@ -295,7 +295,7 @@
           "subject": "CS42",
           "session_id": "P42CS_R2",
           "run": "R2",
-          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS42\\sub-CS42_ses-P42CSR2_behavior+ecephys.nwb",
+          "path": "raw\\nwb\\sub-CS42\\sub-CS42_ses-P42CSR2_behavior+ecephys.nwb",
           "relative_path": "raw\\nwb\\sub-CS42\\sub-CS42_ses-P42CSR2_behavior+ecephys.nwb",
           "size_bytes": 8.94307064E+8,
           "sha256": "0B14D3F58B765E7DC8DFB85B14D01E0E36F0DC61F5F3011D09B24B11211987B8"
@@ -304,7 +304,7 @@
           "subject": "CS43",
           "session_id": "P43CS_R1",
           "run": "R1",
-          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS43\\sub-CS43_ses-P43CSR1_behavior+ecephys.nwb",
+          "path": "raw\\nwb\\sub-CS43\\sub-CS43_ses-P43CSR1_behavior+ecephys.nwb",
           "relative_path": "raw\\nwb\\sub-CS43\\sub-CS43_ses-P43CSR1_behavior+ecephys.nwb",
           "size_bytes": 1.016236528E+9,
           "sha256": "C10B89E704CAF71A55C7AD60427318ECBEE83CE704B8BA223A95E35692C57FDC"
@@ -313,7 +313,7 @@
           "subject": "CS43",
           "session_id": "P43CS_R2",
           "run": "R2",
-          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS43\\sub-CS43_ses-P43CSR2_behavior+ecephys.nwb",
+          "path": "raw\\nwb\\sub-CS43\\sub-CS43_ses-P43CSR2_behavior+ecephys.nwb",
           "relative_path": "raw\\nwb\\sub-CS43\\sub-CS43_ses-P43CSR2_behavior+ecephys.nwb",
           "size_bytes": 8.34923452E+8,
           "sha256": "6E4EBB8BB088D93BE2F7B95418338B9BED2C21F390983D899D991F974ADB0F37"
@@ -322,7 +322,7 @@
           "subject": "CS44",
           "session_id": "P44CS_R1",
           "run": "R1",
-          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS44\\sub-CS44_ses-P44CSR1_behavior+ecephys.nwb",
+          "path": "raw\\nwb\\sub-CS44\\sub-CS44_ses-P44CSR1_behavior+ecephys.nwb",
           "relative_path": "raw\\nwb\\sub-CS44\\sub-CS44_ses-P44CSR1_behavior+ecephys.nwb",
           "size_bytes": 9.94457952E+8,
           "sha256": "DD222B138C734D5A8DE66BD8E382B3D5269DEFD5A4FEF4FFAD9829DCFA3BF8DB"
@@ -331,7 +331,7 @@
           "subject": "CS47",
           "session_id": "P47CS_R1",
           "run": "R1",
-          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS47\\sub-CS47_ses-P47CSR1_behavior+ecephys.nwb",
+          "path": "raw\\nwb\\sub-CS47\\sub-CS47_ses-P47CSR1_behavior+ecephys.nwb",
           "relative_path": "raw\\nwb\\sub-CS47\\sub-CS47_ses-P47CSR1_behavior+ecephys.nwb",
           "size_bytes": 9.27817738E+8,
           "sha256": "BEBC189CC43B46EA7E0CCD13B8061CE1348456D1C4C5E56D02E997DAD3E33347"
@@ -340,7 +340,7 @@
           "subject": "CS47",
           "session_id": "P47CS_R2",
           "run": "R2",
-          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS47\\sub-CS47_ses-P47CSR2_behavior+ecephys.nwb",
+          "path": "raw\\nwb\\sub-CS47\\sub-CS47_ses-P47CSR2_behavior+ecephys.nwb",
           "relative_path": "raw\\nwb\\sub-CS47\\sub-CS47_ses-P47CSR2_behavior+ecephys.nwb",
           "size_bytes": 8.97685121E+8,
           "sha256": "0C6E21FA0B1E267F4AEB3C4A7486D27B2DDA6E6B9FC9D607DA32554723053C03"
@@ -349,7 +349,7 @@
           "subject": "CS48",
           "session_id": "P48CS_R1",
           "run": "R1",
-          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS48\\sub-CS48_ses-P48CSR1_behavior+ecephys.nwb",
+          "path": "raw\\nwb\\sub-CS48\\sub-CS48_ses-P48CSR1_behavior+ecephys.nwb",
           "relative_path": "raw\\nwb\\sub-CS48\\sub-CS48_ses-P48CSR1_behavior+ecephys.nwb",
           "size_bytes": 1.01302069E+9,
           "sha256": "580BEF6C0A46ECFF6B4580D68F85DE2FE70D20156D837594D2C4D3C62FBD1936"
@@ -358,7 +358,7 @@
           "subject": "CS48",
           "session_id": "P48CS_R2",
           "run": "R2",
-          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS48\\sub-CS48_ses-P48CSR2_behavior+ecephys.nwb",
+          "path": "raw\\nwb\\sub-CS48\\sub-CS48_ses-P48CSR2_behavior+ecephys.nwb",
           "relative_path": "raw\\nwb\\sub-CS48\\sub-CS48_ses-P48CSR2_behavior+ecephys.nwb",
           "size_bytes": 9.8829348E+8,
           "sha256": "E7CF7EFA0679AC708D4D1AE87BB167F08D01286837E2C26B6131BAAC204A977D"
@@ -367,7 +367,7 @@
           "subject": "CS49",
           "session_id": "P49CS_R1",
           "run": "R1",
-          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS49\\sub-CS49_ses-P49CSR1_behavior+ecephys.nwb",
+          "path": "raw\\nwb\\sub-CS49\\sub-CS49_ses-P49CSR1_behavior+ecephys.nwb",
           "relative_path": "raw\\nwb\\sub-CS49\\sub-CS49_ses-P49CSR1_behavior+ecephys.nwb",
           "size_bytes": 1.257984064E+9,
           "sha256": "0E945E966D1CCA7BEE7441BEE7BFBF2C7DF3E3764A0FA03AF0C7ACBA5BB49592"
@@ -376,7 +376,7 @@
           "subject": "CS49",
           "session_id": "P49CS_R2",
           "run": "R2",
-          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS49\\sub-CS49_ses-P49CSR2_behavior+ecephys.nwb",
+          "path": "raw\\nwb\\sub-CS49\\sub-CS49_ses-P49CSR2_behavior+ecephys.nwb",
           "relative_path": "raw\\nwb\\sub-CS49\\sub-CS49_ses-P49CSR2_behavior+ecephys.nwb",
           "size_bytes": 9.46447895E+8,
           "sha256": "BDAC0E2F484E101104A137530B3EE20F398B4727FF1716F6B02B5A4C3504A546"
@@ -385,7 +385,7 @@
           "subject": "CS51",
           "session_id": "P51CS_R1",
           "run": "R1",
-          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS51\\sub-CS51_ses-P51CSR1_behavior+ecephys.nwb",
+          "path": "raw\\nwb\\sub-CS51\\sub-CS51_ses-P51CSR1_behavior+ecephys.nwb",
           "relative_path": "raw\\nwb\\sub-CS51\\sub-CS51_ses-P51CSR1_behavior+ecephys.nwb",
           "size_bytes": 1.244681559E+9,
           "sha256": "C89AF9F9D01ACBB89AE75FB6B86C5319946EA2959B9B6B8BC681B109EF63D904"
@@ -394,7 +394,7 @@
           "subject": "CS51",
           "session_id": "P51CS_R2",
           "run": "R2",
-          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS51\\sub-CS51_ses-P51CSR2_behavior+ecephys.nwb",
+          "path": "raw\\nwb\\sub-CS51\\sub-CS51_ses-P51CSR2_behavior+ecephys.nwb",
           "relative_path": "raw\\nwb\\sub-CS51\\sub-CS51_ses-P51CSR2_behavior+ecephys.nwb",
           "size_bytes": 1.227348888E+9,
           "sha256": "97E90B45AB4F42E57B037BFCD77551E129BA87E14427D90320EACC4D2E1986F4"
@@ -403,7 +403,7 @@
           "subject": "CS53",
           "session_id": "P53CS_R1",
           "run": "R1",
-          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS53\\sub-CS53_ses-P53CSR1_behavior+ecephys.nwb",
+          "path": "raw\\nwb\\sub-CS53\\sub-CS53_ses-P53CSR1_behavior+ecephys.nwb",
           "relative_path": "raw\\nwb\\sub-CS53\\sub-CS53_ses-P53CSR1_behavior+ecephys.nwb",
           "size_bytes": 1.033846161E+9,
           "sha256": "B5059FFC956DF8A6005AAAA675E4F4E2CF1D081AF567CAD7FAA2354E84644898"
@@ -412,7 +412,7 @@
           "subject": "CS53",
           "session_id": "P53CS_R2",
           "run": "R2",
-          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS53\\sub-CS53_ses-P53CSR2_behavior+ecephys.nwb",
+          "path": "raw\\nwb\\sub-CS53\\sub-CS53_ses-P53CSR2_behavior+ecephys.nwb",
           "relative_path": "raw\\nwb\\sub-CS53\\sub-CS53_ses-P53CSR2_behavior+ecephys.nwb",
           "size_bytes": 8.82270191E+8,
           "sha256": "B9A7815311D9EEEA41BE4967EC720BC84303832BA530F41093D8508D9A5F34BB"
@@ -421,7 +421,7 @@
           "subject": "CS54",
           "session_id": "P54CS_R1",
           "run": "R1",
-          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS54\\sub-CS54_ses-P54CSR1_behavior+ecephys.nwb",
+          "path": "raw\\nwb\\sub-CS54\\sub-CS54_ses-P54CSR1_behavior+ecephys.nwb",
           "relative_path": "raw\\nwb\\sub-CS54\\sub-CS54_ses-P54CSR1_behavior+ecephys.nwb",
           "size_bytes": 1.132988695E+9,
           "sha256": "49A91928481E72ED623B9B828F90ADC87C08101318197525D618E9C5C887DE54"
@@ -430,7 +430,7 @@
           "subject": "CS54",
           "session_id": "P54CS_R2",
           "run": "R2",
-          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS54\\sub-CS54_ses-P54CSR2_behavior+ecephys.nwb",
+          "path": "raw\\nwb\\sub-CS54\\sub-CS54_ses-P54CSR2_behavior+ecephys.nwb",
           "relative_path": "raw\\nwb\\sub-CS54\\sub-CS54_ses-P54CSR2_behavior+ecephys.nwb",
           "size_bytes": 1.127644867E+9,
           "sha256": "A5E893B12AE12B1868BE517136F1785469B999247AD9F83453D7B5C282E25446"
@@ -439,7 +439,7 @@
           "subject": "CS55",
           "session_id": "P55CS_R1",
           "run": "R1",
-          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS55\\sub-CS55_ses-P55CSR1_behavior+ecephys.nwb",
+          "path": "raw\\nwb\\sub-CS55\\sub-CS55_ses-P55CSR1_behavior+ecephys.nwb",
           "relative_path": "raw\\nwb\\sub-CS55\\sub-CS55_ses-P55CSR1_behavior+ecephys.nwb",
           "size_bytes": 9.24729036E+8,
           "sha256": "E9768BF1A58322FABBD6AA577813C699CCD83018904CB2AA5E0A6E2EE84ECA6C"
@@ -448,7 +448,7 @@
           "subject": "CS55",
           "session_id": "P55CS_R2",
           "run": "R2",
-          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS55\\sub-CS55_ses-P55CSR2_behavior+ecephys.nwb",
+          "path": "raw\\nwb\\sub-CS55\\sub-CS55_ses-P55CSR2_behavior+ecephys.nwb",
           "relative_path": "raw\\nwb\\sub-CS55\\sub-CS55_ses-P55CSR2_behavior+ecephys.nwb",
           "size_bytes": 8.11170897E+8,
           "sha256": "93B7C6115FB7AAFEC5A5303A8EEF877E458A27BC2388362A9536F8D1050D7195"
@@ -457,7 +457,7 @@
           "subject": "CS56",
           "session_id": "P56CS_R1",
           "run": "R1",
-          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS56\\sub-CS56_ses-P56CSR1_behavior+ecephys.nwb",
+          "path": "raw\\nwb\\sub-CS56\\sub-CS56_ses-P56CSR1_behavior+ecephys.nwb",
           "relative_path": "raw\\nwb\\sub-CS56\\sub-CS56_ses-P56CSR1_behavior+ecephys.nwb",
           "size_bytes": 1.139766698E+9,
           "sha256": "AB6E51FAF199447F0525B061634650B505131159D5CFD004691886CF2F3E9177"
@@ -466,7 +466,7 @@
           "subject": "CS56",
           "session_id": "P56CS_R2",
           "run": "R2",
-          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS56\\sub-CS56_ses-P56CSR2_behavior+ecephys.nwb",
+          "path": "raw\\nwb\\sub-CS56\\sub-CS56_ses-P56CSR2_behavior+ecephys.nwb",
           "relative_path": "raw\\nwb\\sub-CS56\\sub-CS56_ses-P56CSR2_behavior+ecephys.nwb",
           "size_bytes": 1.187278887E+9,
           "sha256": "4D0BB1006526E35F2FA9CDB56F36417471E553EF6311824B6B2B6EAF51218F32"
@@ -475,7 +475,7 @@
           "subject": "CS57",
           "session_id": "P57CS_R1",
           "run": "R1",
-          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS57\\sub-CS57_ses-P57CSR1_behavior+ecephys.nwb",
+          "path": "raw\\nwb\\sub-CS57\\sub-CS57_ses-P57CSR1_behavior+ecephys.nwb",
           "relative_path": "raw\\nwb\\sub-CS57\\sub-CS57_ses-P57CSR1_behavior+ecephys.nwb",
           "size_bytes": 9.10108268E+8,
           "sha256": "C2ACDFA20CDF78CC3B418D0541B1562A3E4C4EB025D65E2E512350DB9D366415"
@@ -484,7 +484,7 @@
           "subject": "CS57",
           "session_id": "P57CS_R2",
           "run": "R2",
-          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS57\\sub-CS57_ses-P57CSR2_behavior+ecephys.nwb",
+          "path": "raw\\nwb\\sub-CS57\\sub-CS57_ses-P57CSR2_behavior+ecephys.nwb",
           "relative_path": "raw\\nwb\\sub-CS57\\sub-CS57_ses-P57CSR2_behavior+ecephys.nwb",
           "size_bytes": 9.35356986E+8,
           "sha256": "357D8CDFBF06C30178605923131BBBD0E5A1FCE52507D9BD37F4AAE522FDD9C2"
@@ -493,7 +493,7 @@
           "subject": "CS58",
           "session_id": "P58CS_R1",
           "run": "R1",
-          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS58\\sub-CS58_ses-P58CSR1_behavior+ecephys.nwb",
+          "path": "raw\\nwb\\sub-CS58\\sub-CS58_ses-P58CSR1_behavior+ecephys.nwb",
           "relative_path": "raw\\nwb\\sub-CS58\\sub-CS58_ses-P58CSR1_behavior+ecephys.nwb",
           "size_bytes": 8.15928563E+8,
           "sha256": "EB25B4B187BCAF2F246942C54DAF434FA82FAECB6CCC8D9F8FB2BE884945DC33"
@@ -502,7 +502,7 @@
           "subject": "CS60",
           "session_id": "P60CS_R1",
           "run": "R1",
-          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS60\\sub-CS60_ses-P60CSR1_behavior+ecephys.nwb",
+          "path": "raw\\nwb\\sub-CS60\\sub-CS60_ses-P60CSR1_behavior+ecephys.nwb",
           "relative_path": "raw\\nwb\\sub-CS60\\sub-CS60_ses-P60CSR1_behavior+ecephys.nwb",
           "size_bytes": 9.13830001E+8,
           "sha256": "C41A23CF67CDB94CC26CB65699B21EFB7546AD95CF83F99A6CA0D635D28FC4CA"
@@ -511,7 +511,7 @@
           "subject": "CS62",
           "session_id": "P62CS_R1",
           "run": "R1",
-          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS62\\sub-CS62_ses-P62CSR1_behavior+ecephys.nwb",
+          "path": "raw\\nwb\\sub-CS62\\sub-CS62_ses-P62CSR1_behavior+ecephys.nwb",
           "relative_path": "raw\\nwb\\sub-CS62\\sub-CS62_ses-P62CSR1_behavior+ecephys.nwb",
           "size_bytes": 5.4820254E+8,
           "sha256": "92D118453B137283B18C62B6BA5271D910B4C0701A894A34B88C996AB711DD17"
@@ -520,7 +520,7 @@
           "subject": "CS62",
           "session_id": "P62CS_R2",
           "run": "R2",
-          "path": "E:\\HighEV_sampling\\Bmovie\\raw\\nwb\\sub-CS62\\sub-CS62_ses-P62CSR2_behavior+ecephys.nwb",
+          "path": "raw\\nwb\\sub-CS62\\sub-CS62_ses-P62CSR2_behavior+ecephys.nwb",
           "relative_path": "raw\\nwb\\sub-CS62\\sub-CS62_ses-P62CSR2_behavior+ecephys.nwb",
           "size_bytes": 4.92201332E+8,
           "sha256": "59D5A05DD9AAB5BE88E8B7E3FDA08ECBF42A91FCFAC2DC8189D8089930E44CDF"
@@ -774,7 +774,7 @@
     "mde80_log10_per_z": 0.00448,
     "power": 0.8,
     "unit": "log10_per_z",
-    "simulation_contract_sha256": "51F06B9A733D6FF88534FAECE148E5AB89EDB17B6372657313BF3D4D3BF53260",
+    "simulation_contract_sha256": "AE9B0EEE540CC07AA3D3FE45D445B0C71815E95D7D461C6AB615903532705D09",
     "i02_expected_slope_log10_per_z": [
       2.39E-6,
       3.89E-5,

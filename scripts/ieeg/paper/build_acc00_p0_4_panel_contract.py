@@ -11,7 +11,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 PARENT = HERE / "acc00_sim_p0_3_ablation_contract.json"
 OUT = HERE / "acc00_sim_p0_4_panel_contract.json"
-PARENT_SHA256 = "C27DD782384AEAED32995E9C2C508A38D57349BFEA3D3EC7BC2E4D08D983F949"
+PARENT_SHA256 = "C7BB5C0024D60D31C398FCC5513E203341B4E5A4B318E1656A91AB33C8DC4354"
 
 
 def sha256(path: Path) -> str:

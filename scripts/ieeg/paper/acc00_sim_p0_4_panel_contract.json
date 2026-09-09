@@ -4,7 +4,7 @@
   "purpose": "pre-registered blinded null-FPR diagnostic panel; implementation and smoke only, no main run",
   "parent_p0_2": {
     "path": "scripts/ieeg/paper/acc00_sim_powercurve_contract.json",
-    "sha256": "E3C35D065F6819AA611B7A60573689BFDCED06E399F80B6DAAE40F46BE3E1863",
+    "sha256": "59B22764181C475D824B3847F1FC4F2E3EA726C62618AB02D8691B028031CC55",
     "immutable": true
   },
   "parent_acc00_null": {
@@ -334,7 +334,7 @@
   },
   "parent_p0_3": {
     "path": "scripts/ieeg/paper/acc00_sim_p0_3_ablation_contract.json",
-    "sha256": "C27DD782384AEAED32995E9C2C508A38D57349BFEA3D3EC7BC2E4D08D983F949",
+    "sha256": "C7BB5C0024D60D31C398FCC5513E203341B4E5A4B318E1656A91AB33C8DC4354",
     "immutable": true
   }
 }

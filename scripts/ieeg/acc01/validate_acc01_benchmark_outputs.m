@@ -19,7 +19,7 @@ names = strings(0, 1); states = strings(0, 1); details = strings(0, 1);
 contractPath = fullfile(root, "scripts", "ieeg", "acc01_contract.json");
 contract = jsondecode(fileread(contractPath));
 contractHash = sha256File(contractPath);
-frozenHash = "F2C874719CA9F83010666538017570D4980E0E7D622A0BC0A1E5F4501368D2C9";
+frozenHash = "D15F89687CCB1FEB4D0DFD9C902B12255876CA54551F8014229FD65E9FE32ABD";
 add("contract SHA", contractHash == frozenHash, contractHash);
 
 manifestPath = fullfile(outDir, "benchmark_manifest.json");
