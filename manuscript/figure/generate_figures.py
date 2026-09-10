@@ -1,4 +1,4 @@
-"""Generate the six frozen-specification Bmovie manuscript figures.
+"""Generate the eight frozen-specification Bmovie manuscript figures.
 
 This script reads only completed summary/output tables.  It performs no
 simulation, statistical re-estimation, or manuscript editing.
@@ -174,6 +174,7 @@ def _style_legend(legend):
 
 def route_legend(ax, color, **kwargs):
     """R1/R2 legend: run is encoded by fill state, not by colour."""
+    extra = list(kwargs.pop("extra", []))
     scale = _legend_scale(ax)
     handles = [
         Line2D([], [], marker="o", linestyle="None", markersize=6.0 * scale,
@@ -183,7 +184,7 @@ def route_legend(ax, color, **kwargs):
     ]
     legend_kwargs = _legend_kwargs(ax)
     legend_kwargs.update(kwargs)
-    return _style_legend(ax.legend(handles=handles, **legend_kwargs))
+    return _style_legend(ax.legend(handles=handles + extra, **legend_kwargs))
 
 
 def bar_legend(ax, color=INK, **kwargs):
@@ -202,15 +203,16 @@ def fmt_signed(value, digits=2):
 
 
 def figure1():
-    fig, ax = plt.subplots(figsize=(7.48, 4.9))
+    fig, ax = plt.subplots(figsize=(7.48, 6.4))
     ax.set_axis_off()
     ax.set_xlim(0, 1)
     ax.set_ylim(0, 1)
 
-    def box(x, y, w, h, text, color, fs=6.8):
+    def box(x, y, w, h, text, color, fs=6.0, ls="-"):
         rect = patches.FancyBboxPatch((x, y), w, h,
                                       boxstyle="round,pad=0.012,rounding_size=0.018",
-                                      facecolor=color, edgecolor=INK, linewidth=0.9)
+                                      facecolor=color, edgecolor=INK, linewidth=0.9,
+                                      linestyle=ls)
         ax.add_patch(rect)
         ax.text(x + w / 2, y + h / 2, text, ha="center", va="center", fontsize=fs,
                 color=INK)
@@ -219,42 +221,67 @@ def figure1():
         return ax.annotate("", (x2, y2), (x1, y1), arrowprops=dict(
             arrowstyle="->", color=INK, lw=1.1, shrinkA=3, shrinkB=3))
 
-    ax.text(0.50, 0.985, "Synthetic-world pipeline and estimator routes",
+    ax.text(0.50, 0.985, "Design-faithful audit framework for event-related inference",
             fontsize=10.5, fontweight="bold", va="top", ha="center", color=INK)
-    ax.text(0.98, 0.945, "Schematic, not a data result", fontsize=7.2,
+    ax.text(0.98, 0.952, "Schematic, not a data result", fontsize=7.2,
             va="top", ha="right", color=GRAY, style="italic")
-    # Two labelled rows so the reading order is unambiguous: three generation
-    # stages chained left to right, then the same world scored by two routes
-    # that reconverge at the shared inference. Numeric details (spectral
-    # bounds, amplitude constants, kernel formula) live in the caption.
-    ax.text(0.03, 0.895, "Generate one synthetic world", fontsize=7.6,
-            color=GRAY, va="bottom")
-    box(0.03, 0.70, 0.27, 0.15,
-        "Bmovie event schedule\n1,901 prediction-difficulty events,\nbad segments and edges marked", "#EAF2FB", 6.4)
-    for x in [0.075, 0.105, 0.145, 0.180, 0.220, 0.245]:
-        ax.plot([x, x], [0.648, 0.668], color=BLUE, lw=1.0)
-    ax.add_patch(patches.Rectangle((0.122, 0.648), 0.024, 0.020, facecolor="#BFC7D0",
-                                   edgecolor="none"))
-    ax.text(0.28, 0.658, "unavailable segment", ha="left", va="center",
-            fontsize=5.6, color=GRAY)
-    box(0.37, 0.70, 0.27, 0.15,
-        "1/f background signal\nat participant–session–pair\namplitude hierarchy", "#F4F7F9", 6.4)
-    box(0.71, 0.70, 0.26, 0.15,
-        "Event-locked transient\nhalf-sine injected per event,\nor pure null (P0-4)", "#EEF6F1", 6.4)
-    arrow(0.30, 0.775, 0.37, 0.775)
-    arrow(0.64, 0.775, 0.71, 0.775)
-
-    ax.text(0.03, 0.545, "Score the same world with two estimator routes",
+    # Two bands: the upper band is the reusable audit sequence (general
+    # framework), the lower band is the Bmovie implementation example that
+    # realizes it. Frozen stage tags (P0-1..P0-7) are carried in parentheses
+    # on the framework boxes; numeric constants live in Methods. Boxes are
+    # kept inside the axes (the round pad extends past the given rect).
+    ax.text(0.02, 0.906, "General framework: reusable audit sequence",
             fontsize=7.6, color=GRAY, va="bottom")
-    box(0.20, 0.30, 0.24, 0.16, "Mpower\naperiodic-adjusted\npower change", "#EAF2FB", 7.0)
-    box(0.56, 0.30, 0.24, 0.16, "Mphase\nERP-subtracted\nphase consistency", "#FDEFE2", 7.0)
-    arrow(0.84, 0.70, 0.34, 0.46)
-    arrow(0.84, 0.70, 0.66, 0.46)
-    box(0.355, 0.07, 0.29, 0.13, "Shared inference\nexact sign-flip max-T, FWER 0.05",
-        "#F2F5F7", 6.4)
-    arrow(0.32, 0.30, 0.46, 0.20)
-    arrow(0.68, 0.30, 0.54, 0.20)
-    finish(fig, "Figure1")
+
+    # Upper band, row 1: design -> worlds -> null calibration -> power.
+    box(0.02, 0.745, 0.205, 0.125,
+        "1. Observed design\nevent table · support\nhierarchy · frozen path", "#F4F7F9")
+    box(0.265, 0.745, 0.205, 0.125, "2. Synthetic worlds\ndesign-faithful,\nnull and injected", "#F4F7F9")
+    box(0.510, 0.745, 0.205, 0.125, "3. Null calibration\nempirical FPR + CI\n(P0-1, P0-7)", "#F4F7F9")
+    box(0.755, 0.745, 0.205, 0.125, "4. Estimand-matched power\ninjection · power · bias\n· coverage (P0-2, P0-7)", "#F4F7F9")
+    arrow(0.225, 0.8075, 0.265, 0.8075)
+    arrow(0.470, 0.8075, 0.510, 0.8075)
+    arrow(0.715, 0.8075, 0.755, 0.8075)
+
+    # Upper band, row 2 (right to left): mechanism -> blinded -> surrogate ->
+    # perturbation. Steps 5 and 6 are conditional (Table 3), so their boxes
+    # carry dashed borders and their trigger conditions.
+    arrow(0.8575, 0.745, 0.8575, 0.635)
+    box(0.755, 0.51, 0.205, 0.125, "5. Mechanism diagnosis\n(P0-3, P0-7) if calibration\nor sensitivity fails", "#F4F7F9",
+        ls=(0, (4, 2)))
+    box(0.510, 0.51, 0.205, 0.125, "6. Blinded implementation\nstress test (P0-4)\nwhen decision-relevant", "#F4F7F9",
+        ls=(0, (4, 2)))
+    box(0.265, 0.51, 0.205, 0.125, "7. Surrogate audit\ninvariant · structure ·\nfeasible domain (P0-5)", "#F4F7F9")
+    box(0.02, 0.51, 0.205, 0.125, "8. Design perturbation\nrobustness (P0-6)", "#F4F7F9")
+    arrow(0.755, 0.5725, 0.715, 0.5725)
+    arrow(0.510, 0.5725, 0.470, 0.5725)
+    arrow(0.265, 0.5725, 0.225, 0.5725)
+
+    # Upper band, row 3: interpretation gate, entered from the perturbation box.
+    arrow(0.1225, 0.51, 0.1225, 0.405)
+    box(0.02, 0.28, 0.45, 0.125,
+        "9. Interpretation\nafter calibration, sensitivity, support,\nand perturbation robustness", "#EEF6F1")
+
+    ax.text(0.02, 0.215, "Bmovie implementation example", fontsize=7.6,
+            color=GRAY, va="bottom")
+
+    # Lower band: the observed design (schedule, support, hierarchy) feeds
+    # design-faithful synthetic worlds, which are scored by two stacked routes
+    # converging into the shared inference at the far right.
+    box(0.02, 0.075, 0.21, 0.12,
+        "Observed Bmovie design\n1,901 events · bad support\nparticipant → session → pair", "#EAF2FB", 5.8)
+    box(0.27, 0.075, 0.21, 0.12,
+        "Design-faithful synthetic worlds\npreserve schedule, clean\nsupport, and hierarchy", "#EAF2FB", 5.8)
+    box(0.52, 0.125, 0.20, 0.055, "Power change (Mpower)", "#EAF2FB", 6.2)
+    box(0.52, 0.05, 0.20, 0.055, "Phase consistency (Mphase)", "#FDEFE2", 6.2)
+    box(0.76, 0.075, 0.22, 0.12, "Shared inference\nexact sign-flip max-T,\nFWER 0.05",
+        "#F2F5F7", 6.0)
+    arrow(0.23, 0.135, 0.27, 0.135)
+    arrow(0.48, 0.15, 0.52, 0.1525)
+    arrow(0.48, 0.10, 0.52, 0.0775)
+    arrow(0.72, 0.1525, 0.76, 0.145)
+    arrow(0.72, 0.0775, 0.76, 0.095)
+    finish(fig, "Figure_1")
 
 
 def figure2():
@@ -271,8 +298,9 @@ def figure2():
         color = BLUE if fam == "Mpower" else ORANGE
         marker = "o" if run == "R1" else "s"
         axa.scatter(row.null_mean_over_sd, y, s=44, color=color, marker=marker, zorder=3)
+        # Unit is carried by the x-axis label, so no suffix on either route.
         axa.text(row.null_mean_over_sd + 0.07, y,
-                 fmt_signed(row.null_mean_over_sd, 2) if fam == "Mpower" else fmt_signed(row.null_mean_over_sd, 2) + " SD",
+                 fmt_signed(row.null_mean_over_sd, 2),
                  va="center", fontsize=7.2)
     axa.axvline(0, color=GRAY, lw=0.9, zorder=0)
     axa.set_yticks(range(4), labels)
@@ -302,17 +330,18 @@ def figure2():
     axb.set_ylabel("False-positive rate (95% CP interval)")
     axb.set_title("Null FPR", loc="center", x=0.50, pad=10)
     bar_legend(axb)
-    finish(fig, "Figure2", [[("A", axa), ("B", axb)]])
+    finish(fig, "Figure_2", [[("A", axa), ("B", axb)]])
 
 
 def figure3():
     d = pd.read_csv(DATA / "p0_2_sim_powercurve" / "tables" /
                     "p0_2_powercurve_summary.tsv", sep="\t")
     grid = [f"G{i:02d}" for i in range(1, 8)]
-    fig = plt.figure(figsize=(7.48, 3.75))
-    fig.subplots_adjust(bottom=0.31)
-    gs = GridSpec(1, 2, figure=fig, wspace=0.42)
+    fig = plt.figure(figsize=(7.48, 6.55))
+    gs = GridSpec(2, 2, figure=fig, wspace=0.42, hspace=0.92,
+                  height_ratios=[1.0, 0.92])
     axa, axb = [fig.add_subplot(gs[0, i]) for i in range(2)]
+    axc = fig.add_subplot(gs[1, :])
     offsets = {"R1": -0.10, "R2": 0.10}
     markers = {"R1": "o", "R2": "s"}
     for run, color in [("R1", BLUE), ("R2", BLUE)]:
@@ -326,41 +355,71 @@ def figure3():
                              s.coverage_cp95_high.to_numpy(), fmt=markers[run] + "-", color=color,
                              mfc="white" if run == "R2" else color, capsize=2.5, lw=1.15,
                              markersize=4.2, label=run)
+        axc.errorbar(x, s.observed_slope_mean.to_numpy(),
+                     yerr=s.observed_slope_sample_sd.to_numpy(),
+                     fmt=markers[run] + "-", color=color,
+                     mfc="white" if run == "R2" else color, capsize=2.5,
+                     lw=1.15, markersize=4.2, label=run)
     for ax in [axa, axb]:
         ax.set_xticks(range(7), grid)
         plt.setp(ax.get_xticklabels(), rotation=45, ha="center")
         for x, label in zip([4, 5, 6], ["0.5×", "1×", "2×"]):
             ax.text(x, -0.18, label, transform=ax.get_xaxis_transform(),
                     ha="center", va="top", fontsize=7.0)
-        ax.set_xlabel("Additive grid cell", labelpad=39)
+        # Sit the axis label just below the 0.5x/1x/2x second-row annotations;
+        # a larger labelpad drops it into panel C's letter/title band.
+        ax.set_xlabel("Additive grid cell", labelpad=12)
+    for ax in [axa, axb, axc]:
+        # Separate the near-null cells (G01-G04) from the reference-scale
+        # injections (G05-G07) without adding text.
+        ax.axvline(3.5, color=GRAY, lw=0.7, ls=":", zorder=0)
     axa.axhline(0.05, color=GRAY, ls="--", lw=0.9)
     axa.text(6.12, 0.06, "0.05", fontsize=7, color=GRAY, gid="data-label")
     # G07's R1 interval reaches ~0.26, so the ceiling keeps that bar whole
     # while still removing the empty band a 0.35 limit left above the data.
     axa.set_ylim(0, 0.28)
-    axa.set_ylabel("Rejection proportion (power; 95% CP interval)")
-    axa.set_title("Rejection rate never exceeded 0.12", loc="center", x=0.50, pad=10, fontsize=9)
+    axa.set_ylabel("Empirical rejection rate (95% CP interval)")
+    # pad clears the tall y-axis labels, whose tops reach above the axes into
+    # the title band (panel B's title otherwise collides with its ylabel).
+    axa.set_title("Rejection rate never exceeded 0.12", loc="center", x=0.50, pad=24, fontsize=9)
     route_legend(axa, BLUE)
 
     # Leave a small upper band for the common upper-left R1/R2 legend.
     axb.set_ylim(0, 1.30)
     axb.set_ylabel("Coverage proportion (95% CP interval)")
-    axb.set_title("Coverage collapsed to 0.00 at the largest injections", loc="center", x=0.50, pad=10, fontsize=9)
+    axb.set_title("Coverage collapsed to 0.00 at the largest injections", loc="center", x=0.50, pad=24, fontsize=9)
     route_legend(axb, BLUE)
 
-    # The attenuation diagnostic is reported as tabulated values in the figure
-    # caption rather than drawn here.  The observed bridge slopes span a range
-    # about six times narrower than the true slopes, so a scatter against the
-    # identity line places 8 of the 14 points inside the axis origin and leaves
-    # most of the panel empty; the numbers carry the comparison directly.
-    finish(fig, "Figure3", [[("A", axa), ("B", axb)]])
+    truth = d[d.run == "R1"].set_index("grid_id").loc[grid, "true_bridge_slope"].to_numpy()
+    axc.plot(np.arange(7), truth, "D--", color=INK, lw=1.15, markersize=4.0,
+             markerfacecolor="white", label="Injected truth")
+    axc.axhline(0, color=GRAY, lw=0.9)
+    axc.set_xticks(range(7), grid)
+    for x, label in zip([4, 5, 6], ["0.5×", "1×", "2×"]):
+        axc.text(x, -0.16, label, transform=axc.get_xaxis_transform(),
+                 ha="center", va="top", fontsize=7.0)
+    axc.set_xlabel("Additive grid cell", labelpad=31)
+    axc.set_ylabel("Slope (log10 power per z)")
+    axc.ticklabel_format(axis="y", style="sci", scilimits=(-3, -3))
+    axc.set_title("Observed slopes attenuated as injected truth increased",
+                  loc="center", x=0.50, pad=10, fontsize=9)
+    handles = [
+        Line2D([], [], marker="o", linestyle="-", markersize=4.5,
+               markerfacecolor=BLUE, markeredgecolor=BLUE, color=BLUE, label="R1 observed"),
+        Line2D([], [], marker="s", linestyle="-", markersize=4.5,
+               markerfacecolor="white", markeredgecolor=BLUE, color=BLUE, label="R2 observed"),
+        Line2D([], [], marker="D", linestyle="--", markersize=4.2,
+               markerfacecolor="white", markeredgecolor=INK, color=INK, label="Injected truth"),
+    ]
+    _style_legend(axc.legend(handles=handles, **_legend_kwargs(axc)))
+    finish(fig, "Figure_3", [[("A", axa), ("B", axb)], [("C", axc)]])
 
 
 def figure4():
     contrasts = pd.read_csv(DATA / "p0_3_ablation" / "tables" /
                             "p0_3_mpower_factor_contrasts.tsv", sep="\t")
     diagnostic = pd.read_csv(DATA / "p0_3_ablation" / "tables" /
-                             "p0_3_mpower_pair_diagnostics.tsv", sep="\t")
+                             "p0_3_mpower_pair_diagnostics.tsv.gz", sep="\t")
     replay = pd.read_csv(DATA / "p0_3_ablation" / "tables" /
                          "p0_3_mphase_replay_shape_summary.tsv", sep="\t")
     hist = pd.read_csv(DATA / "p0_3_ablation" / "tables" /
@@ -433,9 +492,11 @@ def figure4():
     for ix, values in enumerate(vals, start=1):
         axb.scatter(ix + jitter_rng.uniform(-0.23, 0.23, size=len(values)), np.clip(values, 0, 1),
                     s=0.18, color=BLUE, alpha=0.035, edgecolors="none", rasterized=True, zorder=2)
-        saturated = values[np.isclose(values, 1.0)]
+        # Full-retention cells are constant at 0.9995, not 1.0, so the
+        # saturation strip must trigger above 0.99 rather than at isclose(1).
+        saturated = values[values > 0.99]
         if len(saturated):
-            # Deterministic in-cell spread keeps the observed saturation visible at y=1.
+            # Deterministic in-cell spread keeps the observed saturation visible.
             axb.scatter(ix + np.linspace(-0.24, 0.24, len(saturated)), saturated,
                         s=1.4, color=BLUE, alpha=0.22, edgecolors="none",
                         rasterized=True, zorder=3, clip_on=False)
@@ -497,7 +558,7 @@ def figure4():
     axd.set_ylabel("Observed FPR")
     axd.set_title("Mphase center-displacement check", loc="center", x=0.50, pad=10)
     route_legend(axd, ORANGE)
-    finish(fig, "Figure4", [[("A", axa), ("B", axb)], [("C", axc1), ("D", axd)]])
+    finish(fig, "Figure_4", [[("A", axa), ("B", axb)], [("C", axc1), ("D", axd)]])
 
 
 def figure5():
@@ -544,7 +605,7 @@ def figure5():
     axa.set_xlim(-0.58, 4.33)
     axa.set_ylim(0, 1.10)
     axa.set_ylabel("False-positive rate (95% CP interval)")
-    axa.set_title("Member FPR separated the risk classes", loc="center", x=0.50, pad=10)
+    axa.set_title("Member FPRs showed distinct null patterns", loc="center", x=0.50, pad=10)
     route_legend(axa, INK)
 
     for xi, run in enumerate(["R1", "R2"]):
@@ -597,8 +658,32 @@ def figure5():
                bbox_to_anchor=(0.5, 0.442), fontsize=8.5,
                handlelength=1.0,
                handletextpad=0.45, columnspacing=0.75)
-    finish(fig, "Figure5", [[("A", axa), ("B", axb)], [("C", axc1)]],
+    finish(fig, "Figure_5", [[("A", axa), ("B", axb)], [("C", axc1)]],
            panel_label_offsets={"C": (-0.085, 0.084)})
+
+
+def _merge_intervals(intervals):
+    """Merge overlapping or touching intervals on [0, 1]; input need not be sorted."""
+    merged = []
+    for start, end in sorted(intervals):
+        if merged and start <= merged[-1][1] + 1e-12:
+            merged[-1] = (merged[-1][0], max(merged[-1][1], end))
+        else:
+            merged.append((start, end))
+    return merged
+
+
+def _complement_intervals(intervals):
+    """Complement of already-merged intervals within [0, 1]."""
+    gaps = []
+    previous = 0.0
+    for start, end in intervals:
+        if start > previous + 1e-12:
+            gaps.append((previous, start))
+        previous = max(previous, end)
+    if previous < 1.0 - 1e-12:
+        gaps.append((previous, 1.0))
+    return gaps
 
 
 def figure6():
@@ -614,30 +699,51 @@ def figure6():
 
     axa.set_xlim(0, 1)
     axa.set_ylim(-0.1, 3.3)
-    axa.set_yticks([0.25, 1.25, 2.25], ["Prohibited", "Circular modulo", "Feasible complement"])
+    # Tick marks sit at band centers: each band is 0.38 tall, so the center is
+    # its bottom edge plus 0.19.
+    axa.set_yticks([0.44, 1.44, 2.44],
+                   ["Prohibited", "Circular modulo", "Feasible complement"])
     axa.set_xticks([0, 1.0], ["0", "movie schedule"])
     axa.set_xlabel("Circular shift δ")
     axa.set_title("Feasible-domain construction", loc="center", x=0.50,
                   fontsize=10.5, fontweight="bold", color=INK, pad=10)
-    # Schematic interval construction only; no selected empirical pair.
-    for start, width in [(0.08, 0.21), (0.47, 0.16), (0.78, 0.12)]:
-        axa.add_patch(patches.Rectangle((start, 0.05), width, 0.38,
+    # Schematic interval construction only; no selected empirical pair. The
+    # three bands are mutually consistent and non-overlapping: the lower band
+    # shows the dilated prohibitions after circular mapping and merging, the
+    # middle band highlights the two slivers that the wrap-around produced,
+    # and the upper band is the exact complement of the lower band. Widths remain illustrative: the drawn feasible slivers are
+    # far wider than the audited median in Panel B (0.96% of the schedule).
+    raw_lower = [(0.05, 0.30), (0.52, 0.77)]
+    raw_upper = [(0.25, 0.48), (0.70, 0.93)]
+    raw_wrap = (0.95, 1.02)   # runs past the right edge; continues at the left
+    mapped = []
+    for start, end in [*raw_lower, *raw_upper, raw_wrap]:
+        if end <= 1.0:
+            mapped.append((start, end))
+        else:
+            mapped.append((start, 1.0))
+            mapped.append((0.0, end - 1.0))
+    prohibited = _merge_intervals(mapped)
+    feasible = _complement_intervals(prohibited)
+    for start, end in prohibited:
+        axa.add_patch(patches.Rectangle((start, 0.25), end - start, 0.38,
                                         facecolor=RED, edgecolor="none", alpha=0.78))
-    for start, width in [(0.00, 0.10), (0.18, 0.25), (0.45, 0.24), (0.75, 0.25)]:
-        axa.add_patch(patches.Rectangle((start, 1.05), width, 0.38,
+    wrap_left = (0.0, raw_wrap[1] - 1.0)        # the piece that wrapped to t=0
+    wrap_right = (raw_wrap[0], 1.0)             # the tail of the original piece
+    for start, end in (wrap_left, wrap_right):
+        axa.add_patch(patches.Rectangle((start, 1.25), end - start, 0.38,
                                         facecolor=PURPLE, edgecolor="none", alpha=0.78))
-    for start, width in [(0.00, 0.09), (0.22, 0.06), (0.52, 0.035), (0.84, 0.02)]:
-        axa.add_patch(patches.Rectangle((start, 2.05), width, 0.38,
+    for start, end in feasible:
+        axa.add_patch(patches.Rectangle((start, 2.25), end - start, 0.38,
                                         facecolor=GREEN, edgecolor="none", alpha=0.85))
-    axa.text(0.98, 3.08, "Schematic; no data-derived pair", ha="right", va="top",
-             fontsize=7, color=GRAY)
-    # Without this note the modulo row reads as if wrapping had created more
-    # prohibition than the dilation row started with.
-    axa.text(0.5, 0.90, "wrap-around merges intervals; it never adds prohibition",
-             ha="center", fontsize=6.6, color=GRAY)
-    axa.text(0.5, 0.64, "edge/bad dilation", ha="center", fontsize=8.4, color=RED)
-    axa.text(0.5, 1.64, "map + merge intervals", ha="center", fontsize=8.4, color=PURPLE)
-    axa.text(0.5, 2.72, "enumerated feasible intervals", ha="center", fontsize=8.4, color=GREEN)
+    axa.text(0.98, 3.08, "Schematic; widths not to scale, no data-derived pair",
+             ha="right", va="top", fontsize=7, color=GRAY)
+    axa.text(0.5, 0.04, "edge/bad dilation, circularly merged", ha="center",
+             fontsize=8.4, color=RED)
+    axa.text(0.5, 1.04, "circular wrap-around", ha="center",
+             fontsize=8.4, color=PURPLE)
+    axa.text(0.5, 2.04, "enumerated feasible intervals", ha="center",
+             fontsize=8.4, color=GREEN)
 
     # The census result itself: every eligible pair's feasible domain is a
     # fraction of a percent of the schedule.
@@ -652,7 +758,171 @@ def figure6():
     axb.set_title("The audited feasible domains", loc="center", x=0.50,
                   fontsize=10.5, fontweight="bold", color=INK, pad=10)
 
-    finish(fig, "Figure6", [[("A", axa), ("B", axb)]])
+    finish(fig, "Figure_6", [[("A", axa), ("B", axb)]])
+
+
+def figure7():
+    """P0-6 event-density perturbation: ordered Mphase FPR decline, flat Mpower.
+
+    Panel A plots per-density FPR point estimates with Clopper-Pearson 95%
+    intervals from paired_fpr_contrast.tsv (Mphase at 0.5x/1x/1.5x, Mpower at
+    1x/1.5x, where paired rows exist). Panel B is the paired-difference forest
+    plot for the prespecified 1.5x-versus-1x contrast with Newcombe method-10
+    intervals and the preregistered attenuation threshold.
+    """
+    P06 = ROOT / "processed" / "subject" / "group" / "ieeg_p0_6_perturbation"
+    pc = pd.read_csv(P06 / "paired_fpr_contrast.tsv", sep="\t")
+
+    fig = plt.figure(figsize=(7.48, 3.55))
+    gs = GridSpec(1, 2, figure=fig, wspace=0.5)
+    axa = fig.add_subplot(gs[0, 0])
+    axb = fig.add_subplot(gs[0, 1])
+
+    def density_value(tag):
+        return float(tag.replace("p", ".").rstrip("x"))
+
+    # Panel A: per-density FPR with CP intervals. The 1x reference is carried
+    # in the FPR_1p0 columns of each paired row and is drawn explicitly so the
+    # prespecified 1.5x-versus-1x contrast has both endpoints visible.
+    for family, color, alpha, ls in [("Mphase", ORANGE, 1.0, "-"),
+                                     ("Mpower", BLUE, 0.6, "--")]:
+        sub = pc[pc.family == family]
+        for run, off, marker, face in [("R1", -0.045, "o", color), ("R2", 0.045, "s", "white")]:
+            pts = {}
+            for _, r in sub[sub.run == run].iterrows():
+                pts[density_value(r.density)] = (r.FPR_1p5, r.FPR_1p5_CP_low, r.FPR_1p5_CP_high)
+                pts[1.0] = (r.FPR_1p0, r.FPR_1p0_CP_low, r.FPR_1p0_CP_high)
+            xs = sorted(pts)
+            ys = np.array([pts[x][0] for x in xs])
+            los = np.array([pts[x][1] for x in xs])
+            his = np.array([pts[x][2] for x in xs])
+            xo = np.array(xs) + off
+            errorbar_from_bounds(axa, xo, ys, los, his, fmt=marker,
+                                 color=color, mfc=face, mec=color, alpha=alpha,
+                                 capsize=2.5, lw=1.1, markersize=5.0, zorder=3)
+            axa.plot(xo, ys, color=color, lw=1.0, ls=ls, alpha=alpha * 0.65, zorder=2)
+    axa.axhline(0.05, color=GRAY, lw=0.9, ls="--")
+    axa.text(0.30, 0.061, "nominal 0.05", ha="left", fontsize=6.8, color=GRAY,
+             gid="data-label")
+    axa.set_xticks([0.5, 1.0, 1.5], ["0.5×", "1×", "1.5×"])
+    axa.set_xlim(0.28, 1.80)
+    axa.set_ylim(0, 0.92)
+    axa.set_xlabel("Schedule density relative to the original schedule")
+    axa.set_ylabel("False-positive rate (95% CP interval)")
+    axa.set_title("Mphase FPR declined with schedule density", loc="center", x=0.50,
+                  fontsize=8.5, pad=10)
+    route_legend(axa, INK, extra=[Line2D([], [], color=BLUE, ls="--", lw=1.2,
+                                         label="Mpower")])
+
+    # Panel B: paired 1.5x-versus-1x differences (Newcombe method-10 intervals);
+    # row order mirrors Figure 1 (Mpower above, Mphase below); run encoded by
+    # fill state (R1 filled, R2 white).
+    rows = ["Mpower R1", "Mpower R2", "Mphase R1", "Mphase R2"]
+    fam_run = [tuple(r.split(" ")) for r in rows]
+    for i, (family, run) in enumerate(fam_run):
+        r = pc[(pc.family == family) & (pc.run == run) & (pc.density == "1p5x")].iloc[0]
+        y = len(rows) - 1 - i
+        color = ORANGE if family == "Mphase" else BLUE
+        axb.scatter(r.Delta, y, s=45, color=color, zorder=4)
+        axb.hlines(y, r.CI_lower, r.CI_upper, color=color, lw=1.6, zorder=3)
+        axb.vlines([r.CI_lower, r.CI_upper], y - 0.16, y + 0.16, color=color,
+                   lw=1.0, zorder=3)
+    axb.axvline(0, color=GRAY, lw=0.9)
+    axb.axvline(-0.05, color=RED, lw=1.0, ls="--")
+    axb.text(-0.058, -0.56, "attenuation\nthreshold", ha="right", va="top",
+             fontsize=6.8, color=RED, gid="data-label", linespacing=1.35)
+    axb.set_yticks(range(4), rows[::-1])
+    axb.set_xlim(-0.48, 0.42)
+    axb.set_ylim(-1.0, 3.8)
+    axb.set_xlabel("Paired FPR difference (1.5× − 1×)")
+    axb.set_title("Prespecified paired contrast", loc="center", x=0.50,
+                  fontsize=8.5, pad=10)
+
+    finish(fig, "Figure_7", [[("A", axa), ("B", axb)]])
+
+
+def figure8():
+    """P0-7 aggregation remedy and injection-matched validation (Mphase).
+
+    Panel A: pure-null FPR under the participant-median versus participant-mean
+    reducer (confirmation arm, 120 fresh worlds), Clopper-Pearson 95% intervals.
+    Panel B: mean-reducer FPR across the injection-matched arms — random-phase
+    control P0 and phase-concentrated P4 (60 matched worlds) plus the
+    gain-flattened P0F diagnostic on the same backgrounds.
+    Panel C: world-mean observed versus refit-surrogate PPC for the two Stage B
+    arms with the identity line; every P4 world sits below identity, showing
+    that the 60/60 "detections" were negative-direction.
+    """
+    P07 = (ROOT / "processed" / "subject" /
+           "group" / "ieeg_p0_7_aggregation_remedy")
+    fa = pd.read_csv(P07 / "stage_a_confirmation" / "main_fpr.tsv", sep="\t")
+    fb = pd.read_csv(P07 / "stage_b_injection_matched" / "main_fpr.tsv", sep="\t")
+    fc = pd.read_csv(P07 / "stage_c_gain_flat" / "main_fpr.tsv", sep="\t")
+    ppc = pd.read_csv(P07 / "stage_b_injection_matched" / "world_ppc_means.tsv", sep="\t")
+
+    fig = plt.figure(figsize=(7.48, 2.85))
+    gs = GridSpec(1, 3, figure=fig, wspace=0.52, width_ratios=[0.9, 1.25, 1.0])
+    axa = fig.add_subplot(gs[0, 0])
+    axb = fig.add_subplot(gs[0, 1])
+    axc = fig.add_subplot(gs[0, 2])
+
+    def fpr_points(ax, table, xpos, color, runs=("R1", "R2"), off=0.095):
+        for run, sign, marker, face in [("R1", -1, "o", color), ("R2", 1, "s", "white")]:
+            r = table[table.run == run]
+            assert len(r) == 1
+            r = r.iloc[0]
+            errorbar_from_bounds(ax, np.array([xpos + sign * off]),
+                                 np.array([r.fpr]), np.array([r.cp_low]),
+                                 np.array([r.cp_high]), fmt=marker, color=color,
+                                 mfc=face, mec=color, capsize=2.5, lw=1.1,
+                                 markersize=5.0, zorder=3)
+
+    # Panel A: pure-null confirmation, both reducers on identical pair values.
+    for x, reducer, color in [(0.0, "median", GRAY), (1.0, "mean", ORANGE)]:
+        fpr_points(axa, fa[fa.reducer == reducer], x, color)
+    axa.axhline(0.05, color=GRAY, lw=0.9, ls="--")
+    axa.text(-0.38, 0.066, "nominal 0.05", ha="left", fontsize=6.8, color=GRAY,
+             gid="data-label")
+    axa.set_xticks([0, 1], ["participant\nmedian", "participant\nmean"])
+    axa.set_xlim(-0.42, 1.42)
+    axa.set_ylim(0, 0.62)
+    axa.set_ylabel("False-positive rate (95% CP)")
+    axa.set_title("Pure null: mean aggregation\nrestored calibration", loc="center",
+                  x=0.50, fontsize=8.5, pad=10)
+    route_legend(axa, INK)
+
+    # Panel B: injection-matched arms under the mean reducer.
+    arms = [(0.0, fb[(fb.arm == "P0") & (fb.reducer == "mean")], GRAY,
+             "P0\nrandom"),
+            (1.0, fb[(fb.arm == "P4") & (fb.reducer == "mean")], ORANGE,
+             "P4\nκ = 4"),
+            (2.0, fc[fc.reducer == "mean"], BLUE, "P0F\nflat gain")]
+    for x, table, color, _label in arms:
+        fpr_points(axb, table, x, color)
+    axb.axhline(0.05, color=GRAY, lw=0.9, ls="--")
+    axb.set_xticks([a[0] for a in arms], [a[3] for a in arms])
+    axb.set_xlim(-0.45, 2.45)
+    axb.set_ylim(0, 1.08)
+    axb.set_title("Injection matched: flat gain\nreturned FPR to the nominal range",
+                  loc="center", x=0.50, fontsize=8.5, pad=10)
+
+    # Panel C: world-mean observed vs refit-surrogate PPC, identity line.
+    lim = (-0.015, 0.055)
+    axc.plot(lim, lim, color=GRAY, lw=0.9, ls="--", zorder=1)
+    for arm, color in [("P0", GRAY), ("P4", ORANGE)]:
+        a = ppc[ppc.arm == arm]
+        axc.scatter(a.surrogate_ppc_mean, a.observed_ppc_mean, s=9, color=color,
+                    alpha=0.55, lw=0, zorder=2, rasterized=True)
+    axc.text(-0.0125, 0.044, "P4: 60/60 worlds\nbelow identity", fontsize=6.8,
+             color=ORANGE, gid="data-label", va="top", linespacing=1.35)
+    axc.set_xlim(lim)
+    axc.set_ylim(lim)
+    axc.set_xlabel("Refit-surrogate PPC (world mean)")
+    axc.set_ylabel("Observed PPC (world mean)")
+    axc.set_title("Phase-concentrated arm rejected\nbelow its surrogates", loc="center",
+                  x=0.50, fontsize=8.5, pad=10)
+
+    finish(fig, "Figure_8", [[("A", axa), ("B", axb), ("C", axc)]])
 
 
 def main():
@@ -663,6 +933,8 @@ def main():
     figure4()
     figure5()
     figure6()
+    figure7()
+    figure8()
 
 
 if __name__ == "__main__":

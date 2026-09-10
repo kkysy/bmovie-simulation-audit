@@ -1,0 +1,205 @@
+{
+  "analysis_id": "Bmovie-MPHASE-SUBJECT-REDUCER-POWER-STAGE-B-v1.0.0",
+  "status": "frozen_design_pending_script_review",
+  "purpose": "Mphase-only matched power arm for the subject-level mean reducer, with median retained as a descriptive robustness contrast.",
+  "parent_contract": {
+    "path": "scripts/ieeg/acc00_sim_contract.json",
+    "sha256": "51F06B9A733D6FF88534FAECE148E5AB89EDB17B6372657313BF3D4D3BF53260",
+    "required_analysis_id": "ACC00-SIM-v1.0.0"
+  },
+  "schedule": {
+    "path": "processed/subject/group/ieeg_acc00_sim/BangYoureDead/task-bangyouredead_desc-acc00sim-label-covariates.tsv",
+    "sha256": "FB371D5DB3F23439BB2569DD8CB2E5159475B5D8D3CDE6B4806FF74D8BC44CA2"
+  },
+  "local_generator_sha256": "AE54A22E701EC1A4E81B3D8D044666D8C7C19BEE28B96903077815414E2AA2EE",
+  "seed_namespace": {
+    "base": 22360827,
+    "seed_index": [
+      1,
+      60
+    ],
+    "world_seed_formula": "22360827 + seed_index",
+    "world_seed_range": [
+      22360828,
+      22360887
+    ],
+    "excluded_seed_ranges": [
+      {
+        "name": "historical_400_world_null_pool",
+        "range": [
+          20360828,
+          20361227
+        ]
+      },
+      {
+        "name": "stage_a_reducer_confirmation",
+        "range": [
+          20860828,
+          20860947
+        ]
+      },
+      {
+        "name": "p0_4_panel",
+        "range": [
+          91500001,
+          91500120
+        ]
+      },
+      {
+        "name": "p0_6_corner",
+        "range": [
+          91206001,
+          91206050
+        ]
+      }
+    ],
+    "rule": "Every formal matched world seed is in the frozen range and outside every excluded range; P0 and P4 share the same world seed and checkpoint."
+  },
+  "arms": {
+    "P0": {
+      "kappa": 0,
+      "role": "matched zero phase-concentration injection; not zero amplitude",
+      "worlds": 60
+    },
+    "P4": {
+      "kappa": 4,
+      "role": "positive phase-concentration injection",
+      "worlds": 60
+    }
+  },
+  "injection": {
+    "frequency_hz": 6,
+    "A_G06_uV": 4.61799281479342,
+    "grid_id": "G06",
+    "gain_intercept_a": 0,
+    "gain_slope_b": 0.3055533803,
+    "kernel": "half_sine_rms1",
+    "kernel_formula": "h(t)=sqrt(2)*sin(pi*(t-0.10)/0.40), t in [0.10,0.50] s, zero outside",
+    "kernel_rms": 1,
+    "formula": "A_G06*exp(a+b*z_e)*h(t)*sin(2*pi*6*t+phi_u+epsilon_u_e)",
+    "phi": "one Uniform(-pi,pi) phase per pair, shared by P0 and P4",
+    "epsilon": "von Mises(0,kappa); kappa=0 is Uniform(-pi,pi), kappa=4 is Best-Fisher rejection sampling",
+    "signal_point": "raw 1000-Hz synthetic signal before anti-alias filtering and 250-Hz downsampling",
+    "event_subset": "all covariate rows with source_complete==1; boundary-invalid windows are skipped",
+    "analysis_event_selector": "acc01_build_support_and_events: phaseGood & mx",
+    "event_count_diagnostics": [
+      "n_injected_events",
+      "n_phase_events",
+      "n_injected_phase_intersection"
+    ],
+    "intersection_rule": "Every phaseGood & mx event is source_complete and has a valid [0.10,0.50] injection window because phaseGood enforces the wider filter support; therefore n_injected_phase_intersection is explicitly asserted equal to n_phase_events, not inferred from a duplicated count.",
+    "epsilon_resultant_check": {
+      "level": "per-world per-arm mean over pairs with epsilon_count>=1000, plus loose per-pair caps",
+      "P0_world_mean_max": 0.04,
+      "P4_world_mean_target_R4": 0.8635,
+      "P4_world_mean_max_abs_error": 0.01,
+      "P0_pair_max_abs": 0.15,
+      "P4_pair_max_abs_error": 0.15,
+      "rationale": "Uniform resultant mean ~0.886/sqrt(n) ~0.0203 with per-pair SD ~0.011 at n~1900; world means over 351 pairs have SE ~0.0006 (observed: P0 0.0208+/-0.0033 max 0.0282, P4 0.86365+/-0.0012). World-mean tolerances are >=8 sigma and catch sampler-level bugs (the 2026-09-10 acceptance-rule bug moved R(4) from 0.8635 to 0.576); per-pair caps are non-firing corruption sentinels. Implementation QC, not a scientific gate."
+    }
+  },
+  "production_mphase": {
+    "implementation": "scripts/ieeg/acc01/acc01_compute_phase_metric_optimized.m",
+    "band_hz": [
+      4,
+      8
+    ],
+    "filter": "third-order zero-phase Butterworth within each continuous clean block",
+    "analytic_signal": "Hilbert",
+    "response_window_s": [
+      0.1,
+      0.5
+    ],
+    "erp_crossfit_folds": 5,
+    "surrogate_type": "whole-schedule circular time-shift signal fixed",
+    "refit_surrogates": 32,
+    "surrogate_reducer": "mean",
+    "edge_guard_s": [
+      1.5,
+      1.5
+    ],
+    "bad_dilation_s": 0.75,
+    "p_value": "p_two_sided(2) only; Mpower/family rejection is excluded"
+  },
+  "stream_partition": {
+    "base": "one common Threefry stream synthesizes subject/session/pair nuisance, pair phase/polarity and 1/f backgrounds; base synthesis occurs once per matched world",
+    "injection": "arm-local pair-keyed Threefry stream derived from SHA256(contract_sha256|world_seed|arm|subject|session_id|pair_id|phase_injection); variable rejection draws cannot advance base or metric streams; the pair key includes subject and session because pair_name labels repeat across subjects",
+    "metric": "P0 and P4 receive independent clones initialized from the identical post-synthesis base stream state",
+    "crn_scope": "background, pair nuisance, schedule/support and metric-surrogate randomness are paired; von Mises epsilon draws are distribution-correct arm-local draws",
+    "additive_draws": "deterministic kernel consumes no random draws"
+  },
+  "checkpoint": {
+    "unit": "one matched world containing complete P0 and P4 results",
+    "format": "MATLAB -v7.3; write world_%03d.mat.tmp then atomic move to world_%03d.mat",
+    "final_requires": "both arms complete, identity/hash/stream assertions pass, no stale tmp residue",
+    "identity_fields": [
+      "analysis_id",
+      "mode",
+      "seed_index",
+      "world_seed",
+      "contract_sha256",
+      "parent_contract_sha256",
+      "schedule_sha256",
+      "arms",
+      "status"
+    ],
+    "resume": "only a complete matched checkpoint with exact identity may be reused; partial single-arm checkpoints are invalid"
+  },
+  "inference": {
+    "runs": [
+      "R1",
+      "R2"
+    ],
+    "reducers": [
+      "mean",
+      "median"
+    ],
+    "subject_reducer": "same finite pair rows and subject inclusion for both reducers",
+    "test": "scripts/ieeg/acc01/acc01_exact_signflip_family.m",
+    "input_matrix": "[zero_placeholder, subject_Mphase] so Mphase is column 2",
+    "alpha": 0.05,
+    "world_rejection": "p_two_sided(2) <= 0.05",
+    "paired_contrast": "FPR_P4 - FPR_P0 within matched world and run; Newcombe method 10 two-sided 95% CI"
+  },
+  "preregistered_decision": {
+    "confidence_level": 0.95,
+    "rule_A": "Rule A — P0 mean 零校准（必要条件）：60 个 P0 world 的 mean-reducer p_two_sided(2) <= 0.05 计数形成 FPR；R1 和 R2 的 CP 95% interval 均须包含 0.05。这里的 P0 是“有匹配 transient、但 phase concentration 为零”的注入下校准；它不是 Stage A 的纯 null/无注入零臂，两者不能互换引用。若失败，Stage B 只能标为 NOT_CONFIRMED，不得用 P4 的结果掩盖。",
+    "rule_B": "Rule B — mean 的相位功效存在性（主规则）：对 matched world 的 P4/P0 mean rejection indicators，FPR_P4 - FPR_P0 的 Newcombe method-10 95% interval 在 R1 和 R2 均须有下界 > 0。这是一条方向性存在性规则，不另设未经校准的最低 power 百分比或“实用重要性”门槛；同时报告两臂 FPR、四格计数和完整 CI。",
+    "rule_B_feasibility": "n=60 的可行性预期（解析量级，不是额外判定门）：κ=4 给出 R(4)^2≈0.746 的 phase-resultant target；结合 G06 的 A_G06=4.61799281479342 µV、exp(a+bz_e) 的事件增益和既定 1/f background，这个 matched transient 的相位集中信号应在 pair-level PPC 中留下明显的正向尺度，而 P0 的 κ=0 只保留相同能量/时间包络的随机相位噪声。因此，在 60 个 matched world 下，若实现与该 SNR 量级一致，P4 相对 P0 的 rejection-rate 差应达到可被 95% Newcombe 区间分离的量级（预期为“多数 P4 world 拒绝、P0 接近 alpha 基线”，而不是仅有几个百分点的微小差异）。这只是可检验的设计期预期：若实际 P4−P0 差仍接近零，或 P0 本身偏离校准，必须如实报告功效边界，不能调大幅度、κ、事件子集或 world 数来补救。",
+    "rule_C": "Rule C — median 仅描述性：同样导出 P0/P4 median 的 FPR、CP interval、配对四格和 Newcombe interval，并与 mean 并排显示；不纳入 CONFIRMED/NOT_CONFIRMED 判定，也不触发 conditional branch。median 的结果可说明稳健性是否一致，但不能事后改变主 estimand。",
+    "status": {
+      "CONFIRMED": "60 个 matched world 完整，validator PASS，Rule A 与 Rule B 在 R1/R2 均通过；Rule C 只作为描述性输出。",
+      "NOT_CONFIRMED": "运行完整且 validator PASS，但 Rule A 或 Rule B 至少一项失败。",
+      "INCOMPLETE": "缺 checkpoint、身份/hash/配对不完整、validator 失败或导出不完整。"
+    }
+  },
+  "validator_checklist": [
+    "contract/parent/schedule/input SHA-256 match checkpoint; no Stage A/P0-6 path is written",
+    "exactly 60 matched checkpoints, each with exactly P0 and P4, unique seeds and no tmp residue",
+    "P0/P4 pair/session/subject/run/T/bad-segment/selector identity and base background fingerprint match",
+    "kappa, A_G06 numeric value, grid_id, frequency, envelope and gain constants match contract; numeric amplitude and grid_id are both checked",
+    "independent injection and event-count checks; P0 epsilon uniform and P4 kappa=4 distribution",
+    "base and metric stream states are not changed by injection; arm-local draw provenance is recorded",
+    "independent mean/median, pair diagnostics, exact sign-flip column-2 p, FPR/CP and P4-P0 Newcombe recomputation",
+    "summary TSVs and decision agree; smoke observed-statistic separation is implementation evidence only and never a tuning gate",
+    "each pair epsilon resultant satisfies the frozen P0/P4 tolerance; event-count intersection assertion is checked",
+    "world rows carry and independently check base_stream_state_hash, metric_stream_initial_state_hash, truth A_G06_uV and truth grid_id",
+    "P0/P4 metric initial hashes are equal and injection_stream_seed is unique by arm and pair"
+  ],
+  "engineering": {
+    "parallel_workers": 12,
+    "worker_threads": 1,
+    "performance_budget": "Stage A 528 s/world; 60 matched worlds with two arms estimated 1.5-2 h at 12 workers; profile synthesis/injection/metric timing",
+    "smoke": "2+2 smoke and benchmark world are implementation/performance checks only; per-world P4-P0 observed-statistic difference is implementation-health evidence, never power estimation or a gate for kappa, amplitude, event subset or world count",
+    "production_code_changes": "none; Stage-B-local wrapper/generator only",
+    "output_root": "tools/stageb_mphase_power/output"
+  },
+  "implementation_files": {
+    "generator": "tools/stageb_mphase_power/stageb_generate_matched_world.m",
+    "world": "tools/stageb_mphase_power/stageb_run_world.m",
+    "main": "tools/stageb_mphase_power/stageb_main.m",
+    "bridge": "tools/stageb_mphase_power/stageb_export_bridge.m",
+    "summarize": "tools/stageb_mphase_power/stageb_summarize.py",
+    "validator": "tools/stageb_mphase_power/stageb_validate.py"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "mode": "formal",
+  "checkpoints": 120,
+  "errors": [],
+  "checks": [
+    "pair reducers",
+    "pair diagnostics",
+    "exact sign-flip",
+    "FPR/CP",
+    "Newcombe method 10",
+    "p distribution",
+    "main-summary agreement (per-group flip budgets)",
+    "decision"
+  ]
+}

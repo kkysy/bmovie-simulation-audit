@@ -1,0 +1,11 @@
+{
+  "analysis_id": "Bmovie-MPHASE-GAINFLAT-DIAGNOSTIC-STAGE-C-v1.0.0",
+  "status": "COMPLETE",
+  "complete": true,
+  "rules": {
+    "C1_gain_coupling_contribution": false,
+    "C2_residual_elevation_absent": true
+  },
+  "mechanism_class": "indeterminate",
+  "scope": "mechanism diagnostic only; enters no Stage A/B verdict"
+}

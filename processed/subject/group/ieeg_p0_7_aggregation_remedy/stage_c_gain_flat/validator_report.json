@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "mode": "formal",
+  "checkpoints": 60,
+  "errors": [],
+  "checks": [
+    "CRN base-fingerprint pairing vs Stage B",
+    "epsilon uniformity (world-mean)",
+    "injection/stream provenance",
+    "injection truth amplitude+grid_id+gain",
+    "event count identities",
+    "pair reducers",
+    "exact sign-flip column 2",
+    "FPR/CP",
+    "paired Newcombe vs Stage B",
+    "summary agreement",
+    "decision"
+  ]
+}

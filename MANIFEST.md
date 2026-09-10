@@ -13,6 +13,9 @@ SHA-256 of every frozen contract and shipped summary table, so the frozen-input 
 | `scripts/ieeg/paper/acc00_sim_p0_4_panel_contract.json` | `6F8A9518D469322019D73B9FD43165AF60A57B4F0B3DAE9FA928867B7EE0C567` |
 | `scripts/ieeg/paper/acc00_sim_p0_6_perturbation_contract.json` | `BB7CB3D53CE724C4349A9ADF874B7AA43BA41D5DC8B1E0B95E4205619AAA916D` |
 | `scripts/ieeg/paper/paper_p0_4_blind_seal.json` | `9F96BDED8E492BD61A15AD9A2B84F9B4A9F4595B740143C49FAA8276656235F0` |
+| `scripts/ieeg/paper/p0_7_aggregation_remedy/stage_a_confirmation/confirm_mphase_reducer_contract.json` | `2D1181CD1AFBE43BE01435598F22F793760613BA881C55DB1B1A725B8253401E` |
+| `scripts/ieeg/paper/p0_7_aggregation_remedy/stage_b_injection_matched/stageb_mphase_power_contract.json` | `0B10CF92B727D4EE7196AB3D071B2ACD94A032BE63BC3A7F1D543E91FC19A577` |
+| `scripts/ieeg/paper/p0_7_aggregation_remedy/stage_c_gain_flat/stagec_mphase_gainflat_contract.json` | `1E66EB5835C263260559A72391F60D6A7CF69CEA911447B015BAE6C49487752D` |
 
 Pinned parent-contract digests recorded inside the paper contracts (`parent_*` fields) refer to the `acc00_sim_contract.json` / `acc00_sim_powercurve_contract.json` hashes above.
 
@@ -50,9 +53,9 @@ Pinned parent-contract digests recorded inside the paper contracts (`parent_*` f
 | `processed/subject/group/ieeg_methods_paper/p0_4_diagnostic_panel/tables/p0_4_paired_contrast_MD2.tsv` | `5A800C98EC6173DD2252D83B315E5C1B5A3321665ACF082B6717FD0CF5B4AA8F` |
 | `processed/subject/group/ieeg_methods_paper/p0_4_diagnostic_panel/tables/p0_4_validator.tsv` | `4B426C744315335EDD8747D4B01B3375D601905B2272E6D21C34CE6CAFC60F99` |
 | `processed/subject/group/ieeg_p0_6_perturbation/census_sensitivity.tsv` | `CBDE49155D7F47ADFEA2010866D62BE260D8647BBE6501AA42D20E9D3C17C800` |
-| `processed/subject/group/ieeg_p0_6_perturbation/corner_probe_G06.tsv` | `C8E7A6047890F67B3E9B6F420E4668F11CABCAA38E25D06E27431F7C1B7C5969` |
+| `processed/subject/group/ieeg_p0_6_perturbation/corner_probe_G06.tsv` | `A3AE21AF026C2A22ACA4AE7E9C4F868DF2F291C0C573995EFAC83ADD16CACB59` |
 | `processed/subject/group/ieeg_p0_6_perturbation/paired_fpr_contrast.tsv` | `B5ADA9414D6498384F649A7F978C7CB5087DF09C3218DB6EDC48EB767E4BE457` |
-| `processed/subject/group/ieeg_p0_6_perturbation/per_world_metrics.tsv` | `ED564D779A2141980738C0100B846431261F26D28201CA1DFA7CBE3FAFEE6088` |
+| `processed/subject/group/ieeg_p0_6_perturbation/per_world_metrics.tsv` | `190673115E1C167A8A9988F2B68D1FDFCAA21D0D6688FF7144E989567E2E2271` |
 | `processed/subject/group/ieeg_p0_6_perturbation/primary_verdict.json` | `62AFC3FC9389D5B9EEF51C7728C24A89F52414AFD5FD6192D28622EEF33823D9` |
 | `processed/subject/group/ieeg_p0_6_perturbation/run_manifest.json` | `77F04E547BD2ED6451CCEBB63B4EE05B4D8AB2DDDF78EB29B283121BD0A699C1` |
 | `processed/subject/group/ieeg_p0_6_perturbation/schedules/schedule_0p5x.tsv` | `88DF4AF4D52C807689A381EAC52C83A703F97F74FAC33F5698334A06A58253B5` |
@@ -62,4 +65,40 @@ Pinned parent-contract digests recorded inside the paper contracts (`parent_*` f
 | `processed/subject/group/ieeg_p0_6_perturbation/schedules/schedule_census_intervalperm_1.tsv` | `02F8FF52ADE6B4881735871208FBD6F4C1AC7F977D466F5FC2B279968C1E0130` |
 | `processed/subject/group/ieeg_p0_6_perturbation/schedules/schedule_census_intervalperm_2.tsv` | `E9559F3716FB9386138B57959C4581810BABB9770B23B74DCA31151826D2EE9C` |
 | `processed/subject/group/ieeg_p0_6_perturbation/schedules/schedule_manifest.tsv` | `7958FF82333A232C0315702B885CA98EE0468DF978AC903A5E0C0FE47F362794` |
-| `processed/subject/group/ieeg_p0_6_perturbation/validator_report.json` | `4032623136B64AA40B08F7DA8D565010633FF1E727B99CBEF09704253C866B60` |
+| `processed/subject/group/ieeg_p0_6_perturbation/validator_report.json` | `5B0F211099530C91B223161CBBBF1E5D41853D826DB5EAFE126723B579B79F68` |
+| `processed/subject/group/ieeg_acc00_sim/BangYoureDead/task-bangyouredead_desc-acc00sim-covariate-manifest.tsv` | `85AAB391C57DE4FD2B144720ABC80E3C69E662ABE4DAF8B1FBF94BF29082AB3A` |
+| `processed/subject/group/ieeg_acc00_sim/BangYoureDead/task-bangyouredead_desc-acc00sim-feasible-domain-census.tsv` | `FBB8C5976B39C5AACD8B574D1C9A9419A722C9F62A8424F7FBF1C5C536C0E6EB` |
+| `processed/subject/group/ieeg_acc00_sim/BangYoureDead/task-bangyouredead_desc-acc00sim-feasible-domain-sessions.tsv` | `DD1C724D52AACD71F4CA9EA9A349A0D0613CA61F5475805A818BF2E901B4BEE1` |
+| `processed/subject/group/ieeg_acc00_sim/BangYoureDead/task-bangyouredead_desc-acc00sim-label-covariates.tsv` | `FB371D5DB3F23439BB2569DD8CB2E5159475B5D8D3CDE6B4806FF74D8BC44CA2` |
+| `processed/subject/group/ieeg_acc00_sim/BangYoureDead/task-bangyouredead_desc-acc00sim-validation.tsv` | `F8B96FAAC0D5F5295677F70D999D80406F5DB1A2D0ABAC4037782A297B270504` |
+| `processed/subject/group/ieeg_p0_7_aggregation_remedy/stage_a_confirmation/bridge_report.json` | `15EA1B94B4F939570010140E666B53B2453505193D711566978E1C89B132904F` |
+| `processed/subject/group/ieeg_p0_7_aggregation_remedy/stage_a_confirmation/main_decision.json` | `8C1658DB53FF154C7794B637B2A4E56EBDABD63581C73FCE9D6463E7AF2346F0` |
+| `processed/subject/group/ieeg_p0_7_aggregation_remedy/stage_a_confirmation/main_fpr.tsv` | `98F56FBF3B956873FD06D4EEF672F4E26FF41A740B02141A601422A19E448D91` |
+| `processed/subject/group/ieeg_p0_7_aggregation_remedy/stage_a_confirmation/main_p_distribution.tsv` | `FC2F13426CB6FA96DB24A730259E23A60B1CCB4AD7B6694E1E7AF4D9605DBC6B` |
+| `processed/subject/group/ieeg_p0_7_aggregation_remedy/stage_a_confirmation/main_paired_risk_difference.tsv` | `55E44F37872EF9F3828F5910E15E0309021093A28AC17EA11A036D856F4B7A4A` |
+| `processed/subject/group/ieeg_p0_7_aggregation_remedy/stage_a_confirmation/run_manifest.json` | `4C5CCC4107DDEF5C7144D95C56F3705AD200DC82B3490F345465C025FAF33611` |
+| `processed/subject/group/ieeg_p0_7_aggregation_remedy/stage_a_confirmation/validator_pair_rows.tsv.gz` | `FBD365B474517D76DB77D5E698B075EF5D9715ACD769BFCBEE8496ED4B2C709F` |
+| `processed/subject/group/ieeg_p0_7_aggregation_remedy/stage_a_confirmation/validator_report.json` | `4CC9AF5089B61E64328603CF7F5AD4ACBCE4513237E395B25CB0B4A5CECB869E` |
+| `processed/subject/group/ieeg_p0_7_aggregation_remedy/stage_a_confirmation/validator_subject_rows.tsv` | `F9F89E1D9D63B794CFFF18FAD8785B6E3A39899180088F7223802AA669A0AAA4` |
+| `processed/subject/group/ieeg_p0_7_aggregation_remedy/stage_a_confirmation/validator_world_rows.tsv` | `233C73B1F806E77C9A50F4E92C2C021FA5A5B6A8FC0B5D4DBBA134FA8E46B03B` |
+| `processed/subject/group/ieeg_p0_7_aggregation_remedy/stage_b_injection_matched/bridge_report.json` | `0641F3ECDBC2A4E44F93A322D28007DA9D0417BD9B80A4EEB611943A789C61D3` |
+| `processed/subject/group/ieeg_p0_7_aggregation_remedy/stage_b_injection_matched/main_decision.json` | `C1255375AFB99FFF45F7B29876203C7073AE752F3129385387B0161EAD40E055` |
+| `processed/subject/group/ieeg_p0_7_aggregation_remedy/stage_b_injection_matched/main_fpr.tsv` | `9B4FAFAE58A8B502F95F091AEFD301734A12E39E97CC1048BE8578C363B7FDA3` |
+| `processed/subject/group/ieeg_p0_7_aggregation_remedy/stage_b_injection_matched/main_p_distribution.tsv` | `587DF87F64454710F87C045E035F19D3C58DD6DE192BFC3ED30F94FDC71E7438` |
+| `processed/subject/group/ieeg_p0_7_aggregation_remedy/stage_b_injection_matched/main_paired_contrast.tsv` | `E922D1967F9C44EB4B7F453F1498E148E6A79666A68C5291F9ED5394FB191F48` |
+| `processed/subject/group/ieeg_p0_7_aggregation_remedy/stage_b_injection_matched/run_manifest.json` | `3D4347C0BBF0914F452DF6BBDEAD131A56D5FC4F36A233333652B0B8537BFCF7` |
+| `processed/subject/group/ieeg_p0_7_aggregation_remedy/stage_b_injection_matched/validator_pair_rows.tsv.gz` | `9089F39DFE81018D825D6A34BCDE54FB6FD71A89AEC1FF0F04B7F15F8B930E3F` |
+| `processed/subject/group/ieeg_p0_7_aggregation_remedy/stage_b_injection_matched/validator_report.json` | `60FFE98222888DD459793403E279FE1CE271738933EAC6120666A9C735438E70` |
+| `processed/subject/group/ieeg_p0_7_aggregation_remedy/stage_b_injection_matched/validator_subject_rows.tsv` | `193C39D29C46BAD0D612E57E9AA40528E1149F82694D241D772059E007D286A4` |
+| `processed/subject/group/ieeg_p0_7_aggregation_remedy/stage_b_injection_matched/validator_world_rows.tsv` | `99D58E3428D2A41FCA5F9FF2DFBE32A21EF8301CD30E4E6B8633CE0B8EFA2DD1` |
+| `processed/subject/group/ieeg_p0_7_aggregation_remedy/stage_b_injection_matched/world_ppc_means.tsv` | `D30AC550DEE7C08155D2973896AC2C6D79AEA6414E6702F1E0104CF4614782B5` |
+| `processed/subject/group/ieeg_p0_7_aggregation_remedy/stage_c_gain_flat/bridge_report.json` | `901E87C8BF5226F7664D8D069D2EE63643315C9AF9E7EBA9AF9DBEC529345336` |
+| `processed/subject/group/ieeg_p0_7_aggregation_remedy/stage_c_gain_flat/main_decision.json` | `94EF3EA5B9062E30B542CE48389AEBBBA44CFFD2B6E9508665DC55A282204121` |
+| `processed/subject/group/ieeg_p0_7_aggregation_remedy/stage_c_gain_flat/main_fpr.tsv` | `8EDF62E36513E9C487C023A78F7A8D4A39F9816AFC28FD53187033ABD2DD1B49` |
+| `processed/subject/group/ieeg_p0_7_aggregation_remedy/stage_c_gain_flat/main_p_distribution.tsv` | `EA9D8876A6B93085F7D5D02033061B668EA97CE4A65C374E0DDBE3942322CD81` |
+| `processed/subject/group/ieeg_p0_7_aggregation_remedy/stage_c_gain_flat/main_paired_contrast.tsv` | `7F8687F3A7CBB0A8CF8B2046B47D06BAA59ECE3F31DA657C2589080E9A44557A` |
+| `processed/subject/group/ieeg_p0_7_aggregation_remedy/stage_c_gain_flat/run_manifest.json` | `235C94A8EDF36E6BB58B092B5AB4CFF4DEECED2BE0B5DAF6BC0069BDEC76290F` |
+| `processed/subject/group/ieeg_p0_7_aggregation_remedy/stage_c_gain_flat/validator_pair_rows.tsv.gz` | `842E093C8CA385802D3F6AC0C5B0EA78B56953129291FF2F846A9B45E05C5A6B` |
+| `processed/subject/group/ieeg_p0_7_aggregation_remedy/stage_c_gain_flat/validator_report.json` | `BE30A78CC267C4F0FB87841ED6DB75A17CA8631064994160F0B4BEB03EB0850F` |
+| `processed/subject/group/ieeg_p0_7_aggregation_remedy/stage_c_gain_flat/validator_subject_rows.tsv` | `D7376EF0C647FB8B158046D73432F15D8A8D090C221759DBBB8DB8BFFA150B55` |
+| `processed/subject/group/ieeg_p0_7_aggregation_remedy/stage_c_gain_flat/validator_world_rows.tsv` | `9CEFB5EBA7C8A7FDE6F0FE64E49B6AFEFA551E5767CD478664D3CF2FF8092338` |

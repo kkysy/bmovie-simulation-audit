@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "mode": "formal",
+  "matched_checkpoints": 60,
+  "errors": [],
+  "checks": [
+    "matched arms/base fingerprints",
+    "epsilon distribution vs contract tolerances",
+    "injection/stream provenance",
+    "injection truth amplitude+grid_id",
+    "event count identities",
+    "pair reducers",
+    "exact sign-flip column 2",
+    "FPR/CP",
+    "Newcombe method 10",
+    "summary agreement",
+    "decision"
+  ]
+}

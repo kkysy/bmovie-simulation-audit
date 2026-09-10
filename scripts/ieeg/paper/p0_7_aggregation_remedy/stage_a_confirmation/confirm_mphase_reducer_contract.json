@@ -1,0 +1,111 @@
+{
+  "analysis_id": "ACC00-MPHASE-SUBJECT-REDUCER-CONFIRM-STAGE-A-v1.0.0",
+  "status": "frozen_stage_a_implementation_and_smoke_only_formal_run_not_authorized",
+  "frozen_at_utc": "2026-09-09",
+  "purpose": "Independent-seed null calibration confirmation of the subject-level within-subject pair reducer for the production S0 Mphase route. The same per-pair corrected Mphase values are reduced by both median and arithmetic mean, then compared within matched worlds. This stage contains no power or positive-effect arm.",
+  "parent_contract": {
+    "path": "scripts/ieeg/acc00_sim_contract.json",
+    "sha256": "51F06B9A733D6FF88534FAECE148E5AB89EDB17B6372657313BF3D4D3BF53260",
+    "required_analysis_id": "ACC00-SIM-v1.0.0"
+  },
+  "independence": {
+    "base": 20360827,
+    "offset": 500000,
+    "seed_index": [1, 120],
+    "world_seed_formula": "20360827 + 500000 + seed_index",
+    "world_seed_range": [20860828, 20860947],
+    "excluded_seed_ranges": [
+      {"name": "historical_400_world_null_pool", "range": [20360828, 20361227]},
+      {"name": "P0_6_discovery_worlds", "range": [20360828, 20360947]},
+      {"name": "pilot_N_worlds", "range": [20360829, 20360851]},
+      {"name": "P0_4_panel", "range": [91500001, 91500120]}
+    ],
+    "rule": "Every formal world seed must be in the frozen range and outside every excluded range. No discovery checkpoint or result is an input."
+  },
+  "arm": {
+    "id": "Mphase_1p0_null",
+    "density": "1p0x_reference_schedule",
+    "worlds": 120,
+    "scenario": "null",
+    "effect_injection": "none",
+    "schedule_path": "processed/subject/group/ieeg_acc00_sim/BangYoureDead/task-bangyouredead_desc-acc00sim-label-covariates.tsv",
+    "schedule_sha256": "FB371D5DB3F23439BB2569DD8CB2E5159475B5D8D3CDE6B4806FF74D8BC44CA2"
+  },
+  "production_mphase": {
+    "implementation": "scripts/ieeg/acc01/acc01_compute_phase_metric_optimized.m",
+    "event_builder": "scripts/ieeg/acc01/acc01_build_support_and_events.m",
+    "band_hz": [4, 8],
+    "filter": "third-order zero-phase Butterworth within each continuous clean block",
+    "analytic_signal": "Hilbert",
+    "response_window_s": [0.10, 0.50],
+    "erp_crossfit_folds": 5,
+    "erp_crossfit_assignment": "contiguous_movie_time_blocks",
+    "surrogate_type": "whole_schedule_circular_time_shift_signal_fixed",
+    "refit_surrogates": 32,
+    "surrogate_reducer": "mean",
+    "edge_guard_s": [1.5, 1.5],
+    "bad_dilation_s": 0.75,
+    "require_exact_parent_contract_match": true
+  },
+  "subject_reducers": {
+    "median": "median of all finite per-pair corrected Mphase values within subject and run",
+    "mean": "arithmetic mean of the identical finite per-pair corrected Mphase values within subject and run",
+    "matched_rule": "Both reducers use the same pair rows and the same finite-value mask. Reducer choice must not alter synthesis, events, surrogates, or subject inclusion.",
+    "subject_order": "lexicographic subject key within run"
+  },
+  "inference": {
+    "runs": ["R1", "R2"],
+    "expected_subject_counts": {"R1": 16, "R2": 13},
+    "test": "scripts/ieeg/acc01/acc01_exact_signflip_family.m",
+    "input_matrix": "[zero_placeholder, subject_Mphase] so Mphase is column 2",
+    "p_value": "p_two_sided(2)",
+    "enumeration_counts": {"R1": 65536, "R2": 8192},
+    "alpha": 0.05,
+    "world_rejection": "p_two_sided(2) <= 0.05"
+  },
+  "diagnostics": {
+    "pair_level": ["per-pair corrected Mphase", "per-subject finite pair count", "bias-corrected skewness of per-subject pair values", "per-subject pair positive fraction"],
+    "subject_level": ["bias-corrected skewness across subject statistics", "positive/negative/zero subject counts", "positive subject fraction"],
+    "world_level": ["exact p value", "observed subject mean", "subject sample SD", "null center across worlds as mean(observed)/sample_SD(observed)"],
+    "p_uniformity": ["mean p", "fraction p < 0.5", "fraction p > 0.75"]
+  },
+  "preregistered_decision": {
+    "confidence_level": 0.95,
+    "fpr_interval": "Clopper-Pearson exact two-sided 95%",
+    "paired_difference": {
+      "definition": "Delta = FPR_mean - FPR_median within matched world and run",
+      "interval": "Newcombe method 10 two-sided 95%",
+      "implementation": "release/bmovie-simulation-audit/scripts/ieeg/paper/verify_p0_6_paired_contrast.py:newcombe_method10"
+    },
+    "rules": [
+      {"id": "A_mean_calibration", "pass": "For R1 and R2 separately, the mean-reducer FPR Clopper-Pearson interval contains 0.05."},
+      {"id": "B_paired_improvement", "pass": "For R1 and R2 separately, the 95% Newcombe interval for FPR_mean - FPR_median has upper bound < 0."},
+      {"id": "C_median_miscalibration_sanity", "pass": "For R1 and R2 separately, the median-reducer FPR Clopper-Pearson lower bound is > 0.05."},
+      {"id": "D_mean_p_uniformity", "pass": "For R1 and R2 separately: mean p is in [0.40,0.60], the Clopper-Pearson interval for Pr(p < 0.5) contains 0.5, and the Clopper-Pearson interval for Pr(p > 0.75) contains 0.25."}
+    ],
+    "classification": {
+      "CONFIRMED": "All four rules pass in both runs with exactly 120 matched worlds.",
+      "NOT_CONFIRMED": "The run is complete but one or more frozen rules fail.",
+      "INCOMPLETE": "Any checkpoint, identity, subject count, export, or matched-world requirement is missing or invalid."
+    },
+    "failure_policy": "Do not change reducer, thresholds, bins, seed count, seed range, schedule, or configuration after seeing Stage A results. Report the failed rule and stop before designing any power arm."
+  },
+  "engineering": {
+    "parallel_workers": 12,
+    "worker_threads": 1,
+    "checkpoint": "v7.3 MAT, one world per file, save to .tmp.mat then atomic move to final path",
+    "resume_identity": ["analysis_id", "arm", "mode", "seed_index", "world_seed", "contract_sha256", "parent_contract_sha256", "schedule_sha256"],
+    "output_root": "tools/confirm_mphase_reducer/output",
+    "production_code_changes": "prohibited"
+  },
+  "validator": {
+    "bridge": "MATLAB loads v7.3 table/string fields and writes flat TSV only; it performs no statistical reduction.",
+    "independent_checks": ["checkpoint cardinality and identity", "pair-to-subject median and mean recomputation", "pair counts and pair skewness", "exact two-sided sign-flip p values from subject rows", "FPR and Clopper-Pearson intervals", "matched rejection table and Newcombe method 10 interval", "p-distribution diagnostics and frozen decision", "agreement with main summary outputs"],
+    "v7_3_constraint": "Python must not read MATLAB table/string objects directly with h5py."
+  },
+  "authorization": {
+    "current_stage": "contract_implementation_static_review_and_minimal_smoke",
+    "formal_120_world_run": false,
+    "power_arms": false
+  }
+}

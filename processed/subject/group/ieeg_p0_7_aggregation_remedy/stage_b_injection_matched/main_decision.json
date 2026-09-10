@@ -1,0 +1,10 @@
+{
+  "analysis_id": "Bmovie-MPHASE-SUBJECT-REDUCER-POWER-STAGE-B-v1.0.0",
+  "status": "NOT_CONFIRMED",
+  "complete": true,
+  "rules": {
+    "A_P0_mean_calibration": false,
+    "B_mean_P4_minus_P0": true,
+    "C_median_descriptive_only": true
+  }
+}

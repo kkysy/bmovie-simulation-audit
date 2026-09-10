@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "mode": "benchmark",
+  "checkpoints": 60,
+  "pair_rows": 21060,
+  "subject_rows": 3480,
+  "world_rows": 240
+}

@@ -1,0 +1,12 @@
+{
+  "analysis_id": "ACC00-MPHASE-SUBJECT-REDUCER-CONFIRM-STAGE-A-v1.0.0",
+  "status": "CONFIRMED",
+  "complete": true,
+  "rules": {
+    "A_mean_calibration": true,
+    "B_paired_improvement": true,
+    "C_median_miscalibration_sanity": true,
+    "D_mean_p_uniformity": true
+  },
+  "prohibition": "Do not tune or add worlds after this decision; stop before any power-arm design."
+}
