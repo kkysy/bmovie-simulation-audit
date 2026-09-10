@@ -33,11 +33,13 @@ sim=base;sim.inputs.label_covariates.path=sch;% only the schedule changes; guard
 started=utcNow();clock=tic;
 if estimator=="corner"
     pc=jsondecode(fileread(fullfile(paperPath,"acc00_sim_powercurve_contract.json")));
-    seed=91000000+100000*2+1000*6+seedIndex;scenario="additive";
-    effect=struct("a_erp_uV",3.2654140348111795,"lambda_a_uV",0,"kappa",0,"provisional",false);
+    gi=6;assert(string(pc.additive.grid_id(gi))=="G06","Powercurve grid_id(6) is not G06.");
+    A=double(pc.additive.a_erp_grid_uV(gi+1));% grid carries a leading A=0 reference: G06 = a_erp_grid_uV(7) = 4.61799281479342
+    seed=91000000+100000*2+1000*gi+seedIndex;scenario="additive";
+    effect=struct("a_erp_uV",A,"lambda_a_uV",0,"kappa",0,"provisional",false);
     world=acc00_sim_generate_world(root,sim,"benchmark",seed,scenario,effect);
     metrics=runPowerRoute(world,sim);
-    corner=struct("grid_id","G06","a_erp_uV",pc.additive.a_erp_grid_uV(6),"gain_intercept_a",double(pc.additive.gain_intercept_a),"gain_slope_b",double(pc.additive.gain_slope_b),"kernel",string(pc.additive.kernel),"scenario_index",2);
+    corner=struct("grid_id",string(pc.additive.grid_id(gi)),"a_erp_uV",A,"gain_intercept_a",double(pc.additive.gain_intercept_a),"gain_slope_b",double(pc.additive.gain_slope_b),"kernel",string(pc.additive.kernel),"scenario_index",2);
 else
     seed=20260827+100000+seedIndex;scenario="null";effect=struct();
     world=acc00_sim_generate_world(root,sim,"benchmark",seed,scenario,effect);

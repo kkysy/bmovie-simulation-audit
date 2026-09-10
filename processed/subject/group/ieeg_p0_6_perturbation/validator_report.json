@@ -103,7 +103,7 @@
     {
       "name": "corner_g06_identity",
       "status": "PASS",
-      "evidence": "seed + grid_id on all corner checkpoints"
+      "evidence": "seed + grid_id + injected amplitude on all corner checkpoints"
     },
     {
       "name": "phase_event_annex",

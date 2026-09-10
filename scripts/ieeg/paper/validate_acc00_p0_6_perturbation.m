@@ -47,7 +47,7 @@ add("p04_namespace",checkNoP04Seeds(od),"no panel-namespace seeds in null arms")
 man=readtable(fullfile(sd,"schedule_manifest.tsv"),"FileType","text","Delimiter","\t","TextType","string","VariableNamingRule","preserve");
 add("schedule_sha",checkManifestSha(man,sd),num2str(height(man)));
 add("schedule_effect_present",checkBitwiseM15(c,od),"metrics differ across schedules (CRN background identical by construction; generator-level bitwise probe runs in smoke)");
-add("corner_g06_identity",checkCornerProbe(od),"seed + grid_id on all corner checkpoints");
+add("corner_g06_identity",checkCornerProbe(od,pp),"seed + grid_id + injected amplitude on all corner checkpoints");
 annex=phaseEventAnnex(parent,t15);
 add("phase_event_annex",annex.n15>0,sprintf("1x no-gate=%d; 1.5x no-gate=%d",annex.n1x,annex.n15));
 add("census_isolation",true,"census-only outputs excluded from aggregation");
@@ -126,12 +126,16 @@ for si=1:2
     end
 end
 end
-function ok=checkCornerProbe(od)
+function ok=checkCornerProbe(od,pp)
 ok=true;
+pc=jsondecode(fileread(fullfile(pp,"acc00_sim_powercurve_contract.json")));
+gi=find(string(pc.additive.grid_id)=="G06",1);assert(~isempty(gi),"Powercurve contract has no G06 cell.");
+aG06=double(pc.additive.a_erp_grid_uV(gi+1));% grid carries a leading A=0 reference
 d=dir(fullfile(od,"checkpoints","corner_probe_G06","world_*.mat"));
 for i=1:numel(d),q=load(fullfile(d(i).folder,d(i).name),"checkpoint");
     if abs(q.checkpoint.world_seed-(91000000+100000*2+1000*6+q.checkpoint.seed_index))>0.5,ok=false;return,end
     if string(q.checkpoint.corner.grid_id)~="G06",ok=false;return,end
+    if q.checkpoint.corner.a_erp_uV~=aG06,ok=false;return,end
 end
 end
 function a=phaseEventAnnex(parent,t15)

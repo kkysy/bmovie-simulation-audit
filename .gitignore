@@ -5,3 +5,11 @@ Thumbs.db
 # Local rerun artifacts; published summary tables remain tracked.
 *.log
 **/checkpoints/
+
+# Local junction to the workspace input tree and quarantined checkpoints; never ship.
+/processed/subject/group/ieeg_i00/
+**/checkpoints_quarantine*/
+
+# Locally rendered figures; only the generation script is shipped.
+manuscript/figure/Figure_*.png
+manuscript/figure/Figure_*.pdf
