@@ -376,32 +376,27 @@ def figure3():
         for x, label in zip([4, 5, 6], ["0.5×", "1×", "2×"]):
             ax.text(x, -0.18, label, transform=ax.get_xaxis_transform(),
                     ha="center", va="top", fontsize=7.0)
-        # Region labels sit on a third annotation row below the 0.5x/1x/2x row
-        # so the G01-G04 versus G05-G07 split does not require the codebook.
-        ax.text(1.5, -0.34, "near-null injections", transform=ax.get_xaxis_transform(),
-                ha="center", va="top", fontsize=7.0, color=GRAY, style="italic")
-        ax.text(5.0, -0.34, "reference-scale injections", transform=ax.get_xaxis_transform(),
-                ha="center", va="top", fontsize=7.0, color=GRAY, style="italic")
-        # Sit the axis label just below the region-label row; a larger labelpad
-        # drops it into panel C's letter/title band.
-        ax.set_xlabel("Additive grid cell", labelpad=30)
+        # Sit the axis label just below the 0.5x/1x/2x second-row annotations;
+        # a larger labelpad drops it into panel C's letter/title band.
+        ax.set_xlabel("Additive grid cell", labelpad=12)
     for ax in [axa, axb, axc]:
         # Separate the near-null cells (G01-G04) from the reference-scale
         # injections (G05-G07) without adding text.
         ax.axvline(3.5, color=GRAY, lw=0.7, ls=":", zorder=0)
     axa.axhline(0.05, color=GRAY, ls="--", lw=0.9)
     axa.text(6.12, 0.06, "0.05", fontsize=7, color=GRAY, gid="data-label")
-    # G07's R1 interval reaches ~0.26, so the ceiling keeps that bar whole
-    # while still removing the empty band a 0.35 limit left above the data.
-    axa.set_ylim(0, 0.28)
+    # G07's R1 interval reaches ~0.26; the ceiling adds headroom above it for
+    # the in-panel region labels flanking the dotted separator.
+    axa.set_ylim(0, 0.34)
     axa.set_ylabel("Empirical rejection rate (95% CP interval)")
     # pad clears the tall y-axis labels, whose tops reach above the axes into
     # the title band (panel B's title otherwise collides with its ylabel).
     axa.set_title("Empirical rejection rate remained below 0.12", loc="center", x=0.50, pad=24, fontsize=9)
     route_legend(axa, BLUE)
 
-    # Leave a small upper band for the common upper-left R1/R2 legend.
-    axb.set_ylim(0, 1.30)
+    # Leave an upper band for the common upper-left R1/R2 legend and the
+    # in-panel region labels flanking the dotted separator.
+    axb.set_ylim(0, 1.52)
     axb.set_ylabel("Coverage proportion (95% CP interval)")
     axb.set_title("Coverage collapsed to 0.00 at the largest injections", loc="center", x=0.50, pad=24, fontsize=9)
     route_legend(axb, BLUE)
@@ -414,13 +409,24 @@ def figure3():
     for x, label in zip([4, 5, 6], ["0.5×", "1×", "2×"]):
         axc.text(x, -0.16, label, transform=axc.get_xaxis_transform(),
                  ha="center", va="top", fontsize=7.0)
-    axc.set_xlabel("Additive grid cell", labelpad=46)
-    axc.text(1.5, -0.32, "near-null injections", transform=axc.get_xaxis_transform(),
-             ha="center", va="top", fontsize=7.0, color=GRAY, style="italic")
-    axc.text(5.0, -0.32, "reference-scale injections", transform=axc.get_xaxis_transform(),
-             ha="center", va="top", fontsize=7.0, color=GRAY, style="italic")
+    axc.set_xlabel("Additive grid cell", labelpad=31)
     axc.set_ylabel("Slope (log10 power per z)")
     axc.ticklabel_format(axis="y", style="sci", scilimits=(-3, -3))
+
+    # Region labels live inside each panel at the top, flanking the dotted
+    # separator (two-line form so they clear the line and the data traces);
+    # panel y ceilings are raised to make room for them.
+    def region_labels(ax, y):
+        ax.text(3.30, y, "near-null\ninjections", ha="right", va="top",
+                fontsize=7.0, color=GRAY, style="italic", linespacing=1.25)
+        ax.text(3.70, y, "reference-scale\ninjections", ha="left", va="top",
+                fontsize=7.0, color=GRAY, style="italic", linespacing=1.25)
+
+    region_labels(axa, 0.335)
+    region_labels(axb, 1.505)
+    c_lo, c_hi = axc.get_ylim()
+    axc.set_ylim(c_lo, c_hi * 1.50)
+    region_labels(axc, c_hi * 1.44)
     axc.set_title("Observed slopes attenuated as injected truth increased",
                   loc="center", x=0.50, pad=10, fontsize=9)
     handles = [
@@ -634,6 +640,9 @@ def figure5():
     axa.set_xlim(-0.58, 4.33)
     axa.set_ylim(0, 1.10)
     axa.set_ylabel("False-positive rate (95% CP interval)")
+    # The long y-label's top end grazes the panel title's left end; shift the
+    # label outward to clear it.
+    axa.yaxis.set_label_coords(-0.185, 0.5)
     axa.set_title("Member FPRs showed distinct null patterns", loc="center", x=0.50, pad=10)
     route_legend(axa, INK)
 
