@@ -1,5 +1,9 @@
 # Audit-first simulation evaluation of event-related iEEG estimators (Bmovie schedule)
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22710381.svg)](https://doi.org/10.5281/zenodo.22710381)
+
+Archived submission release: v1.0, https://doi.org/10.5281/zenodo.22710382
+
 Code, frozen simulation contracts, and summary tables for the methods paper on
 null calibration, empirical power, mechanism ablation, a blinded diagnostic
 panel, and surrogate feasible-domain auditing for event-related intracranial
