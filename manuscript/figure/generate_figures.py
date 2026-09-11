@@ -1,7 +1,9 @@
 """Generate the eight frozen-specification Bmovie manuscript figures.
 
-This script reads only completed summary/output tables.  It performs no
-simulation, statistical re-estimation, or manuscript editing.
+Six main-text figures (Figure_1..Figure_6) and two supplementary figures
+(Figure_S1, Figure_S2).  This script reads only completed summary/output
+tables.  It performs no simulation, statistical re-estimation, or manuscript
+editing.
 """
 
 from pathlib import Path
@@ -232,37 +234,45 @@ def figure1():
     # kept inside the axes (the round pad extends past the given rect).
     ax.text(0.02, 0.906, "General framework: reusable audit sequence",
             fontsize=7.6, color=GRAY, va="bottom")
+    ax.plot([0.700, 0.740], [0.9125, 0.9125], color=INK, lw=0.9, ls=(0, (4, 2)))
+    ax.text(0.98, 0.906, "dashed = conditional steps", fontsize=7.0,
+            color=GRAY, va="bottom", ha="right")
 
     # Upper band, row 1: design -> worlds -> null calibration -> power.
     box(0.02, 0.745, 0.205, 0.125,
         "1. Observed design\nevent table · support\nhierarchy · frozen path", "#F4F7F9")
     box(0.265, 0.745, 0.205, 0.125, "2. Synthetic worlds\ndesign-faithful,\nnull and injected", "#F4F7F9")
-    box(0.510, 0.745, 0.205, 0.125, "3. Null calibration\nempirical FPR + CI\n(P0-1, P0-7)", "#F4F7F9")
-    box(0.755, 0.745, 0.205, 0.125, "4. Estimand-matched power\ninjection · power · bias\n· coverage (P0-2, P0-7)", "#F4F7F9")
+    box(0.510, 0.745, 0.205, 0.125, "3. Null calibration\nempirical FPR + CI\n(P0-1)", "#F4F7F9")
+    box(0.755, 0.745, 0.205, 0.125, "4. Estimand-matched power\ninjection · power · bias\n· coverage (P0-2)", "#F4F7F9")
     arrow(0.225, 0.8075, 0.265, 0.8075)
     arrow(0.470, 0.8075, 0.510, 0.8075)
     arrow(0.715, 0.8075, 0.755, 0.8075)
 
-    # Upper band, row 2 (right to left): mechanism -> blinded -> surrogate ->
-    # perturbation. Steps 5 and 6 are conditional (Table 3), so their boxes
-    # carry dashed borders and their trigger conditions.
-    arrow(0.8575, 0.745, 0.8575, 0.635)
-    box(0.755, 0.51, 0.205, 0.125, "5. Mechanism diagnosis\n(P0-3, P0-7) if calibration\nor sensitivity fails", "#F4F7F9",
-        ls=(0, (4, 2)))
-    box(0.510, 0.51, 0.205, 0.125, "6. Blinded implementation\nstress test (P0-4)\nwhen decision-relevant", "#F4F7F9",
-        ls=(0, (4, 2)))
-    box(0.265, 0.51, 0.205, 0.125, "7. Surrogate audit\ninvariant · structure ·\nfeasible domain (P0-5)", "#F4F7F9")
-    box(0.02, 0.51, 0.205, 0.125, "8. Design perturbation\nrobustness (P0-6)", "#F4F7F9")
-    arrow(0.755, 0.5725, 0.715, 0.5725)
-    arrow(0.510, 0.5725, 0.470, 0.5725)
-    arrow(0.265, 0.5725, 0.225, 0.5725)
+    # Upper band, row 2 (right to left): mechanism -> repair/revalidate ->
+    # blinded -> surrogate -> perturbation. Steps 5, 6, and 7 are conditional
+    # (Table 2), so their boxes carry dashed borders and trigger conditions.
+    arrow(0.8745, 0.745, 0.8745, 0.635)
+    box(0.792, 0.51, 0.165, 0.125, "5. Mechanism diagnosis\n(P0-3) if calibration\nor sensitivity fails", "#F4F7F9",
+        fs=5.6, ls=(0, (4, 2)))
+    box(0.599, 0.51, 0.165, 0.125, "6. Repair & revalidate\n(P0-7) on fresh null and\ninjection-matched worlds", "#F4F7F9",
+        fs=5.6, ls=(0, (4, 2)))
+    box(0.406, 0.51, 0.165, 0.125, "7. Blinded implementation\nstress test (P0-4) when\ndecision-relevant", "#F4F7F9",
+        fs=5.6, ls=(0, (4, 2)))
+    box(0.213, 0.51, 0.165, 0.125, "8. Surrogate audit (P0-5)\ninvariant · structure ·\nfeasible domain", "#F4F7F9",
+        fs=5.6)
+    box(0.02, 0.51, 0.165, 0.125, "9. Design perturbation\nrobustness (P0-6)", "#F4F7F9",
+        fs=5.6)
+    arrow(0.792, 0.5725, 0.764, 0.5725)
+    arrow(0.599, 0.5725, 0.571, 0.5725)
+    arrow(0.406, 0.5725, 0.378, 0.5725)
+    arrow(0.213, 0.5725, 0.185, 0.5725)
 
     # Upper band, row 3: interpretation gate, entered from the perturbation box.
-    arrow(0.1225, 0.51, 0.1225, 0.405)
+    arrow(0.1025, 0.51, 0.1025, 0.405)
     box(0.02, 0.28, 0.45, 0.125,
-        "9. Interpretation\nafter calibration, sensitivity, support,\nand perturbation robustness", "#EEF6F1")
+        "10. Interpretation\nafter calibration, sensitivity, support, perturbation\nrobustness, and any required repair–revalidation", "#EEF6F1")
 
-    ax.text(0.02, 0.215, "Bmovie implementation example", fontsize=7.6,
+    ax.text(0.02, 0.215, "Bmovie analysis paths audited by the framework", fontsize=7.6,
             color=GRAY, va="bottom")
 
     # Lower band: the observed design (schedule, support, hierarchy) feeds
@@ -323,7 +333,7 @@ def figure2():
                                            [row.ci95_high - row.fpr]],
                          fmt="none", ecolor=INK, capsize=2.5, lw=1.1, zorder=4)
     axb.axhline(0.05, color=GRAY, lw=0.9, ls="--")
-    axb.text(1.44, 0.058, "nominal 0.05", fontsize=7, color=GRAY, ha="right")
+    axb.text(0.5, 0.058, "nominal 0.05", fontsize=7, color=GRAY, ha="center")
     axb.set_xticks([0, 1], ["Mpower", "Mphase"])
     axb.set_xlim(-0.45, 1.45)
     axb.set_ylim(0, 0.75)
@@ -366,9 +376,15 @@ def figure3():
         for x, label in zip([4, 5, 6], ["0.5×", "1×", "2×"]):
             ax.text(x, -0.18, label, transform=ax.get_xaxis_transform(),
                     ha="center", va="top", fontsize=7.0)
-        # Sit the axis label just below the 0.5x/1x/2x second-row annotations;
-        # a larger labelpad drops it into panel C's letter/title band.
-        ax.set_xlabel("Additive grid cell", labelpad=12)
+        # Region labels sit on a third annotation row below the 0.5x/1x/2x row
+        # so the G01-G04 versus G05-G07 split does not require the codebook.
+        ax.text(1.5, -0.34, "near-null injections", transform=ax.get_xaxis_transform(),
+                ha="center", va="top", fontsize=7.0, color=GRAY, style="italic")
+        ax.text(5.0, -0.34, "reference-scale injections", transform=ax.get_xaxis_transform(),
+                ha="center", va="top", fontsize=7.0, color=GRAY, style="italic")
+        # Sit the axis label just below the region-label row; a larger labelpad
+        # drops it into panel C's letter/title band.
+        ax.set_xlabel("Additive grid cell", labelpad=30)
     for ax in [axa, axb, axc]:
         # Separate the near-null cells (G01-G04) from the reference-scale
         # injections (G05-G07) without adding text.
@@ -381,7 +397,7 @@ def figure3():
     axa.set_ylabel("Empirical rejection rate (95% CP interval)")
     # pad clears the tall y-axis labels, whose tops reach above the axes into
     # the title band (panel B's title otherwise collides with its ylabel).
-    axa.set_title("Rejection rate never exceeded 0.12", loc="center", x=0.50, pad=24, fontsize=9)
+    axa.set_title("Empirical rejection rate remained below 0.12", loc="center", x=0.50, pad=24, fontsize=9)
     route_legend(axa, BLUE)
 
     # Leave a small upper band for the common upper-left R1/R2 legend.
@@ -398,7 +414,11 @@ def figure3():
     for x, label in zip([4, 5, 6], ["0.5×", "1×", "2×"]):
         axc.text(x, -0.16, label, transform=axc.get_xaxis_transform(),
                  ha="center", va="top", fontsize=7.0)
-    axc.set_xlabel("Additive grid cell", labelpad=31)
+    axc.set_xlabel("Additive grid cell", labelpad=46)
+    axc.text(1.5, -0.32, "near-null injections", transform=axc.get_xaxis_transform(),
+             ha="center", va="top", fontsize=7.0, color=GRAY, style="italic")
+    axc.text(5.0, -0.32, "reference-scale injections", transform=axc.get_xaxis_transform(),
+             ha="center", va="top", fontsize=7.0, color=GRAY, style="italic")
     axc.set_ylabel("Slope (log10 power per z)")
     axc.ticklabel_format(axis="y", style="sci", scilimits=(-3, -3))
     axc.set_title("Observed slopes attenuated as injected truth increased",
@@ -412,7 +432,7 @@ def figure3():
                markerfacecolor="white", markeredgecolor=INK, color=INK, label="Injected truth"),
     ]
     _style_legend(axc.legend(handles=handles, **_legend_kwargs(axc)))
-    finish(fig, "Figure_3", [[("A", axa), ("B", axb)], [("C", axc)]])
+    finish(fig, "Figure_4", [[("A", axa), ("B", axb)], [("C", axc)]])
 
 
 def figure4():
@@ -500,7 +520,13 @@ def figure4():
             axb.scatter(ix + np.linspace(-0.24, 0.24, len(saturated)), saturated,
                         s=1.4, color=BLUE, alpha=0.22, edgecolors="none",
                         rasterized=True, zorder=3, clip_on=False)
-    axb.set_xticks(np.arange(len(cells)) + 1, cells, rotation=35, ha="center")
+    # Human-readable two-row tick labels: cell ID over retention. The
+    # post-versus-symmetric placement split rides on the axis label because
+    # full "placement·retention" words do not fit the narrow category width.
+    CELL2ROWS = {"P01": "P01\nfull", "P02": "P02\nhalf", "P03": "P03\nquarter",
+                 "P07": "P07\nfull", "P08": "P08\nhalf", "P09": "P09\nquarter",
+                 "P10": "P10\ntheta"}
+    axb.set_xticks(np.arange(len(cells)) + 1, [CELL2ROWS[c] for c in cells], fontsize=6.4)
     axb.set_ylim(0, 1)
     # Full-retention cells (P01, P07, P10) sit at 0.9995, indistinguishable
     # from a clipped axis bound; print the medians so the saturation reads as
@@ -511,7 +537,7 @@ def figure4():
         if med > 0.99:
             axb.text(cells.index(c) + 1, 1.01, f"{med:.4f}", ha="center", va="bottom",
                      fontsize=6.0, color=BLUE, clip_on=False)
-    axb.set_xlabel("P0-3 Mpower cell")
+    axb.set_xlabel("P0-3 Mpower cell\n(P01–03 post, P07–09 symmetric placement)", fontsize=7.2)
     axb.set_ylabel("Predecessor post-component\noverlap fraction in pre window")
     axb.set_title("Predecessor-overlap diagnostic", loc="center", x=0.50, pad=10)
 
@@ -526,9 +552,12 @@ def figure4():
     for thr in (-1.96, 1.96):
         axc1.axhline(thr, color=GRAY, ls="--", lw=0.9)
     axc1.set_ylim(-3.4, 2.5)
-    axc1.set_xticks(range(4), [f"{c}\n{r}" for c, r in cat])
+    # Lead with the scientific variable (guard durations); the M01/M02 cell
+    # IDs are carried by the caption instead of the axis.
+    GUARD2ROWS = {"M01": "0.75/0.756 s", "M02": "1.5/1.5 s"}
+    axc1.set_xticks(range(4), [f"{GUARD2ROWS[c]}\n{r}" for c, r in cat], fontsize=6.4)
     axc1.set_ylabel("Observed standardized score")
-    axc1.set_title("Mphase M01/M02 paired descriptive replay", loc="center", x=0.50, fontsize=7.2, pad=12)
+    axc1.set_title("Mphase guard-replay standardized scores", loc="center", x=0.50, fontsize=7.2, pad=12)
 
     guards = [("Mphase_guard_0p75", "0.75 / 0.756 s"), ("Mphase_guard_1p5", "1.5 / 1.5 s")]
     guard_x = [0.0, 1.0]
@@ -558,7 +587,7 @@ def figure4():
     axd.set_ylabel("Observed FPR")
     axd.set_title("Mphase center-displacement check", loc="center", x=0.50, pad=10)
     route_legend(axd, ORANGE)
-    finish(fig, "Figure_4", [[("A", axa), ("B", axb)], [("C", axc1), ("D", axd)]])
+    finish(fig, "Figure_5", [[("A", axa), ("B", axb)], [("C", axc1), ("D", axd)]])
 
 
 def figure5():
@@ -658,7 +687,7 @@ def figure5():
                bbox_to_anchor=(0.5, 0.442), fontsize=8.5,
                handlelength=1.0,
                handletextpad=0.45, columnspacing=0.75)
-    finish(fig, "Figure_5", [[("A", axa), ("B", axb)], [("C", axc1)]],
+    finish(fig, "Figure_S1", [[("A", axa), ("B", axb)], [("C", axc1)]],
            panel_label_offsets={"C": (-0.085, 0.084)})
 
 
@@ -702,7 +731,7 @@ def figure6():
     # Tick marks sit at band centers: each band is 0.38 tall, so the center is
     # its bottom edge plus 0.19.
     axa.set_yticks([0.44, 1.44, 2.44],
-                   ["Prohibited", "Circular modulo", "Feasible complement"])
+                   ["Prohibited", "Circular modulo", "Feasible intervals"])
     axa.set_xticks([0, 1.0], ["0", "movie schedule"])
     axa.set_xlabel("Circular shift δ")
     axa.set_title("Feasible-domain construction", loc="center", x=0.50,
@@ -752,6 +781,8 @@ def figure6():
     axb.axvline(med, color=INK, ls="--", lw=1.0)
     axb.text(med - 0.03, axb.get_ylim()[1] * 0.94, f"median {med:.2f}%",
              ha="right", va="top", fontsize=7.2, color=INK, gid="data-label")
+    axb.text(0.04, 0.96, "351/351 pairs nonempty", transform=axb.transAxes,
+             ha="left", va="top", fontsize=7.6, color=INK, fontweight="bold")
     axb.set_xlim(0, 1)
     axb.set_xlabel("Feasible-domain fraction of the movie schedule (%)")
     axb.set_ylabel("Number of pairs")
@@ -838,7 +869,7 @@ def figure7():
     axb.set_title("Prespecified paired contrast", loc="center", x=0.50,
                   fontsize=8.5, pad=10)
 
-    finish(fig, "Figure_7", [[("A", axa), ("B", axb)]])
+    finish(fig, "Figure_S2", [[("A", axa), ("B", axb)]])
 
 
 def figure8():
@@ -903,7 +934,7 @@ def figure8():
     axb.set_xticks([a[0] for a in arms], [a[3] for a in arms])
     axb.set_xlim(-0.45, 2.45)
     axb.set_ylim(0, 1.08)
-    axb.set_title("Injection matched: flat gain\nreturned FPR to the nominal range",
+    axb.set_title("Injection-matched revalidation\nexposed residual miscalibration",
                   loc="center", x=0.50, fontsize=8.5, pad=10)
 
     # Panel C: world-mean observed vs refit-surrogate PPC, identity line.
@@ -922,7 +953,7 @@ def figure8():
     axc.set_title("Phase-concentrated arm rejected\nbelow its surrogates", loc="center",
                   x=0.50, fontsize=8.5, pad=10)
 
-    finish(fig, "Figure_8", [[("A", axa), ("B", axb), ("C", axc)]])
+    finish(fig, "Figure_3", [[("A", axa), ("B", axb), ("C", axc)]])
 
 
 def main():

@@ -1,0 +1,27 @@
+{
+  "analysis_id": "ACC00-MPHASE-JROBUST-v1.0.0",
+  "status": "ROBUST_TO_SURROGATE_COUNT",
+  "complete": true,
+  "scientific_rules_evaluated": true,
+  "rules": {
+    "A_mean_statistic_stability": {
+      "R1": true,
+      "R2": true
+    },
+    "B_J256_calibration": {
+      "R1": true,
+      "R2": true
+    },
+    "C_J256_mean_minus_median": {
+      "R1": true,
+      "R2": true
+    }
+  },
+  "hard_not_robust": {
+    "A_continuous": false,
+    "J256_mean_calibration": false,
+    "J256_median_no_elevation": false,
+    "J256_contrast_reversal": false
+  },
+  "prohibition": "Do not change J, world count, seeds, thresholds, intervals, or classification after observing results."
+}

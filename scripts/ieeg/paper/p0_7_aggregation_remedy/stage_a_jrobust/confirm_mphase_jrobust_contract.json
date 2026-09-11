@@ -1,0 +1,241 @@
+{
+  "analysis_id": "ACC00-MPHASE-JROBUST-v1.0.0",
+  "status": "smoke_passed_formal_120_world_authorized",
+  "frozen_at_utc": "2026-09-10",
+  "purpose": "Matched sensitivity analysis testing whether the completed Stage A mean-versus-median reducer conclusion is attributable to Monte Carlo noise from J=32 refitted surrogates. The same 120 null worlds are recomputed with pair-level common random-number states at J=32 and J=256.",
+  "scope": {
+    "included": "Mphase null-world J sensitivity only",
+    "excluded": [
+      "power",
+      "positive-effect arms",
+      "production changes",
+      "Stage A edits",
+      "manuscript edits",
+      "Git operations"
+    ],
+    "seed_reuse_interpretation": "intentional paired sensitivity design; not an independent replication and never pooled with Stage A as n=240"
+  },
+  "parent_contract": {
+    "path": "scripts/ieeg/acc00_sim_contract.json",
+    "sha256": "51F06B9A733D6FF88534FAECE148E5AB89EDB17B6372657313BF3D4D3BF53260",
+    "required_analysis_id": "ACC00-SIM-v1.0.0",
+    "required_J": 32,
+    "required_surrogate_reducer": "mean"
+  },
+  "stage_a_reference": {
+    "analysis_id": "ACC00-MPHASE-SUBJECT-REDUCER-CONFIRM-STAGE-A-v1.0.0",
+    "contract": {
+      "path": "tools/confirm_mphase_reducer/confirm_mphase_reducer_contract.json",
+      "sha256": "7EDC86F009DA9F7929CEE1D6FE3B55FBD1C52710A62F7B72EF13FF71A3699F03"
+    },
+    "runner": {
+      "path": "tools/confirm_mphase_reducer/confirm_run_world.m",
+      "sha256": "D3CDC504B33742E14466677337535F75EB811113845CC4B5CC3E98BE8D25D055"
+    },
+    "validator": {
+      "path": "tools/confirm_mphase_reducer/validate_confirm.py",
+      "sha256": "37478279259DF1F7EEC259AC4CEFF568255CC8C5C50451D5EC7FFF25EA46E896"
+    },
+    "checkpoint_pattern": "tools/confirm_mphase_reducer/output/checkpoints/Mphase_1p0_null/world_%03d.mat",
+    "pair_rows": {
+      "path": "tools/confirm_mphase_reducer/output/validator_pair_rows.tsv",
+      "sha256": "DC69015D1FE21E817B595024C317A3376999D99A2741518F586C6D97DCE92F5F"
+    },
+    "subject_rows": {
+      "path": "tools/confirm_mphase_reducer/output/validator_subject_rows.tsv",
+      "sha256": "F9F89E1D9D63B794CFFF18FAD8785B6E3A39899180088F7223802AA669A0AAA4"
+    },
+    "world_rows": {
+      "path": "tools/confirm_mphase_reducer/output/validator_world_rows.tsv",
+      "sha256": "233C73B1F806E77C9A50F4E92C2C021FA5A5B6A8FC0B5D4DBBA134FA8E46B03B"
+    },
+    "completed_status_note": "Stage A formal 120-world result is completed and PASS; its historical contract and README authorization text remain frozen and are not edited."
+  },
+  "production_code": [
+    {
+      "path": "scripts/ieeg/acc01/acc00_sim_generate_world.m",
+      "sha256": "77E83FDCD29C0669032E43C6595D12D73D216A7658CE524955D712E1191F019A"
+    },
+    {
+      "path": "scripts/ieeg/acc01/acc01_build_support_and_events.m",
+      "sha256": "623DC4D67A7F586B408000BE12D994EC63EA601C90238092C1A975B4B4C5882F"
+    },
+    {
+      "path": "scripts/ieeg/acc01/acc01_compute_phase_metric_optimized.m",
+      "sha256": "6C771A4070C4A1A2CF09FAEAEE12B89A166604EEBBADFC65D6158D98D7D9829B"
+    },
+    {
+      "path": "scripts/ieeg/acc01/acc01_build_empirical_surrogates.m",
+      "sha256": "54D3B03A2D12C58A2C3B4C745D32D6E90545CE0AD95742B443ABC4B91B815ADE"
+    },
+    {
+      "path": "scripts/ieeg/acc01/private/acc01_crossfit_operator_cache.m",
+      "sha256": "5267D1F45E727D4835CDDBFC96C12CA8113C54BF7771B3C75B2BAEAB2960E091"
+    },
+    {
+      "path": "scripts/ieeg/acc01/private/acc01_phase_ppc_for_schedules_optimized.m",
+      "sha256": "E181209057FDA2F30148A315BD7BC94516FF9CEF6910BB84763943E1B39DE927"
+    },
+    {
+      "path": "scripts/ieeg/acc01/private/acc01_corr_series_diagnostic.m",
+      "sha256": "ABEF1247140F750684D2690FCD73764488A0B27628EAD1460A94AFE00BA49080"
+    },
+    {
+      "path": "scripts/ieeg/acc01/acc01_exact_signflip_family.m",
+      "sha256": "29D9A6DDA1D11D496A657E9695F16CE4A8A4183508F0FBA3F70E9C64560751CA"
+    },
+    {
+      "path": "release/bmovie-simulation-audit/scripts/ieeg/paper/verify_p0_6_paired_contrast.py",
+      "sha256": "A15A5E2AD0F46DFF030828B82F2CC297AFA480932173C4765A569B005993BC14"
+    }
+  ],
+  "seed_namespace": {
+    "base": 20360827,
+    "offset": 500000,
+    "seed_index": [
+      1,
+      120
+    ],
+    "world_seed_formula": "20360827 + 500000 + seed_index",
+    "world_seed_range": [
+      20860828,
+      20860947
+    ],
+    "reuse": "exact Stage A seed reuse required for matched comparison"
+  },
+  "world": {
+    "arm_id": "Mphase_1p0_null_J32_J256",
+    "scenario": "null",
+    "generator_mode": "benchmark",
+    "worlds": 120,
+    "runs": [
+      "R1",
+      "R2"
+    ],
+    "expected_subject_counts": {
+      "R1": 16,
+      "R2": 13
+    },
+    "schedule_path": "processed/subject/group/ieeg_acc00_sim/BangYoureDead/task-bangyouredead_desc-acc00sim-label-covariates.tsv",
+    "schedule_sha256": "FB371D5DB3F23439BB2569DD8CB2E5159475B5D8D3CDE6B4806FF74D8BC44CA2"
+  },
+  "arms": {
+    "order": [
+      "J32_reference",
+      "J256_high"
+    ],
+    "J32_reference": {
+      "J": 32,
+      "effective_contract": "unaltered parent contract",
+      "must_reproduce_stage_a": true
+    },
+    "J256_high": {
+      "J": 256,
+      "effective_contract": "in-memory parent copy with the sole change phase.refit_surrogates.J=256"
+    },
+    "allowed_effective_contract_diff": [
+      "phase.refit_surrogates.J"
+    ]
+  },
+  "crn": {
+    "algorithm": "Threefry",
+    "rule": "Run J32 sequentially in Stage A pair order; capture each pair's metric-stream initial State; restart the corresponding J256 pair from that identical State.",
+    "candidate_family_requirement": "candidate delta count and SHA-256 must match across arms for every pair",
+    "initial_state_requirement": "pair metric-stream initial-state SHA-256 must match across arms",
+    "non_nesting_note": "randperm(stream,B,k) is evaluated separately at k=32 and k=256; prefix nesting is not required or imposed",
+    "known_stream_consumers": [
+      "acc01_build_empirical_surrogates candidate-family randperm when feasible count exceeds 1024",
+      "acc01_compute_phase_metric_optimized refit-index randperm when B exceeds J"
+    ]
+  },
+  "inference": {
+    "subject_reducers": [
+      "median",
+      "mean"
+    ],
+    "test": "scripts/ieeg/acc01/acc01_exact_signflip_family.m",
+    "input_matrix": "[zero_placeholder, subject_Mphase]",
+    "p_value": "p_two_sided(2)",
+    "alpha": 0.05,
+    "fpr_interval": "Clopper-Pearson exact two-sided 95%",
+    "paired_binary_interval": "Newcombe method 10 two-sided 95%",
+    "continuous_difference_interval": "Student-t two-sided 95% across 120 paired worlds"
+  },
+  "preregistered_rules": {
+    "A_mean_statistic_stability": {
+      "equivalence_band_S32": [
+        -0.1,
+        0.1
+      ],
+      "require_t_ci_inside_band": true,
+      "rmse_ratio_max": 0.25,
+      "hard_rmse_ratio_min": 0.5
+    },
+    "B_J256_calibration": {
+      "mean_cp_contains": 0.05,
+      "median_cp_lower_gt": 0.05
+    },
+    "C_J256_mean_minus_median": {
+      "newcombe_ci_upper_lt": 0.0
+    },
+    "classification": {
+      "ROBUST_TO_SURROGATE_COUNT": "A, B, and C pass for R1 and R2",
+      "NOT_ROBUST_TO_SURROGATE_COUNT": "A t CI lies wholly outside the equivalence band, or RMSE ratio is at least 0.50, or a J256 mean CP interval excludes 0.05, or a J256 median CP upper bound is at most 0.05, or a J256 mean-minus-median CI lower bound is at least zero",
+      "INCONCLUSIVE_J_ROBUSTNESS": "complete and valid, but neither robust nor hard-not-robust",
+      "INCOMPLETE_INVALID": "any completeness, identity, Stage A reproduction, CRN, export, hash, or validator requirement fails"
+    }
+  },
+  "tolerances": {
+    "continuous_abs": 1e-12,
+    "stage_a_continuous_abs": 1e-12,
+    "signflip_one_flip_plus_abs": 1e-12
+  },
+  "engineering": {
+    "parallel_workers_formal": 8,
+    "worker_threads": 1,
+    "checkpoint": "one v7.3 MAT per world containing both complete arms; write .tmp.mat then atomic move",
+    "formal_seed_indices": [
+      1,
+      120
+    ],
+    "smoke_seed_indices": [
+      1,
+      2
+    ],
+    "smoke_runtime_review_threshold_hours": 12,
+    "output_root": "tools/confirm_mphase_jrobust/output",
+    "production_code_changes": "prohibited"
+  },
+  "local_code": [
+    {
+      "path": "tools/confirm_mphase_jrobust/jrobust_run_world.m",
+      "sha256": "96BCFA3A1B53EFF9E4CF046742C243587BC97B7313D181D12620CD7880CD0CFB"
+    },
+    {
+      "path": "tools/confirm_mphase_jrobust/jrobust_main.m",
+      "sha256": "8F33D1CAB39ED884D814233DDE0C0F593576ED84C0D4792C6F774133CED1FCBE"
+    },
+    {
+      "path": "tools/confirm_mphase_jrobust/jrobust_smoke.m",
+      "sha256": "3B9B65AB0DEFDF6B3C625C9D1EE1739102E9EFA5A978E4CF1F6CA19F43A45350"
+    },
+    {
+      "path": "tools/confirm_mphase_jrobust/jrobust_export_bridge.m",
+      "sha256": "B605A801DC132FC966F1C0A1EA47B5F623C1C47D4E0B57A348885CB11DDA23CB"
+    },
+    {
+      "path": "tools/confirm_mphase_jrobust/summarize_jrobust.py",
+      "sha256": "DAA65D3D6DACB456416EC341B8E54515711250635189D791013D1EBED0BAB876"
+    },
+    {
+      "path": "tools/confirm_mphase_jrobust/validate_jrobust.py",
+      "sha256": "8B77F22284E8E35251C9C7155E10D6FDD8EDAA2CDD5060BA4D47DDCC342AD89B"
+    }
+  ],
+  "authorization": {
+    "contract_and_code": true,
+    "static_review": true,
+    "smoke_2_world": true,
+    "formal_120_world": true
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "mode": "formal",
+  "matched_checkpoints": 120,
+  "validated_decision_status": "ROBUST_TO_SURROGATE_COUNT",
+  "errors": [],
+  "checks": [
+    "frozen parent/production/local/Stage A hashes",
+    "seed/arm/J identities",
+    "pair-level CRN and candidate-family hashes",
+    "B/J enumeration and sampling counts",
+    "Stage A J32 pair/subject/world reproduction",
+    "pair-to-subject median and mean recomputation",
+    "exact sign-flip column 2",
+    "FPR and Clopper-Pearson intervals",
+    "Newcombe method 10 paired contrasts",
+    "Rule A Student-t equivalence and RMSE",
+    "main-summary agreement",
+    "three-branch decision"
+  ]
+}

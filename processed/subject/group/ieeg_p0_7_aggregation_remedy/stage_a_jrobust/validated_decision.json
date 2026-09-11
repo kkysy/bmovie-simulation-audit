@@ -1,0 +1,8 @@
+{
+  "analysis_id": "ACC00-MPHASE-JROBUST-v1.0.0",
+  "status": "ROBUST_TO_SURROGATE_COUNT",
+  "main_decision_status": "ROBUST_TO_SURROGATE_COUNT",
+  "validator_status": "PASS",
+  "scientific_interpretation_allowed": true,
+  "errors": []
+}

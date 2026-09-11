@@ -32,7 +32,8 @@ scripts/ieeg/                      frozen contracts + runners + validators + sum
   acc00_sim_contract.json          parent contract (schedule, guards, surrogate domain, seeds)
   acc01/                           synthetic-world generator and shared estimator kernels
   paper/                           P0-2..P0-6 contracts, runners, validators, summarizers;
-                                   p0_7_aggregation_remedy/ holds the three P0-7 sub-stages
+                                   p0_7_aggregation_remedy/ holds the three P0-7 sub-stages and the
+                                   Stage A surrogate-count sensitivity check (stage_a_jrobust/)
 processed/subject/group/           summary tables underlying all figures and numerical claims
 manuscript/figure/                 figure generation script; rendered manuscript figures are not shipped
 MANIFEST.md                        SHA-256 of every contract and shipped table

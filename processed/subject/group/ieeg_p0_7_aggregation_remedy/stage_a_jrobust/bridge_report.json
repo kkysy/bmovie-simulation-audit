@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "run_kind": "formal",
+  "checkpoints": 120,
+  "pair_rows": 84240,
+  "subject_rows": 13920,
+  "world_rows": 960
+}
